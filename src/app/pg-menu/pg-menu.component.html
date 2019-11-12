@@ -1,0 +1,77 @@
+<mdb-navbar SideClass="navbar navbar-expand-md fixed-top  navbar-light blue-grey lighten-5">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportContent">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
+        <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle class="nav-link dropdown-toggle">
+          Entreprises
+          </a>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item" routerLink="/">Ouvrir</a>
+            <a class="dropdown-item" routerLink="/">Nouvelle</a>
+            <a class="dropdown-item" routerLink="/">Edit</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle class="nav-link dropdown-toggle">
+          Bases de données
+          </a>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item" routerLink="/clients">Clients</a>
+            <a class="dropdown-item" routerLink="/">Articles</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" routerLink="/">Contrats</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown" dropdown>
+          <a dropdownToggle class="nav-link dropdown-toggle">
+            Quotidien
+          </a>
+          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+            <a class="dropdown-item" routerLink="/"> Factures</a>
+            <a class="dropdown-item" routerLink="/">Editer</a>
+            <a class="dropdown-item" routerLink="/">Supprimer</a>
+            <div class="dropdown-divider">Devis</div>
+        <!--<li bs-form-popover form-popover-template="views/register-form.html" form-popover-title="Register" form-popover-submit="header.submitRegister(valid, data)">-->
+            <a class="dropdown-item" routerLink="/">Devis</a>
+            <a class="dropdown-item" routerLink="/">Editer</a>
+            <a class="dropdown-item" routerLink="/">Supprimer</a>
+          </div>
+        </li>
+      </ul>
+      <div class="float-md-right mx-auto">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="!currentUser" routerLink="/register">
+              <mdb-icon fas icon="user-plus"></mdb-icon> register
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="!currentUser" routerLink="/login">
+              <mdb-icon fas icon="user"></mdb-icon> login
+            </a>
+          </li>
+          <!--<li class="nav-item" *ngIf="!currentUser">
+            <app-register-modal-form>
+            </app-register-modal-form>
+          </li>
+          <li class="nav-item">
+            <app-pg-login-form *ngIf="!currentUser"></app-pg-login-form>
+            <button class="nav-link dropdown-item" *ngIf="currentUser" (click)="logout()">
+                <span><i class="fas faSignOutAlt"></i></span>
+              Logout
+            </button>
+          </li>-->
+
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</mdb-navbar>

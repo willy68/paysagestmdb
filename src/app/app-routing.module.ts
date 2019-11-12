@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { HomeComponent } from './home';
+import { PgLoginComponent } from './pg-login/pg-login.component';
+
 
 const routes: Routes = [
   {
@@ -9,8 +11,8 @@ const routes: Routes = [
     component: HomeComponent
     // canActivate: [AuthGuard]
   },
- /* { path: 'login', component: PgLoginComponent },
-  { path: 'register', component: PgRegisterComponent },
+  { path: 'login', component: PgLoginComponent },
+  /*{ path: 'register', component: PgRegisterComponent },
   { path: 'clients', component: ClientsListComponent },*/
 
   // otherwise redirect to home

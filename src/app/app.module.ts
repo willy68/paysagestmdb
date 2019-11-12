@@ -14,11 +14,11 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HomeComponent } from './home';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
-// import { PgMenuComponent } from './pg-menu/pg-menu.component';
+import { PgMenuComponent } from './pg-menu/pg-menu.component';
 // import { PgLoginFormComponent } from './pg-login-form/pg-login-form.component';
 // import { RegisterModalFormComponent } from './register-modal-form/register-modal-form.component';
 // import { PgRegisterComponent } from './pg-register/pg-register.component';
-// import { PgLoginComponent } from './pg-login/pg-login.component';
+import { PgLoginComponent } from './pg-login/pg-login.component';
 // import { AlertComponent } from './alert/alert.component';
 // import { ClientsListComponent } from './clients-list/clients-list.component';
 // import { HighlightTableRowDirective } from './directives';
@@ -26,7 +26,9 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    PgMenuComponent,
+    HomeComponent,
+    PgLoginComponent
   ],
   imports: [
     BrowserModule,

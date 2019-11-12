@@ -1,0 +1,78 @@
+<div class="row">
+<div class="col-sm-8 offset-sm-1">
+<div class="card border-light-default">
+  <div class="card-body">
+    <h3 class="card-header card-header-default">
+      Login
+      <span class="float-right"><mdb-icon fas icon="sign-in-alt"></mdb-icon></span>
+    </h3>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <!--  -->
+      <div class="form-group">
+        <label class="control-label" for="email">Email:</label>
+        <input type="text" formControlName="email" class="form-control" placeholder="user.name@dom.com"
+        [ngClass]="{ 'is-invalid': f.email.invalid && (submitted || f.email.touched) }" autocomplete="on"/>
+         <div class="form-text error-form" 
+         [ngClass]="{ 'invalid-feedback': f.email.invalid && (submitted || f.email.touched) }">
+           <div class="invalid-form-alert" *ngIf="f.email.errors && f.email.errors.required" >
+             Email is required
+           </div>
+          <div class="invalid-form-alert" *ngIf="f.email.errors && f.email.errors.email">
+            Email must be a valid email address
+          </div>
+         </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="control-label" for="password">Password:</label>
+        <input type="password" formControlName="password" class="form-control" placeholder="minimum 8 caractères"
+         [ngClass]="{ 'is-invalid': f.password.invalid && (submitted || f.password.touched) }" />
+          <div class="form-text error-form"
+          [ngClass]="{ 'invalid-feedback': f.password.invalid && (submitted || f.password.touched) }" >
+            <div class="invalid-form-alert" 
+            *ngIf="f.password.errors && f.password.errors.required">
+                Password is required
+            </div>
+            <div class="invalid-form-alert" 
+            *ngIf="f.password.errors && f.password.errors.minlength">
+              Password must be at least 8 characters
+            </div>
+          </div>
+      </div>
+ 
+      <div class="form-group">
+        <label class="control-label" for="confirmPassword">Confirm Password:</label>
+        <input type="password" formControlName="confirmPassword" class="form-control" placeholder="confirmer le mot de passe"
+         [ngClass]="{ 'is-invalid': f.confirmPassword.invalid && (submitted || f.confirmPassword.touched) }" />
+          <div class="form-text error-form"
+          [ngClass]="{ 'invalid-feedback': f.confirmPassword.invalid && (submitted || f.confirmPassword.touched) }">
+             <div class="invalid-form-alert" *ngIf="f.confirmPassword.errors && f.confirmPassword.errors.required">
+              Confirm Password is required
+             </div>
+             <div class="invalid-form-alert" *ngIf="f.confirmPassword.errors && f.confirmPassword.errors.match">
+                Passwords must match
+             </div>
+          </div>
+      </div>
+      <br *ngIf="!errorMessage.length">
+      <div *ngIf="errorMessage.length" class="alert-danger">{{errorMessage}}</div>
+      <div>Pas encore de compte? 
+          <a [routerLink]="['/register']" routerLinkActive="router-link-active" >
+              Créez un compte
+          </a>
+        </div>
+
+      <div class="form-group text-right">
+          <button type="reset" class="btn btn-outline-secondary mr-2" (click)="resetForm()">
+              Annuler
+          </button>
+          <button type="submit" class="btn btn-outline-primary mr-2" >
+              Connexion
+          </button>
+          <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div>
