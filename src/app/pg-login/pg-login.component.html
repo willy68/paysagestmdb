@@ -1,18 +1,26 @@
 <div class="row">
-<div class="col-sm-8 offset-sm-1">
-<div class="card border-light-default">
-  <div class="card-body">
-    <h3 class="card-header card-header-default">
-      Login
+<div class="col-sm-6 offset-sm-2">
+<mdb-card>
+  <mdb-card-header class="info-color white-text text-center py-4">
+    <h5>
+      <strong>Login</strong>
       <span class="float-right"><mdb-icon fas icon="sign-in-alt"></mdb-icon></span>
-    </h3>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    </h5>
+  </mdb-card-header>  
+    <mdb-card-body class="px-lg-5 pt-0">
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="text-center" style="color: #757575;">
     <!--  -->
-      <div class="form-group">
-        <label class="control-label" for="email">Email:</label>
-        <input type="text" formControlName="email" class="form-control" placeholder="user.name@dom.com"
-        [ngClass]="{ 'is-invalid': f.email.invalid && (submitted || f.email.touched) }" autocomplete="on"/>
-         <div class="form-text error-form" 
+      <div class="md-form">
+        <input type="email" mdbInput mdbValidate formControlName="email" id="email" class="form-control" />
+        <label for="email">E-mail:</label>
+        <mdb-error *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
+            <span *ngIf="f.email.errors.required">Email is required</span>
+            <span *ngIf="f.email.errors.email">This email address is not valid</span>
+        </mdb-error>
+        <mdb-success *ngIf="f.email.valid && (f.email.dirty || f.email.touched)">
+          Email valid
+        </mdb-success>
+        <!--<div class="form-text error-form" 
          [ngClass]="{ 'invalid-feedback': f.email.invalid && (submitted || f.email.touched) }">
            <div class="invalid-form-alert" *ngIf="f.email.errors && f.email.errors.required" >
              Email is required
@@ -20,14 +28,21 @@
           <div class="invalid-form-alert" *ngIf="f.email.errors && f.email.errors.email">
             Email must be a valid email address
           </div>
-         </div>
+         </div>-->
       </div>
       
-      <div class="form-group">
-        <label class="control-label" for="password">Password:</label>
-        <input type="password" formControlName="password" class="form-control" placeholder="minimum 8 caractères"
-         [ngClass]="{ 'is-invalid': f.password.invalid && (submitted || f.password.touched) }" />
-          <div class="form-text error-form"
+      <div class="md-form">
+        <label for="password">Password:</label>
+        <input type="password" formControlName="password" id="password" class="form-control"
+        mdbValidate mdbInput />
+        <mdb-error *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
+          <span *ngIf="f.password.errors.required">Password is required</span>
+          <span *ngIf="f.password.errors.minlength">Password must be at least 8 characters</span>
+        </mdb-error>
+        <mdb-success *ngIf="f.password.valid && (f.password.dirty || f.password.touched)">
+          Password valid
+        </mdb-success>
+        <!--  <div class="form-text error-form"
           [ngClass]="{ 'invalid-feedback': f.password.invalid && (submitted || f.password.touched) }" >
             <div class="invalid-form-alert" 
             *ngIf="f.password.errors && f.password.errors.required">
@@ -37,14 +52,21 @@
             *ngIf="f.password.errors && f.password.errors.minlength">
               Password must be at least 8 characters
             </div>
-          </div>
+          </div>-->
       </div>
  
-      <div class="form-group">
-        <label class="control-label" for="confirmPassword">Confirm Password:</label>
-        <input type="password" formControlName="confirmPassword" class="form-control" placeholder="confirmer le mot de passe"
-         [ngClass]="{ 'is-invalid': f.confirmPassword.invalid && (submitted || f.confirmPassword.touched) }" />
-          <div class="form-text error-form"
+      <div class="md-form">
+        <input type="password" formControlName="confirmPassword" class="form-control"
+        mdbValidate mdbInput />
+        <label for="confirmPassword">Confirm Password:</label>
+        <mdb-error *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
+            <span *ngIf="f.confirmPassword.errors.required">Confirm Password is required</span>
+            <span *ngIf="f.confirmPassword.errors.match">Password must match</span>
+        </mdb-error>
+        <mdb-success *ngIf="f.confirmPassword.valid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
+          Password confirmed
+        </mdb-success>
+          <!--<div class="form-text error-form"
           [ngClass]="{ 'invalid-feedback': f.confirmPassword.invalid && (submitted || f.confirmPassword.touched) }">
              <div class="invalid-form-alert" *ngIf="f.confirmPassword.errors && f.confirmPassword.errors.required">
               Confirm Password is required
@@ -52,27 +74,42 @@
              <div class="invalid-form-alert" *ngIf="f.confirmPassword.errors && f.confirmPassword.errors.match">
                 Passwords must match
              </div>
-          </div>
+          </div>-->
       </div>
       <br *ngIf="!errorMessage.length">
       <div *ngIf="errorMessage.length" class="alert-danger">{{errorMessage}}</div>
-      <div>Pas encore de compte? 
-          <a [routerLink]="['/register']" routerLinkActive="router-link-active" >
-              Créez un compte
-          </a>
-        </div>
-
-      <div class="form-group text-right">
+      <div class="d-flex justify-content-around">
+          <div>
+            <!-- Remember me -->
+            <mdb-checkbox formControlName="rememberMe">Remember me</mdb-checkbox>
+          </div>
+          <div>
+            <!-- Forgot password -->
+            <a href="">Forgot password?</a>
+          </div>
+      </div>
+  
+      <div class="md-form">
           <button type="reset" class="btn btn-outline-secondary mr-2" (click)="resetForm()">
               Annuler
           </button>
-          <button type="submit" class="btn btn-outline-primary mr-2" >
-              Connexion
+          <button mdbBtn class="mr-2" color="info" outline="true" rounded="true" type="submit">
+            Connexion
           </button>
+          <!--<button mdbBtn class="pt-5" color="info" outline="true" rounded="true" class="z-depth-0 my-4 waves-effect"
+            mdbWavesEffect type="submit">
+              Connexion
+          </button>-->
           <img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
       </div>
+      <p>Pas encore de compte? 
+          <a [routerLink]="['/register']" routerLinkActive="router-link-active" >
+              Créez un compte
+          </a>
+        </p>
+
     </form>
-  </div>
-</div>
+  </mdb-card-body>
+</mdb-card>
 </div>
 </div>

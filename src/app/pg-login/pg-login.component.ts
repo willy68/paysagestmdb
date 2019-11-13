@@ -36,11 +36,18 @@ export class PgLoginComponent implements OnInit {
     this.loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]] ,
     password: ['', [Validators.required, Validators.minLength(8)]],
-    confirmPassword: ['', [Validators.required]]
+    confirmPassword: ['', [Validators.required]],
+    rememberMe: [null, []]
     }, {
     validator: mustMatch('password', 'confirmPassword')
     });
   }
+
+  get email() { return this.loginForm.get('required'); }
+  get password() { return this.loginForm.get('password'); }
+  get confirmPassword() { return this.loginForm.get('confirmPassword'); }
+  get rememberMe() { return this.loginForm.get('rememberMe'); }
+
   onSubmit() {
     this.submitted = true;
 
