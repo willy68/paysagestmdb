@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home';
 import { PgLoginComponent } from './pg-login/pg-login.component';
 import { PgRegisterComponent } from './pg-register';
+import { ClientsListComponent } from './clients-list/clients-list.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,7 @@ const routes: Routes = [
   },
   { path: 'login', component: PgLoginComponent },
   { path: 'register', component: PgRegisterComponent },
-  /*{ path: 'clients', component: ClientsListComponent },*/
+  { path: 'clients', component: ClientsListComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

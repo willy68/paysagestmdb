@@ -20,8 +20,8 @@ import { PgMenuComponent } from './pg-menu/pg-menu.component';
 import { PgRegisterComponent } from './pg-register/pg-register.component';
 import { PgLoginComponent } from './pg-login/pg-login.component';
 // import { AlertComponent } from './alert/alert.component';
-// import { ClientsListComponent } from './clients-list/clients-list.component';
-// import { HighlightTableRowDirective } from './directives';
+import { ClientsListComponent } from './clients-list/clients-list.component';
+import { HighlightTableRowDirective } from './directives';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,9 @@ import { PgLoginComponent } from './pg-login/pg-login.component';
     PgMenuComponent,
     HomeComponent,
     PgLoginComponent,
-    PgRegisterComponent
+    PgRegisterComponent,
+    ClientsListComponent,
+    HighlightTableRowDirective
   ],
   imports: [
     BrowserModule,

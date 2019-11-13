@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-sm-11">
+  <div class="card border-light-default">
+    <div class="card-body">
+      <h3 class="card-header card-header-default">
+        Liste des clients
+        <span class="float-right"></span>
+      </h3>
+	  <table class="table table-hover" appHighlightTableRow *ngIf="!emptyList">
+		<thead>
+		  <tr>
+			  <th>Game Name</th>
+			  <th>Platform</th>
+			  <th>Release Date</th>
+		  </tr>
+	  </thead>
+	  <tbody>
+		  <tr *ngFor="let game of games; let i = index">
+			  <td>{{game.game}}</td>
+			  <td>{{game.platform}}</td>
+			  <td>{{game.release}}</td>
+		  </tr>
+	  </tbody>
+	</table>
+    </div>
+  </div>
+</div>
