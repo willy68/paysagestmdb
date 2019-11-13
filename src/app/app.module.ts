@@ -17,7 +17,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { PgMenuComponent } from './pg-menu/pg-menu.component';
 // import { PgLoginFormComponent } from './pg-login-form/pg-login-form.component';
 // import { RegisterModalFormComponent } from './register-modal-form/register-modal-form.component';
-// import { PgRegisterComponent } from './pg-register/pg-register.component';
+import { PgRegisterComponent } from './pg-register/pg-register.component';
 import { PgLoginComponent } from './pg-login/pg-login.component';
 // import { AlertComponent } from './alert/alert.component';
 // import { ClientsListComponent } from './clients-list/clients-list.component';
@@ -28,7 +28,8 @@ import { PgLoginComponent } from './pg-login/pg-login.component';
     AppComponent,
     PgMenuComponent,
     HomeComponent,
-    PgLoginComponent
+    PgLoginComponent,
+    PgRegisterComponent
   ],
   imports: [
     BrowserModule,
