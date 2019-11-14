@@ -57,17 +57,12 @@
               <mdb-icon fas icon="user"></mdb-icon> login
             </a>
           </li>
-          <!--<li class="nav-item" *ngIf="!currentUser">
-            <app-register-modal-form>
-            </app-register-modal-form>
-          </li>
           <li class="nav-item">
-            <app-pg-login-form *ngIf="!currentUser"></app-pg-login-form>
-            <button class="nav-link dropdown-item" *ngIf="currentUser" (click)="logout()">
-                <span><i class="fas faSignOutAlt"></i></span>
+            <a class="nav-link" *ngIf="currentUser" (click)="logout()">
+                <span><mdb-icon fas icon="sign-out-alt"></mdb-icon></span>
               Logout
-            </button>
-          </li>-->
+            </a>
+          </li>
 
         </ul>
       </div>
