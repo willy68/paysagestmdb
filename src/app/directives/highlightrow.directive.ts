@@ -12,7 +12,7 @@ import { Directive, ElementRef, HostListener, Renderer2, OnInit } from '@angular
 * Todo: Add pageup pagedown handler
 */
 @Directive({
-  selector: '[appHighlightTableRow]'
+  selector: '[pgHighlightTableRow]'
 })
 export class HighlightTableRowDirective implements OnInit {
 
