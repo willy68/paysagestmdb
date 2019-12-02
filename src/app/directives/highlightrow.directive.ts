@@ -71,6 +71,20 @@ export class HighlightTableRowDirective implements OnInit {
       this.renderer.removeClass(this.trCollection[index], 'active');
     }
   }
+  /*
+   private doScroll() {
+        let index = this.table.selection ? this.table.value.findIndex(item => item.id == this.table.selection.id) : 0;
+        let scrollBodyEl = this.table.el.nativeElement.getElementsByClassName('ui-table-scrollable-body')[0];
+        let tbodyEl = scrollBodyEl.getElementsByClassName('ui-table-tbody')[0];
+        if (!tbodyEl.children.length)
+            return;
+        let rowEl = tbodyEl.children[index];
+        if (rowEl.offsetTop < scrollBodyEl.scrollTop)
+            scrollBodyEl.scrollTop = rowEl.offsetTop;
+        else if ((rowEl.offsetTop + rowEl.offsetHeight) > (scrollBodyEl.scrollTop + scrollBodyEl.offsetHeight - 17)) {
+            scrollBodyEl.scrollTop += rowEl.offsetTop + rowEl.offsetHeight - scrollBodyEl.scrollTop - scrollBodyEl.offsetHeight + 17;
+        }
+    }*/
 
   ngOnInit() {
     const tbody = this.el.nativeElement.getElementsByTagName('tbody');

@@ -2,29 +2,34 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { User } from '../users';
+import { Api } from '../url';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-    constructor(private http: HttpClient) { }
+    public apigest: Api;
+    
+    constructor(private http: HttpClient) {
+        this.apigest = new Api;
+     }
 
     getAll() {
-        return this.http.get<User[]>(`http://api/users`);
+        return this.http.get<User[]>('http://' + this.apigest.url + '/users');
     }
 
     getById(id: number) {
-        return this.http.get<User>(`http://api/users/${id}`);
+        return this.http.get<User>(`http://` + this.apigest.url + `/user/${id}`);
     }
 
     register(user: User) {
-        return this.http.post('http://api/users', user);
+        return this.http.post('http://' + this.apigest.url + '/user', user);
     }
 
     update(user: User) {
-        return this.http.put('http://api/users/' + user.id, user);
+        return this.http.put('http://' + this.apigest.url + '/user/' + user.id, user);
     }
 
     delete(id: number) {
-        return this.http.delete('http://api/users/' + id);
+        return this.http.delete('http://' + this.apigest.url + '/user/' + id);
     }
 
 }

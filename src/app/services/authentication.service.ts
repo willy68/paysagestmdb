@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { User } from '../users';
 import { JwtHelperService } from './jwt-helper.service';
+import { Api } from '../url';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,12 @@ import { JwtHelperService } from './jwt-helper.service';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  public apigest: Api;
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
       this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
       this.currentUser = this.currentUserSubject.asObservable();
+      this.apigest = new Api;
   }
 
   public get currentUserValue(): User {
@@ -23,7 +26,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-      return this.http.post<any>(`http://api/users/login`, { email, password })
+      return this.http.post<any>('http://' + this.apigest.url + '/user/login', { email, password })
           .pipe(map(user => {
               // login successful if there's a jwt token in the response
               if (user && user.token) {
