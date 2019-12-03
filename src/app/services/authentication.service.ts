@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User } from '../users';
+import { User } from './user.service';
 import { JwtHelperService } from './jwt-helper.service';
 import { apigest } from '../url';
 
