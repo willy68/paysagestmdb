@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { apigest } from '../url';
 
 export interface Entreprise {
-  id: number;
+  id?: number;
   siret: string;
   nom: string;
   ape: string;
@@ -36,7 +36,7 @@ export class EntrepriseService {
   }
 
   create(entreprise: Entreprise) {
-      return this.http.post(apigest + '/entreprise', entreprise);
+      return this.http.post<Entreprise>(apigest + '/entreprise', entreprise);
   }
 
   update(entreprise: Entreprise) {

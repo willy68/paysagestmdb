@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from './services';
-import { User, Role } from './users';
+import { AuthenticationService, User, Role } from './services';
+// import { User, Role } from './users';
 
 @Component({
   selector: 'pg-root',

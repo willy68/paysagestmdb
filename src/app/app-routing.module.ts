@@ -5,6 +5,7 @@ import { HomeComponent } from './home';
 import { PgLoginComponent } from './pg-login/pg-login.component';
 import { PgRegisterComponent } from './pg-register';
 import { ClientsListComponent } from './clients-list/clients-list.component';
+import { PgEntrepriseCreateComponent } from './pg-entreprise-create/pg-entreprise-create.component';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'login', component: PgLoginComponent },
   { path: 'register', component: PgRegisterComponent },
   { path: 'clients', component: ClientsListComponent },
+  { path: 'new_entreprise', component: PgEntrepriseCreateComponent },
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
