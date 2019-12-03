@@ -12,6 +12,7 @@
       <mdb-card-body class="px-lg-5 pt-0">
         <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="text-center" style="color: #757575;">
           <!--  -->
+          
           <div class="form-row">
             <div class="col">
               <div class="md-form">
@@ -19,7 +20,6 @@
                 <label for="siret">Siret:</label>
                 <mdb-error *ngIf="f.siret.invalid && (f.siret.dirty || f.siret.touched)">
                   <span *ngIf="f.siret.errors.required">Siret is required</span>
-                  <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
                 </mdb-error>
                 <mdb-success *ngIf="f.siret.valid && (f.siret.dirty || f.siret.touched)">
                   Siret valid
@@ -32,7 +32,6 @@
                 <label for="nom">Nom:</label>
                 <mdb-error *ngIf="f.nom.invalid && (f.nom.dirty || f.nom.touched)">
                   <span *ngIf="f.nom.errors.required">Nom is required</span>
-                  <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
                 </mdb-error>
                 <mdb-success *ngIf="f.nom.valid && (f.nom.dirty || f.nom.touched)">
                   Nom valid
@@ -47,7 +46,6 @@
             <label for="ape">APE:</label>
             <mdb-error *ngIf="f.ape.invalid && (f.ape.dirty || f.ape.touched)">
               <span *ngIf="f.ape.errors.required">APE is required</span>
-              <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
             </mdb-error>
             <mdb-success *ngIf="f.ape.valid && (f.ape.dirty || f.ape.touched)">
               APE valid
@@ -58,9 +56,8 @@
             <input type="text" mdbInput mdbValidate formControlName="tva_intracom" id="tva_intracom"
               class="form-control" />
             <label for="tva_intracom">TVA Intra-communautaire:</label>
-            <mdb-error *ngIf="f.tva_intracom.invalid && (f.tva_intracom.dirty || f.tva_intraom.touched)">
+            <mdb-error *ngIf="f.tva_intracom.invalid && (f.tva_intracom.dirty || f.tva_intracom.touched)">
               <span *ngIf="f.tva_intracom.errors.required">TVA intracommunautaire is required</span>
-              <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
             </mdb-error>
             <mdb-success *ngIf="f.tva_intracom.valid && (f.tva_intracom.dirty || f.tva_intracom.touched)">
               Numero de TVA intracommunautaire valid
@@ -72,7 +69,6 @@
             <label for="adresse">Adresse:</label>
             <mdb-error *ngIf="f.adresse.invalid && (f.adresse.dirty || f.adresse.touched)">
               <span *ngIf="f.adresse.errors.required">adresse is required</span>
-              <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
             </mdb-error>
             <mdb-success *ngIf="f.adresse.valid && (f.adresse.dirty || f.adresse.touched)">
               Adresse valid
@@ -85,7 +81,6 @@
             <label for="suite_adresse">Adresse suite:</label>
             <mdb-error *ngIf="f.suite_adresse.invalid && (f.suite_adresse.dirty || f.suite_adresse.touched)">
               <span *ngIf="f.suite_adresse.errors.required">adresse is required</span>
-              <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
             </mdb-error>
             <mdb-success *ngIf="f.suite_adresse.valid && (f.suite_adresse.dirty || f.suite_adresse.touched)">
               Adresse valid
@@ -97,7 +92,6 @@
             <label for="cp">Code Postal:</label>
             <mdb-error *ngIf="f.cp.invalid && (f.cp.dirty || f.cp.touched)">
               <span *ngIf="f.cp.errors.required">Code Postal is required</span>
-              <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
             </mdb-error>
             <mdb-success *ngIf="f.cp.valid && (f.cp.dirty || f.cp.touched)">
               Code Postal valid
@@ -109,7 +103,6 @@
             <label for="ville">Ville:</label>
             <mdb-error *ngIf="f.ville.invalid && (f.ville.dirty || f.ville.touched)">
               <span *ngIf="f.adresse.errors.required">ville is required</span>
-              <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
             </mdb-error>
             <mdb-success *ngIf="f.ville.valid && (f.ville.dirty || f.ville.touched)">
               Ville valid
@@ -121,7 +114,6 @@
             <label for="tel">Telephone:</label>
             <mdb-error *ngIf="f.tel.invalid && (f.tel.dirty || f.tel.touched)">
               <span *ngIf="f.adresse.errors.required">Telephone is required</span>
-              <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
             </mdb-error>
             <mdb-success *ngIf="f.tel.valid && (f.tel.dirty || f.tel.touched)">
               Telephone valid
@@ -133,7 +125,6 @@
             <label for="portable">Portable:</label>
             <mdb-error *ngIf="f.portable.invalid && (f.portable.dirty || f.portable.touched)">
               <span *ngIf="f.portable.errors.required">Portable is required</span>
-              <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
             </mdb-error>
             <mdb-success *ngIf="f.portable.valid && (f.portable.dirty || f.portable.touched)">
               Portable valid
@@ -152,6 +143,7 @@
             </mdb-success>
           </div>
 
+
           <div class="md-form">
             <input type="text" mdbInput mdbValidate formControlName="regime_commercial" id="regime_commercial"
               class="form-control" />
@@ -159,7 +151,6 @@
             <mdb-error
               *ngIf="f.regime_commercial.invalid && (f.regime_commercial.dirty || f.regime_commercial.touched)">
               <span *ngIf="f.regime_commercial.errors.required">Regime commercial is required</span>
-              <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
             </mdb-error>
             <mdb-success
               *ngIf="f.regime_commercial.valid && (f.regime_commercial.dirty || f.regime_commercial.touched)">
@@ -167,12 +158,12 @@
             </mdb-success>
           </div>
 
+
           <div class="md-form">
             <input type="text" mdbInput mdbValidate formControlName="logo" id="logo" class="form-control" />
             <label for="logo">Logo:</label>
             <mdb-error *ngIf="f.logo.invalid && (f.logo.dirty || f.logo.touched)">
               <span *ngIf="f.logo.errors.required">Logo is required</span>
-              <!--<span *ngIf="f.siret.errors.email">This email address is not valid</span>-->
             </mdb-error>
             <mdb-success *ngIf="f.logo.valid && (f.logo.dirty || f.logo.touched)">
               Logo valid
