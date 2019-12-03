@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { AuthenticationService } from '../services';
-import { User } from '../users';
+import { User } from '../services';
 
 @Component({
   selector: 'pg-menu',

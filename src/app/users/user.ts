@@ -1,12 +1,11 @@
 import {Role} from './role.enum';
 
-export class User {
+export interface User {
     id: number;
+    entreprise_id: number;
     email: string;
     username: string;
     password: string;
-    firstName: string;
-    lastName: string;
     role: Role;
     token?: string;
 }

@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User } from '../users';
+import { User } from './user.service';
 import { JwtHelperService } from './jwt-helper.service';
+import { apigest } from '../url';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class AuthenticationService {
   }
 
   login(email: string, password: string) {
-      return this.http.post<any>(`http://api/users/login`, { email, password })
+      return this.http.post<any>(apigest + '/user/login', { email, password })
           .pipe(map(user => {
               // login successful if there's a jwt token in the response
               if (user && user.token) {
