@@ -11,12 +11,12 @@ export enum Role {
 }
 
 export interface User {
-    id: number;
-    entreprise_id: number;
-    email: string;
-    username: string;
-    password: string;
-    role: Role;
+    id?: number;
+    entreprise_id?: number;
+    email?: string;
+    username?: string;
+    password?: string;
+    role?: Role;
     token?: string;
 }
 
