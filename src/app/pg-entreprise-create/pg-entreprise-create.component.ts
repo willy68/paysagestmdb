@@ -45,7 +45,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
     portable: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]] ,
     regime_commercial: ['', [Validators.required]],
-    logo: ['', [Validators.required]],
+    logo: ['', []],
     rememberMe: [null, []]
     });
   }
@@ -104,7 +104,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
       portable: this.f.portable.value,
       email: this.f.email.value,
       regime_commercial: this.f.regime_commercial.value,
-      logo: this.f.logo.value} )
+      logo: this.imgURL ? this.imgURL : '' } )
     .pipe(first())
     .subscribe(
         data => {
@@ -123,6 +123,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
   resetForm() {
     this.submitted = false;
     this.errorMessage = '';
+    this.imgURL = '';
     this.createForm.reset();
     Object.keys(this.createForm.controls).forEach(key => {
       this.createForm.controls[key].setErrors(null);
