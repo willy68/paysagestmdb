@@ -15,7 +15,9 @@ export class PgEntrepriseCreateComponent implements OnInit {
   public submitted = false;
   public loading = false;
   public errorMessage = '';
-  // public faSignInAlt = faSignInAlt;
+
+  public imagePath: FileList;
+  public imgURL: any;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -44,7 +46,6 @@ export class PgEntrepriseCreateComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]] ,
     regime_commercial: ['', [Validators.required]],
     logo: ['', [Validators.required]],
-    file: [null,[]],
     rememberMe: [null, []]
     });
   }
@@ -62,8 +63,24 @@ export class PgEntrepriseCreateComponent implements OnInit {
   get email() { return this.createForm.get('required'); }
   get regime_commercial() { return this.createForm.get('regime_commercial'); }
   get logo() { return this.createForm.get('logo'); }
-  get file() { return this.createForm.get('file'); }
   get rememberMe() { return this.createForm.get('rememberMe'); }
+
+  previewLogo(files: FileList) {
+    if (files.length === 0) return;
+
+    let mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.errorMessage = "Seul les fichiers image sont supporter";
+      return;
+    }
+
+    let reader = new FileReader();
+    this.imagePath = files;
+    reader.readAsDataURL(files[0]);
+    reader.onload = (event) => {
+      this.imgURL = reader.result;
+    }
+  }
 
   onSubmit() {
     this.submitted = true;

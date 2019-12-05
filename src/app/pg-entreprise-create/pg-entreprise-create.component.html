@@ -174,12 +174,14 @@
           </div>
 
           <div class="form-row">
-            <div class="col-8">
-              <div class="md-form text-left">
-                <label for="logo" class="pointer"> Choisissez une image pour votre logo</label>
-                <input type="file" formControlName="logo" id="logo" class="form-control-file"/>
-                <input type="text" mdbInput formControlName="file" id="file" class="form-control" [value]="f.logo.value" />
+            <div class="col">
+              <div class="text-left">
+                <input type="file" #logo formControlName="logo" id="logo" accept="image/*" (change)="previewLogo(logo.files)" />
+                <label for="logo"> Image pour votre logo</label>
               </div>
+            </div>
+            <div class="col">
+              <img [src]="imgURL" heiht="200" *ngIf="imgURL"/>
             </div>
           </div>
 
@@ -191,7 +193,7 @@
               (click)="resetForm()">
               Annuler
             </button>
-            <button mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect type="submit">
+            <button mdbBtn pgRoundedBtn class="mr-2" color="primary" outline="true" mdbWavesEffect type="submit">
               Créer
             </button>
             <img *ngIf="loading" class="pl-2"
