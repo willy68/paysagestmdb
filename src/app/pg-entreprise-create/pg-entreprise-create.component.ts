@@ -70,7 +70,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
 
     let mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
-      this.errorMessage = "Seul les fichiers image sont supporter";
+      this.errorMessage = "Seul les fichiers image sont supportés";
       return;
     }
 
