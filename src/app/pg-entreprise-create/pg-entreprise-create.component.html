@@ -178,12 +178,12 @@
               <div>
                 <input type="file" #logo formControlName="logo" id="logo" accept="image/*"
                   (change)="previewLogo(logo.files)" />
-                <label for="logo"> Image pour votre logo</label>
+                <label for="logo" mdbWavesEffect > Image pour votre logo</label>
               </div>
             </div>
             <div class="col">
               <div class="h120">
-                <img class="image" [src]="imgURL" *ngIf="imgURL" />
+                <img class="image h120" [src]="imgURL" *ngIf="imgURL" />
               </div>
             </div>
           </div>

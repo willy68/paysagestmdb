@@ -45,8 +45,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
     portable: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]] ,
     regime_commercial: ['', [Validators.required]],
-    logo: ['', []],
-    rememberMe: [null, []]
+    logo: ['', []]
     });
   }
 
@@ -63,7 +62,6 @@ export class PgEntrepriseCreateComponent implements OnInit {
   get email() { return this.createForm.get('required'); }
   get regime_commercial() { return this.createForm.get('regime_commercial'); }
   get logo() { return this.createForm.get('logo'); }
-  get rememberMe() { return this.createForm.get('rememberMe'); }
 
   previewLogo(files: FileList) {
     if (files.length === 0) return;
