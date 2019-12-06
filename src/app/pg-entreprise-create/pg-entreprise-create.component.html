@@ -26,6 +26,16 @@
                 </mdb-success>
               </div>
               <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="nom" id="nom" class="form-control" />
+                <label for="nom">Nom:</label>
+                <mdb-error *ngIf="f.nom.invalid && (f.nom.dirty || f.nom.touched)">
+                  <span *ngIf="f.nom.errors.required">Nom is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.nom.valid && (f.nom.dirty || f.nom.touched)">
+                  Nom valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="adresse" id="adresse" class="form-control" />
                 <label for="adresse">Adresse:</label>
                 <mdb-error *ngIf="f.adresse.invalid && (f.adresse.dirty || f.adresse.touched)">
@@ -47,18 +57,6 @@
                   Adresse valid
                 </mdb-success>
               </div>
-            </div>
-            <div class="col">
-              <div class="md-form">
-                <input type="text" mdbInput mdbValidate formControlName="nom" id="nom" class="form-control" />
-                <label for="nom">Nom:</label>
-                <mdb-error *ngIf="f.nom.invalid && (f.nom.dirty || f.nom.touched)">
-                  <span *ngIf="f.nom.errors.required">Nom is required</span>
-                </mdb-error>
-                <mdb-success *ngIf="f.nom.valid && (f.nom.dirty || f.nom.touched)">
-                  Nom valid
-                </mdb-success>
-              </div>
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="cp" id="cp" class="form-control" />
                 <label for="cp">Code Postal:</label>
@@ -69,7 +67,6 @@
                   Code Postal valid
                 </mdb-success>
               </div>
-
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="ville" id="ville" class="form-control" />
                 <label for="ville">Ville:</label>
@@ -81,10 +78,7 @@
                 </mdb-success>
               </div>
             </div>
-          </div>
-          <!--Form-row-->
 
-          <div class="form-row">
             <div class="col">
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="ape" id="ape" class="form-control" />
@@ -96,9 +90,6 @@
                   APE valid
                 </mdb-success>
               </div>
-            </div>
-
-            <div class="col">
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="tva_intracom" id="tva_intracom"
                   class="form-control" />
@@ -110,11 +101,6 @@
                   Numero de TVA intracommunautaire valid
                 </mdb-success>
               </div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="col">
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="tel" id="tel" class="form-control" />
                 <label for="tel">Telephone:</label>
@@ -125,9 +111,6 @@
                   Telephone valid
                 </mdb-success>
               </div>
-            </div>
-
-            <div class="col">
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="portable" id="portable" class="form-control" />
                 <label for="portable">Portable:</label>
@@ -138,25 +121,17 @@
                   Portable valid
                 </mdb-success>
               </div>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="col">
               <div class="md-form">
                 <input type="email" mdbInput mdbValidate formControlName="email" id="email" class="form-control" />
                 <label for="email">Email:</label>
                 <mdb-error *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
                   <span *ngIf="f.email.errors.required">Email is required</span>
-                  <span *ngIf="f.siret.errors.email">This email address is not valid</span>
+                  <span *ngIf="f.email.errors.email">This email address is not valid</span>
                 </mdb-error>
                 <mdb-success *ngIf="f.email.valid && (f.email.dirty || f.email.touched)">
                   Email valid
                 </mdb-success>
               </div>
-            </div>
-
-            <div class="col">
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="regime_commercial" id="regime_commercial"
                   class="form-control" />
@@ -172,13 +147,14 @@
               </div>
             </div>
           </div>
+          <!--Form-row-->
 
           <div class="form-row">
             <div class="col">
               <div>
                 <input type="file" #logo formControlName="logo" id="logo" accept="image/*"
                   (change)="previewLogo(logo.files)" />
-                <label for="logo" mdbWavesEffect > Image pour votre logo</label>
+                <label for="logo" mdbWavesEffect> Image pour votre logo</label>
               </div>
             </div>
             <div class="col">
@@ -191,7 +167,7 @@
           <br *ngIf="!errorMessage.length">
           <div *ngIf="errorMessage.length" class="alert-danger">{{errorMessage}}</div>
 
-          <div class="md-form">
+          <div>
             <button pgRoundedBtn type="reset" mdbBtn color="secondary" outline="true" mdbWavesEffect
               (click)="resetForm()">
               Annuler

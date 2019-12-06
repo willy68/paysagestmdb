@@ -38,13 +38,13 @@ export class PgEntrepriseCreateComponent implements OnInit {
     ape: ['', [Validators.required]],
     tva_intracom: ['', [Validators.required]],
     adresse: ['', [Validators.required]],
-    suite_adresse: ['', [Validators.required]],
+    suite_adresse: ['', []],
     cp: ['', [Validators.required]],
     ville: ['', [Validators.required]],
-    tel: ['', [Validators.required]],
+    tel: ['', []],
     portable: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]] ,
-    regime_commercial: ['', [Validators.required]],
+    regime_commercial: ['', []],
     logo: ['', []]
     });
   }
@@ -59,7 +59,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
   get ville() { return this.createForm.get('ville'); }
   get tel() { return this.createForm.get('tel'); }
   get portable() { return this.createForm.get('portable'); }
-  get email() { return this.createForm.get('required'); }
+  get email() { return this.createForm.get('email'); }
   get regime_commercial() { return this.createForm.get('regime_commercial'); }
   get logo() { return this.createForm.get('logo'); }
 
