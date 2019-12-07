@@ -67,7 +67,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
 
     const mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
-      this.errorMessage = 'Seul les fichiers image sont supportés';
+      this.alertService.error('Seul les fichiers image sont supportés');
       return;
     }
 
@@ -78,7 +78,6 @@ export class PgEntrepriseCreateComponent implements OnInit {
       this.imgURL = reader.result;
     };
   }
-  this.errorMessage = error;
 
   onSubmit() {
     this.submitted = true;
@@ -119,7 +118,6 @@ export class PgEntrepriseCreateComponent implements OnInit {
 
   resetForm() {
     this.submitted = false;
-    this.errorMessage = '';
     this.imgURL = '';
     this.createForm.reset();
     Object.keys(this.createForm.controls).forEach(key => {
