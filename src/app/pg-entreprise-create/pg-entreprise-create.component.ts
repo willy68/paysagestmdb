@@ -14,7 +14,6 @@ export class PgEntrepriseCreateComponent implements OnInit {
   public createForm: FormGroup;
   public submitted = false;
   public loading = false;
-  public errorMessage = '';
 
   public imagePath: FileList;
   public imgURL: any;
@@ -79,6 +78,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
       this.imgURL = reader.result;
     };
   }
+  this.errorMessage = error;
 
   onSubmit() {
     this.submitted = true;
@@ -113,7 +113,6 @@ export class PgEntrepriseCreateComponent implements OnInit {
         },
         error => {
             this.alertService.error(error);
-            this.errorMessage = error;
         });
         this.loading = false;
   }

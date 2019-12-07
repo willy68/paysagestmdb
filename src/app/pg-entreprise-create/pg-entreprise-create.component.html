@@ -164,9 +164,6 @@
             </div>
           </div>
 
-          <br *ngIf="!errorMessage.length">
-          <div *ngIf="errorMessage.length" class="alert-danger">{{errorMessage}}</div>
-
           <div>
             <button pgRoundedBtn type="reset" mdbBtn color="secondary" outline="true" mdbWavesEffect
               (click)="resetForm()">
