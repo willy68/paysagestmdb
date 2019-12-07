@@ -15,7 +15,9 @@ export class PgEntrepriseCreateComponent implements OnInit {
   public submitted = false;
   public loading = false;
   public errorMessage = '';
-  // public faSignInAlt = faSignInAlt;
+
+  public imagePath: FileList;
+  public imgURL: any;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -36,16 +38,14 @@ export class PgEntrepriseCreateComponent implements OnInit {
     ape: ['', [Validators.required]],
     tva_intracom: ['', [Validators.required]],
     adresse: ['', [Validators.required]],
-    suite_adresse: ['', [Validators.required]],
+    suite_adresse: ['', []],
     cp: ['', [Validators.required]],
     ville: ['', [Validators.required]],
-    tel: ['', [Validators.required]],
+    tel: ['', []],
     portable: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]] ,
-    regime_commercial: ['', [Validators.required]],
-    logo: ['', [Validators.required]],
-    file: [null,[]],
-    rememberMe: [null, []]
+    regime_commercial: ['', []],
+    logo: ['', []]
     });
   }
 
@@ -59,11 +59,26 @@ export class PgEntrepriseCreateComponent implements OnInit {
   get ville() { return this.createForm.get('ville'); }
   get tel() { return this.createForm.get('tel'); }
   get portable() { return this.createForm.get('portable'); }
-  get email() { return this.createForm.get('required'); }
+  get email() { return this.createForm.get('email'); }
   get regime_commercial() { return this.createForm.get('regime_commercial'); }
   get logo() { return this.createForm.get('logo'); }
-  get file() { return this.createForm.get('file'); }
-  get rememberMe() { return this.createForm.get('rememberMe'); }
+
+  previewLogo(files: FileList) {
+    if (files.length === 0) return;
+
+    let mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      this.errorMessage = "Seul les fichiers image sont supportés";
+      return;
+    }
+
+    let reader = new FileReader();
+    this.imagePath = files;
+    reader.readAsDataURL(files[0]);
+    reader.onload = (event) => {
+      this.imgURL = reader.result;
+    }
+  }
 
   onSubmit() {
     this.submitted = true;
@@ -87,7 +102,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
       portable: this.f.portable.value,
       email: this.f.email.value,
       regime_commercial: this.f.regime_commercial.value,
-      logo: this.f.logo.value} )
+      logo: this.imgURL ? this.imgURL : '' } )
     .pipe(first())
     .subscribe(
         data => {
@@ -106,6 +121,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
   resetForm() {
     this.submitted = false;
     this.errorMessage = '';
+    this.imgURL = '';
     this.createForm.reset();
     Object.keys(this.createForm.controls).forEach(key => {
       this.createForm.controls[key].setErrors(null);

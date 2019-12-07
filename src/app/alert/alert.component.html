@@ -1,3 +1,4 @@
-<ngb-alert *ngIf="message" [type]="(message.type === 'success') ? 'success' : 'danger'" (close)="message = null">
+<alert *ngIf="message" [type]="(message.type === 'success') ? 'success' : 'danger'" 
+[dismissible]="dismiss()" (onClosed)="message = null">
 	{{message.text}}
-</ngb-alert>
+</alert>

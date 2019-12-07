@@ -14,13 +14,14 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { HomeComponent } from './home';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { PgMenuComponent } from './pg-menu/pg-menu.component';
 // import { PgLoginFormComponent } from './pg-login-form/pg-login-form.component';
 // import { RegisterModalFormComponent } from './register-modal-form/register-modal-form.component';
 import { PgEntrepriseCreateComponent } from './pg-entreprise-create/pg-entreprise-create.component';
 import { PgRegisterComponent } from './pg-register/pg-register.component';
 import { PgLoginComponent } from './pg-login/pg-login.component';
-// import { AlertComponent } from './alert/alert.component';
+import { AlertComponent } from './alert/alert.component';
 import { ClientsListComponent } from './clients-list/clients-list.component';
 import { HighlightTableRowDirective } from './directives';
 import { RoundedBtnDirective } from './directives/rounded-btn.directive';
@@ -28,6 +29,7 @@ import { RoundedBtnDirective } from './directives/rounded-btn.directive';
 @NgModule({
   declarations: [
     AppComponent,
+    AlertComponent,
     PgMenuComponent,
     HomeComponent,
     PgEntrepriseCreateComponent,
@@ -45,7 +47,8 @@ import { RoundedBtnDirective } from './directives/rounded-btn.directive';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    AccordionModule.forRoot()
+    AccordionModule.forRoot(),
+    AlertModule.forRoot()
   ],
   providers: [
     JwtHelperService,
