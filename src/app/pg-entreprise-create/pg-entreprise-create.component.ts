@@ -64,20 +64,20 @@ export class PgEntrepriseCreateComponent implements OnInit {
   get logo() { return this.createForm.get('logo'); }
 
   previewLogo(files: FileList) {
-    if (files.length === 0) return;
+    if (files.length === 0) { return; }
 
-    let mimeType = files[0].type;
+    const mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
-      this.errorMessage = "Seul les fichiers image sont supportés";
+      this.errorMessage = 'Seul les fichiers image sont supportés';
       return;
     }
 
-    let reader = new FileReader();
+    const reader = new FileReader();
     this.imagePath = files;
     reader.readAsDataURL(files[0]);
     reader.onload = (event) => {
       this.imgURL = reader.result;
-    }
+    };
   }
 
   onSubmit() {
