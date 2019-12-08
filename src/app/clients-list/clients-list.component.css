@@ -23,7 +23,7 @@
 .fixed-header{
   display: block;
   overflow-y: auto;
-  height: 150px;
+  height: 15em;
 }
 
 .fixed-header th {

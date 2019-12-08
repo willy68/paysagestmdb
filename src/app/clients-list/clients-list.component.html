@@ -1,30 +1,34 @@
 <div class="row">
-	<div class="col-sm-11">
-		<mdb-card>
-			<mdb-card-header class="primary-color white-text text-center py-4">
-				<h3>
-					Liste des clients
-					<span class="float-right"><mdb-icon fas icon="user-alt"></mdb-icon></span>
-				</h3>
-			</mdb-card-header>
-			<mdb-card-body>
-				<table class="table table-hover fixed-header" pgHighlightTableRow *ngIf="!emptyList">
-					<thead>
-						<tr>
-							<th>Game Name</th>
-							<th>Platform</th>
-							<th>Release Date</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let game of games; let i = index">
-							<td>{{game.game}}</td>
-							<td>{{game.platform}}</td>
-							<td>{{game.release}}</td>
-						</tr>
-					</tbody>
-				</table>
-				</mdb-card-body>
-		</mdb-card>
-	</div>
+  <div class="col-sm-11">
+    <mdb-card>
+      <mdb-card-header class="primary-color white-text text-center py-4">
+        <h3>
+          Liste des clients
+          <span class="float-right">
+            <mdb-icon fas icon="user-alt"></mdb-icon>
+          </span>
+        </h3>
+      </mdb-card-header>
+      <mdb-card-body>
+        <div class="fixed-header">
+          <table class="table table-hover" pgHighlightTableRow *ngIf="!emptyList">
+            <thead>
+              <tr>
+                <th>Game Name</th>
+                <th>Platform</th>
+                <th>Release Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let game of games; let i = index">
+                <td>{{game.game}}</td>
+                <td>{{game.platform}}</td>
+                <td>{{game.release}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
 </div>
