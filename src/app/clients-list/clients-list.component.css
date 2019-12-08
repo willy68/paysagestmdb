@@ -2,3 +2,37 @@
   background-color:#4285f4 !important;
   color: white;
 }
+/*
+.fixed-header tbody{
+  display:block;
+  overflow:auto;
+  height:100px;
+  width:100%;
+}
+
+.fixed-header tr{
+  display:table;
+  width: calc(100% - 1em);
+  table-layout: fixed;
+}
+
+.fixed-header thead {
+  width: calc(100% - 1em);
+}*/
+
+.fixed-header{
+  display: block;
+  overflow-y: auto;
+  height: 150px;
+}
+
+.fixed-header th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: whitesmoke;
+}
+/*
+.fixed-header tr {
+  width: 100%;
+}*/
