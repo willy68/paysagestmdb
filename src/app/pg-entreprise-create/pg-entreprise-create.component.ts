@@ -14,10 +14,6 @@ export class PgEntrepriseCreateComponent implements OnInit {
   public createForm: FormGroup;
   public submitted = false;
   public loading = false;
-<<<<<<< HEAD
-  public errorMessage = '';
-=======
->>>>>>> 66a834b69def50ab08f47ef8f23bf5f8329690b3
 
   public imagePath: FileList;
   public imgURL: any;
@@ -67,36 +63,20 @@ export class PgEntrepriseCreateComponent implements OnInit {
   get logo() { return this.createForm.get('logo'); }
 
   previewLogo(files: FileList) {
-<<<<<<< HEAD
     if (files.length === 0) return;
 
     let mimeType = files[0].type;
     if (mimeType.match(/image\/*/) == null) {
-      this.errorMessage = "Seul les fichiers image sont supportés";
+      this.alertService.error("Seul les fichiers image sont supportés");
       return;
     }
 
     let reader = new FileReader();
-=======
-    if (files.length === 0) { return; }
-
-    const mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.alertService.error('Seul les fichiers image sont supportés');
-      return;
-    }
-
-    const reader = new FileReader();
->>>>>>> 66a834b69def50ab08f47ef8f23bf5f8329690b3
     this.imagePath = files;
     reader.readAsDataURL(files[0]);
     reader.onload = (event) => {
       this.imgURL = reader.result;
-<<<<<<< HEAD
     }
-=======
-    };
->>>>>>> 66a834b69def50ab08f47ef8f23bf5f8329690b3
   }
 
   onSubmit() {
@@ -138,10 +118,6 @@ export class PgEntrepriseCreateComponent implements OnInit {
 
   resetForm() {
     this.submitted = false;
-<<<<<<< HEAD
-    this.errorMessage = '';
-=======
->>>>>>> 66a834b69def50ab08f47ef8f23bf5f8329690b3
     this.imgURL = '';
     this.createForm.reset();
     Object.keys(this.createForm.controls).forEach(key => {

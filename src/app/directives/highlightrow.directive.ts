@@ -33,6 +33,7 @@ export class HighlightTableRowDirective implements OnInit {
           this.selectedRow ++;
           this.disableClass(index);
           this.setClickedRow(this.selectedRow);
+          this.doScroll(this.selectedRow);
         }
         if (event.code === 'ArrowUp') {
           if (this.selectedRow === 0 || this.selectedRow === -1) {
@@ -41,6 +42,7 @@ export class HighlightTableRowDirective implements OnInit {
           this.selectedRow --;
           this.disableClass(index);
           this.setClickedRow(this.selectedRow);
+          this.doScroll(this.selectedRow);
         }
     }
 
@@ -58,6 +60,7 @@ export class HighlightTableRowDirective implements OnInit {
     }
     this.selectedRow = tr.rowIndex - this.startIndex;
     this.setClickedRow(this.selectedRow);
+    this.doScroll(this.selectedRow);
 }
 
   private setClickedRow(index: number) {
@@ -71,20 +74,33 @@ export class HighlightTableRowDirective implements OnInit {
       this.renderer.removeClass(this.trCollection[index], 'active');
     }
   }
-  /*
-   private doScroll() {
-        let index = this.table.selection ? this.table.value.findIndex(item => item.id == this.table.selection.id) : 0;
-        let scrollBodyEl = this.table.el.nativeElement.getElementsByClassName('ui-table-scrollable-body')[0];
-        let tbodyEl = scrollBodyEl.getElementsByClassName('ui-table-tbody')[0];
-        if (!tbodyEl.children.length)
-            return;
-        let rowEl = tbodyEl.children[index];
-        if (rowEl.offsetTop < scrollBodyEl.scrollTop)
-            scrollBodyEl.scrollTop = rowEl.offsetTop;
-        else if ((rowEl.offsetTop + rowEl.offsetHeight) > (scrollBodyEl.scrollTop + scrollBodyEl.offsetHeight - 17)) {
-            scrollBodyEl.scrollTop += rowEl.offsetTop + rowEl.offsetHeight - scrollBodyEl.scrollTop - scrollBodyEl.offsetHeight + 17;
-        }
-    }*/
+  
+  private doScroll(index: number) {
+    if (index > -1 && index < this.trCollection.length) {
+      
+      let scrollBodyEl: any;
+      let theadHeight = 0;
+      let theadFixed = this.el.nativeElement.getElementsByTagName('thead')[0];
+      if (theadFixed) {
+        theadHeight = theadFixed.offsetHeight;
+      }
+      let scrollBody = document.getElementsByClassName('fixed-header');
+      if (!scrollBody.length)
+        return;
+      scrollBodyEl = scrollBody[0];
+      let rowEl = this.trCollection[index];
+      /*if (index === 0) {
+        scrollBodyEl.scrollTop = 0;
+      }*/
+      if (rowEl.offsetTop < scrollBodyEl.scrollTop + theadHeight)
+          scrollBodyEl.scrollTop = rowEl.offsetTop - theadHeight;
+      else if ((rowEl.offsetTop + rowEl.offsetHeight) > 
+              (scrollBodyEl.scrollTop + scrollBodyEl.offsetHeight)) {
+          scrollBodyEl.scrollTop += rowEl.offsetTop + 
+          rowEl.offsetHeight - scrollBodyEl.scrollTop - scrollBodyEl.offsetHeight;
+      }
+    }
+  }
 
   ngOnInit() {
     const tbody = this.el.nativeElement.getElementsByTagName('tbody');
