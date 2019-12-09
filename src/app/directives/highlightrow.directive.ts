@@ -1,6 +1,6 @@
 import { Directive, ElementRef, HostListener, Renderer2, OnInit } from '@angular/core';
 
-/*
+/**
 * Table directive selection de lignes
 * Tbody obligatoire
 * Css :
