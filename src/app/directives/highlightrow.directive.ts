@@ -92,12 +92,15 @@ export class HighlightTableRowDirective implements OnInit {
       /*if (index === 0) {
         scrollBodyEl.scrollTop = 0;
       }*/
-      if (rowEl.offsetTop < scrollBodyEl.scrollTop + theadHeight)
+      if (rowEl.offsetTop < scrollBodyEl.scrollTop + theadHeight) {
           scrollBodyEl.scrollTop = rowEl.offsetTop - theadHeight;
+          return;
+      }
       else if ((rowEl.offsetTop + rowEl.offsetHeight) > 
               (scrollBodyEl.scrollTop + scrollBodyEl.offsetHeight)) {
           scrollBodyEl.scrollTop += rowEl.offsetTop + 
           rowEl.offsetHeight - scrollBodyEl.scrollTop - scrollBodyEl.offsetHeight;
+          return;
       }
     }
   }
