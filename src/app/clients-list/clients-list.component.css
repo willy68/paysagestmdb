@@ -7,11 +7,15 @@
   display: block;
   overflow-y: auto;
   height: 25em;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
 }
 
 .fixed-header th {
   position: sticky;
   top: 0;
-  z-index: 2;
+  /*z-index: 2;*/
   background: whitesmoke;
+  border-top: none;
+  border-bottom: none;
+  box-shadow: 0px 1px 0 #dee2e6;
 }
