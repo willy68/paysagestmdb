@@ -17,6 +17,10 @@ import { Directive, ElementRef, HostListener, Renderer2, OnInit } from '@angular
 export class HighlightTableRowDirective implements OnInit {
 
   private trCollection: any;
+  private tbody: any;
+  private thead: any;
+  private scrollTop = 0;
+  private cancelScroll = false;
   private startIndex = 0;
   private selectedRow: number;
 
@@ -24,7 +28,12 @@ export class HighlightTableRowDirective implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
-        if (this.trCollection.length === 0) { return; }
+        if (!this.trCollection || this.trCollection.length === 0) { 
+          this.trCollection = this.tbody[0].getElementsByTagName('tr');
+          if (this.trCollection.length === 0) {
+           return;
+          }
+        }
         const index: number = this.selectedRow;
         if (event.code === 'ArrowDown') {
           if (this.selectedRow === this.trCollection.length - 1) {
@@ -48,11 +57,17 @@ export class HighlightTableRowDirective implements OnInit {
 
   @HostListener('click', ['$event']) onMouseClick(event: MouseEvent) {
     const index: number = this.selectedRow;
-    if (this.trCollection.length > 0) {
-      if (this.trCollection[0].rowIndex > 0) {
-        this.startIndex = this.trCollection[0].rowIndex;
+    if (!this.trCollection || this.trCollection.length === 0) { 
+      this.trCollection = this.tbody[0].getElementsByTagName('tr');
+      if (this.trCollection.length === 0) {
+       return;
       }
     }
+
+    if (this.trCollection[0].rowIndex > 0) {
+      this.startIndex = this.trCollection[0].rowIndex;
+    }
+
     this.disableClass(index);
     let tr: any = event.target;
     while (tr.tagName !== 'TR') {
@@ -74,44 +89,51 @@ export class HighlightTableRowDirective implements OnInit {
       this.renderer.removeClass(this.trCollection[index], 'active');
     }
   }
+
+  @HostListener('scroll', ['$event']) onScroll(event: any) {
+
+    if (this.cancelScroll && this.scrollTop !== event.target.scrollTop) {
+      event.target.scrollTop = this.scrollTop;
+      this.cancelScroll = false;
+    }
+  }
   
   private doScroll(index: number) {
-    if (index > -1 && index < this.trCollection.length) {
-      
-      let scrollBodyEl: any;
-      let theadHeight = 0;
-      let theadFixed = this.el.nativeElement.getElementsByTagName('thead')[0];
-      if (theadFixed) {
-        theadHeight = theadFixed.offsetHeight;
-      }
-      let scrollBody = document.getElementsByClassName('fixed-header');
-      if (!scrollBody.length)
+    let scrollBody = document.getElementsByClassName('fixed-header');
+    if (!scrollBody.length)
+      return;
+
+    let scrollBodyEl: any;
+    let theadHeight = 0;
+    let theadFixed = this.thead[0];
+    if (theadFixed) {
+      theadHeight = theadFixed.offsetHeight;
+    }
+
+    scrollBodyEl = scrollBody[0];
+    let rowEl = this.trCollection[index];
+    if (rowEl.offsetTop < scrollBodyEl.scrollTop + theadHeight) {
+        this.scrollTop = scrollBodyEl.scrollTop = rowEl.offsetTop - theadHeight;
+        this.cancelScroll = true;
         return;
-      scrollBodyEl = scrollBody[0];
-      let rowEl = this.trCollection[index];
-      /*if (index === 0) {
-        scrollBodyEl.scrollTop = 0;
-      }*/
-      if (rowEl.offsetTop < scrollBodyEl.scrollTop + theadHeight) {
-          scrollBodyEl.scrollTop = rowEl.offsetTop - theadHeight;
-          return;
-      }
-      else if ((rowEl.offsetTop + rowEl.offsetHeight) > 
-              (scrollBodyEl.scrollTop + scrollBodyEl.offsetHeight)) {
-          scrollBodyEl.scrollTop += rowEl.offsetTop + 
-          rowEl.offsetHeight - scrollBodyEl.scrollTop - scrollBodyEl.offsetHeight;
-          return;
-      }
+    }
+    else if ((rowEl.offsetTop + rowEl.offsetHeight) > 
+            (scrollBodyEl.scrollTop + scrollBodyEl.offsetHeight)) {
+              this.scrollTop = (scrollBodyEl.scrollTop += rowEl.offsetTop + 
+        rowEl.offsetHeight - scrollBodyEl.scrollTop - scrollBodyEl.offsetHeight);
+        this.cancelScroll = true;
+        return;
     }
   }
 
   ngOnInit() {
-    const tbody = this.el.nativeElement.getElementsByTagName('tbody');
-    if (tbody.length > 0) {
-      this.trCollection = tbody[0].getElementsByTagName('tr');
-    } else {
+    this.tbody = this.el.nativeElement.getElementsByTagName('tbody');
+    this.thead = this.el.nativeElement.getElementsByTagName('thead');
+     if (this.tbody.length > 0) {
+      this.trCollection = this.tbody[0].getElementsByTagName('tr');
+    } /*else {
       this.trCollection = this.el.nativeElement.getElementsByTagName('tr');
-    }
+    }*/
     this.selectedRow = -1;
   }
 }
