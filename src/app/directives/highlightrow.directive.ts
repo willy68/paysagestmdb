@@ -1,4 +1,5 @@
-import { Directive, ElementRef, HostListener, Renderer2, OnInit } from '@angular/core';
+import { Directive, ElementRef, HostListener, 
+  EventEmitter, Output, Renderer2, OnInit } from '@angular/core';
 
 /**
 * Table directive selection de lignes
@@ -8,6 +9,8 @@ import { Directive, ElementRef, HostListener, Renderer2, OnInit } from '@angular
 *  background-color:#123456 !important;
 *  color: white;
 * }
+*
+* Event: SelectItem
 *
 * Todo: Add pageup pagedown handler
 */
@@ -25,6 +28,8 @@ export class HighlightTableRowDirective implements OnInit {
   private selectedRow: number;
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
+
+  @Output() selectItem = new EventEmitter<number>();
 
   @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
@@ -44,7 +49,7 @@ export class HighlightTableRowDirective implements OnInit {
           this.setClickedRow(this.selectedRow);
           this.doScroll(this.selectedRow);
         }
-        if (event.code === 'ArrowUp') {
+        else if (event.code === 'ArrowUp') {
           if (this.selectedRow === 0 || this.selectedRow === -1) {
             this.selectedRow = this.trCollection.length;
           }
@@ -52,6 +57,11 @@ export class HighlightTableRowDirective implements OnInit {
           this.disableClass(index);
           this.setClickedRow(this.selectedRow);
           this.doScroll(this.selectedRow);
+        }
+        else if (event.code === 'Enter') {
+          if (this.selectedRow !== -1) {
+            this.selectItem.emit(this.selectedRow);
+          }
         }
     }
 
@@ -115,18 +125,42 @@ export class HighlightTableRowDirective implements OnInit {
     if (rowEl.offsetTop < scrollBodyEl.scrollTop + theadHeight) {
         this.scrollTop = scrollBodyEl.scrollTop = rowEl.offsetTop - theadHeight;
         this.cancelScroll = true;
-        return;
     }
     else if ((rowEl.offsetTop + rowEl.offsetHeight) > 
             (scrollBodyEl.scrollTop + scrollBodyEl.offsetHeight)) {
               this.scrollTop = (scrollBodyEl.scrollTop += rowEl.offsetTop + 
         rowEl.offsetHeight - scrollBodyEl.scrollTop - scrollBodyEl.offsetHeight);
         this.cancelScroll = true;
-        return;
     }
   }
 
-  ngOnInit() {
+  @HostListener('dblclick', ['$event']) onMouseDblClick(event: MouseEvent) {
+    const index: number = this.selectedRow;
+    if (!this.trCollection || this.trCollection.length === 0) { 
+      this.trCollection = this.tbody[0].getElementsByTagName('tr');
+      if (this.trCollection.length === 0) {
+       return;
+      }
+    }
+
+    if (this.trCollection[0].rowIndex > 0) {
+      this.startIndex = this.trCollection[0].rowIndex;
+    }
+
+    this.disableClass(index);
+    let tr: any = event.target;
+    while (tr.tagName !== 'TR') {
+      tr = tr.parentElement;
+    }
+    this.selectedRow = tr.rowIndex - this.startIndex;
+    this.setClickedRow(this.selectedRow);
+    this.doScroll(this.selectedRow);
+    if (this.selectedRow !== -1) {
+      this.selectItem.emit(this.selectedRow);
+    }
+  }
+
+    ngOnInit() {
     this.tbody = this.el.nativeElement.getElementsByTagName('tbody');
     this.thead = this.el.nativeElement.getElementsByTagName('thead');
      if (this.tbody.length > 0) {
