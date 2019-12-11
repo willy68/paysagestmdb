@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+.table tr.active td {
+  background-color:#4285f4 !important;
+  color: white;
+}
+
+.fixed-header{
+  display: block;
+  overflow-y: auto;
+  height: 25em;
+}
+
+.fixed-header th {
+  position: sticky;
+  top: 0;
+  background: whitesmoke;
+  border-top: none;
+  border-bottom: none;
+  box-shadow: 0px 1px 0 #dee2e6;
+}

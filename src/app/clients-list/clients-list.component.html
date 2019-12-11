@@ -10,7 +10,8 @@
         </h3>
       </mdb-card-header>
       <mdb-card-body>
-        <div class="fixed-header" pgHighlightTableRow (selectItem)="onSelect($event)">
+        <div class="fixed-header z-depth-1" 
+        pgHighlightTableRow (selectItem)="onSelect($event)" (selectChange)="onSelect($event)">
           <table class="table table-hover" *ngIf="!emptyList">
             <thead>
               <tr>
@@ -28,6 +29,7 @@
             </tbody>
           </table>
         </div>
+        <span>Index de selection: {{selectedItem}}</span>
       </mdb-card-body>
     </mdb-card>
   </div>

@@ -31,6 +31,8 @@ export class HighlightTableRowDirective implements OnInit {
 
   @Output() selectItem = new EventEmitter<number>();
 
+  @Output() selectChange = new EventEmitter<number>();
+
   @HostListener('document:keydown', ['$event'])
     handleKeyboardEvent(event: KeyboardEvent) {
         if (!this.trCollection || this.trCollection.length === 0) { 
@@ -48,6 +50,7 @@ export class HighlightTableRowDirective implements OnInit {
           this.disableClass(index);
           this.setClickedRow(this.selectedRow);
           this.doScroll(this.selectedRow);
+          this.selectChange.emit(this.selectedRow);
         }
         else if (event.code === 'ArrowUp') {
           if (this.selectedRow === 0 || this.selectedRow === -1) {
@@ -57,6 +60,7 @@ export class HighlightTableRowDirective implements OnInit {
           this.disableClass(index);
           this.setClickedRow(this.selectedRow);
           this.doScroll(this.selectedRow);
+          this.selectChange.emit(this.selectedRow);
         }
         else if (event.code === 'Enter') {
           if (this.selectedRow !== -1) {
@@ -86,6 +90,7 @@ export class HighlightTableRowDirective implements OnInit {
     this.selectedRow = tr.rowIndex - this.startIndex;
     this.setClickedRow(this.selectedRow);
     this.doScroll(this.selectedRow);
+    this.selectChange.emit(this.selectedRow);
 }
 
   private setClickedRow(index: number) {
