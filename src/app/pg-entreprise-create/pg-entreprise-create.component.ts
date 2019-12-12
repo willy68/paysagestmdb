@@ -3,7 +3,8 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'; // Reactive form services
 import { first } from 'rxjs/operators';
 
-import { EntrepriseService, Entreprise, AlertService } from '../services';
+import { EntrepriseService, AlertService } from '../services';
+import { Entreprise } from '../models';
 
 @Component({
   selector: 'pg-entreprise-create',

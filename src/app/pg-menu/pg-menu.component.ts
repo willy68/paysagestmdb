@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-// import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { AuthenticationService } from '../services';
-import { User } from '../services';
+import { User } from '../models';
 
 @Component({
   selector: 'pg-menu',
@@ -12,7 +11,6 @@ import { User } from '../services';
 export class PgMenuComponent implements OnInit {
 
   currentUser: User;
-  // faSignOutAlt = faSignOutAlt;
   isCollapsed = true;
 
   constructor(private authenticationService: AuthenticationService) {
