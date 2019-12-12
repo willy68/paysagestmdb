@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-// import { User } from '../users';
+import { Role } from './root.service';
 import { apigest } from '../url';
-
-export enum Role {
-    Root = "Root",
-    User = 'User',
-    Admin = 'Admin'
-}
 
 export interface User {
     id?: number;
@@ -17,6 +11,8 @@ export interface User {
     username?: string;
     password?: string;
     role?: Role;
+    created_at?: string;
+    updated_at?: string;
     token?: string;
 }
 

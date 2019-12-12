@@ -18,6 +18,8 @@ export interface Entreprise {
   email?: string;
   regime_commercial?: string;
   logo?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
 @Injectable({
