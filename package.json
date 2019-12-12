@@ -31,8 +31,6 @@
     "ngx-bootstrap": "^5.2.0",
     "popper.js": "^1.16.0",
     "rxjs": "~6.5.3",
-    "terser-webpack-plugin": "^1.4.2",
-    "serialize-javascript": "^2.1.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"
   },
@@ -56,6 +54,7 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "terser-webpack-plugin": "^1.4.2",
+    "serialize-javascript": "^2.1.2",
     "typescript": "~3.5.3"
   }
 }
