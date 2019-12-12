@@ -10,7 +10,7 @@ import { AlertService } from '../services';
 // import custom validator to validate that password and confirm password fields match
 import { mustMatch } from '../helpers/must-match.validator';
 
-import { User } from '../users';
+import { User } from '../models';
 
 @Component({
   selector: 'pg-register',

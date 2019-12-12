@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService, User, Role } from './services';
-// import { User, Role } from './users';
+import { AuthenticationService } from './services';
+import { User, Role } from './models';
 
 @Component({
   selector: 'pg-root',
@@ -14,19 +14,23 @@ export class AppComponent {
   currentUser: User;
 
   constructor(
-      private router: Router,
-      private authenticationService: AuthenticationService
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) {
-      this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   get isAdmin() {
-      return this.currentUser && this.currentUser.role === Role.Admin;
+    return this.currentUser && this.currentUser.role === Role.Admin;
+  }
+
+  get isRoot() {
+    return this.currentUser && this.currentUser.role === Role.Root;
   }
 
   logout() {
-      this.authenticationService.logout();
-      // this.router.navigate(['/']);
+    this.authenticationService.logout();
+    // this.router.navigate(['/']);
   }
 
 }

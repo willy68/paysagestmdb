@@ -1,20 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Role } from './root.service';
 import { apigest } from '../url';
-
-export interface User {
-    id?: number;
-    entreprise_id?: number;
-    email?: string;
-    username?: string;
-    password?: string;
-    role?: Role;
-    created_at?: string;
-    updated_at?: string;
-    token?: string;
-}
+import { User } from '../models';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
