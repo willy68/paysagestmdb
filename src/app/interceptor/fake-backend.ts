@@ -11,9 +11,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         const users: User[] = [
             { id: 1, email: 'william.lety@gmail.com',
             username: 'admin', password: 'admin',
-            role: Role.Admin, entreprise_id: 1 },
+            role: Role.Admin },
             { id: 2, email: 'w.l@g', username: 'user',
-            password: 'user', role: Role.User, entreprise_id: 1 }
+            password: 'user', role: Role.User }
         ];
 
         const authHeader = request.headers.get('Authorization');
