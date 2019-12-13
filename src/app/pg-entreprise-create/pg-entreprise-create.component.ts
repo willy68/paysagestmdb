@@ -5,6 +5,8 @@ import { first } from 'rxjs/operators';
 
 import { EntrepriseService, AlertService } from '../services';
 import { Entreprise } from '../models';
+import { AuthenticationService } from '../services';
+import { User, Role } from '../models';
 
 @Component({
   selector: 'pg-entreprise-create',
@@ -12,6 +14,7 @@ import { Entreprise } from '../models';
   styleUrls: ['./pg-entreprise-create.component.scss']
 })
 export class PgEntrepriseCreateComponent implements OnInit {
+  currentUser: User;
   public createForm: FormGroup;
   public submitted = false;
   public loading = false;
@@ -22,7 +25,10 @@ export class PgEntrepriseCreateComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private router: Router,
     private entrepriseService: EntrepriseService,
-    private alertService: AlertService) { }
+    private authenticationService: AuthenticationService,
+    private alertService: AlertService) {
+      this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+     }
 
   ngOnInit() {
     this.createFormBuild();
@@ -89,7 +95,7 @@ export class PgEntrepriseCreateComponent implements OnInit {
     }
 
     this.loading = true;
-    this.entrepriseService.create({
+    this.entrepriseService.create(this.currentUser.id, {
       siret: this.f.siret.value,
       nom: this.f.nom.value,
       ape: this.f.ape.value,

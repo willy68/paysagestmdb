@@ -9,17 +9,17 @@
           <a class="nav-link" routerLink="/">Home</a>
         </li>
         <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle class="nav-link dropdown-toggle">
+          <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="user">
           Entreprises
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
             <a class="dropdown-item" routerLink="/">Ouvrir</a>
-            <a class="dropdown-item" routerLink="/new_entreprise">Nouvelle</a>
-            <a class="dropdown-item" routerLink="/">Edit</a>
+            <a *ngIf="user.role === 'Admin'" class="dropdown-item" routerLink="/new_entreprise">Nouvelle</a>
+            <a *ngIf="user.role === 'Admin'" class="dropdown-item" routerLink="/">Edit</a>
           </div>
         </li>
         <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle class="nav-link dropdown-toggle">
+          <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="user">
           Bases de données
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -30,7 +30,7 @@
           </div>
         </li>
         <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle class="nav-link dropdown-toggle">
+          <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="user">
             Quotidien
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -48,17 +48,17 @@
       <div class="float-md-right mx-auto">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" *ngIf="!currentUser" routerLink="/register">
+            <a class="nav-link" *ngIf="!user" routerLink="/register">
               <mdb-icon fas icon="user-plus"></mdb-icon> register
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" *ngIf="!currentUser" routerLink="/login">
+            <a class="nav-link" *ngIf="!user" routerLink="/login">
               <mdb-icon fas icon="user"></mdb-icon> login
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" *ngIf="currentUser" (click)="logout()">
+            <a class="nav-link" *ngIf="user" (click)="logout()">
                 <span><mdb-icon fas icon="sign-out-alt"></mdb-icon></span>
               Deconnexion
             </a>

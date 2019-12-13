@@ -12,23 +12,27 @@ export class EntrepriseService {
   constructor(private http: HttpClient) { }
 
   getAll(params?: '') {
-      return this.http.get<Entreprise[]>(apigest + '/entreprises' + params);
+    return this.http.get<Entreprise[]>(apigest + '/entreprises' + params);
   }
 
-  getById(id: number, params?: '') {
-      return this.http.get<Entreprise>(apigest + `/entreprise/${id}` + params);
+  getList(user_id: number, params?: '') {
+    return this.http.get<Entreprise[]>(apigest + `/user/${user_id}/entreprises` + params);
   }
 
-  create(entreprise: Entreprise) {
-      return this.http.post<Entreprise>(apigest + '/entreprise', entreprise);
+  getById(user_id: number, id: number, params?: '') {
+    return this.http.get<Entreprise>(apigest + `/user/${user_id}/entreprise/${id}` + params);
   }
 
-  update(entreprise: Entreprise) {
-      return this.http.put(apigest + `/entreprise/${entreprise.id}`, entreprise);
+  create(user_id: number, entreprise: Entreprise) {
+    return this.http.post<Entreprise>(apigest + `/user/${user_id}/entreprise`, entreprise);
   }
 
-  delete(id: number) {
-      return this.http.delete(apigest + `/entreprise/${id}`);
+  update(user_id: number, entreprise: Entreprise) {
+    return this.http.put(apigest + `/user/${user_id}/entreprise/${entreprise.id}`, entreprise);
+  }
+
+  delete(user_id: number, id: number) {
+    return this.http.delete(apigest + `user/${user_id}/entreprise/${id}`);
   }
 
 }

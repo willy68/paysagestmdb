@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { AuthenticationService } from '../services';
-import { User } from '../models';
+import { User, Role } from '../models';
 
 @Component({
   selector: 'pg-menu',
@@ -14,8 +14,16 @@ export class PgMenuComponent implements OnInit {
   isCollapsed = true;
 
   constructor(private authenticationService: AuthenticationService) {
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-   }
+  }
+
+   @Input()
+    set user(current: User) {
+      this.currentUser = current;
+    }
+
+    get user() {
+      return this.currentUser;
+    }
 
   ngOnInit() {
   }

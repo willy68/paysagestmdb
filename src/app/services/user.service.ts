@@ -14,18 +14,18 @@ export class UserService {
         return this.http.get<User[]>(apigest + '/users' + params);
     }
 
-    getList(entreprise_id: number, params: '') {
+    getList(params: '') {
         return this.http.get<User[]>(apigest + 
-            `/entreprise/${entreprise_id}/users${params}`);
+            `/users${params}`);
     }
 
     getById(id: number, params?: '') {
         return this.http.get<User>(apigest + `/user/${id}` + params);
     }
 
-    getUser(entreprise_id: number, id: number, params?: '') {
+    getUser(id: number, params?: '') {
         return this.http.get(apigest + 
-            `/entreprise/${entreprise_id}/user/${id}${params}`);
+            `/user/${id}${params}`);
     }
 
     register(user: User) {
@@ -34,7 +34,7 @@ export class UserService {
 
     create(user: User) {
         return this.http.post(apigest + 
-            `/entreprise/${user.entreprise_id}/user`, user);
+            `/user`, user);
     }
 
     update(user: User) {
