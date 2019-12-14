@@ -18,3 +18,49 @@
   border-bottom: none;
   box-shadow: 0px 1px 0 #dee2e6;
 }
+
+.md-form select {
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  border-bottom: 1px solid #ced4da;
+  border-radius: 0;
+  box-sizing: content-box;
+  background-color: transparent;
+}
+
+.md-form select:focus:not([readonlu]) {
+  border-bottom: 1px solid #4285f4 !important;
+  box-shadow: 0 1px 0 0 #4285f4 !important;
+}
+
+.md-form select:focus:not([readonlu]) + label{
+  color: #4285f4;
+}
+
+select.form-control.validate-error.ng-invalid.ng-touched, 
+select.form-control.validate-error.ng-invalid.ng-dirty, 
+.form-submitted select.form-control.validate-error.ng-invalid {
+  border-bottom: 1px solid #f44336 !important;
+  box-shadow: 0 1px 0 0 #f44336 !important;
+}
+
+select.form-control.validate-error.ng-invalid.ng-touched + label, 
+select.form-control.validate-error.ng-invalid.ng-dirty + label, 
+.form-submitted select.form-control.validate-error.ng-invalid  + label{
+  color: #f44336 !important;
+}
+
+select.form-control.validate-success.ng-valid.ng-dirty,
+select.form-control.validate-success.ng-valid.ng-touched,
+.form-submitted input.form-control.validate-success.ng-valid {
+  border-bottom: 1px solid #00c851 !important;
+  box-shadow: 0 1px 0 0 #00c851 !important;
+}
+
+select.form-control.validate-success.ng-valid.ng-dirty + label,
+select.form-control.validate-success.ng-valid.ng-touched + label,
+.form-submitted input.form-control.validate-success.ng-valid  + label{
+  color: #00c851 !important;
+}

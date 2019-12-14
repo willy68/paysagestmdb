@@ -14,7 +14,7 @@
           <!--  -->
           <div class="md-form">
             <input type="text" mdbInput mdbValidate formControlName="username" id="username" class="form-control" />
-            <label for="username">*User name:</label>
+            <label for="username">User name*</label>
             <mdb-error *ngIf="f.username.invalid && (f.username.dirty || f.username.touched)">
               <span *ngIf="f.username.errors.required">User name is required</span>
             </mdb-error>
@@ -25,7 +25,7 @@
 
           <div class="md-form">
             <input type="email" mdbInput mdbValidate formControlName="email" id="email" class="form-control" />
-            <label for="email">*E-mail:</label>
+            <label for="email">E-mail*</label>
             <mdb-error *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
               <span *ngIf="f.email.errors.required">Email is required</span>
               <span *ngIf="f.email.errors.email">This email address is not valid</span>
@@ -36,7 +36,7 @@
           </div>
 
           <div class="md-form">
-            <label for="password">*Password:</label>
+            <label for="password">Password*</label>
             <input type="password" formControlName="password" id="password" class="form-control" mdbValidate mdbInput />
             <mdb-error *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
               <span *ngIf="f.password.errors.required">Password is required</span>
@@ -49,7 +49,7 @@
 
           <div class="md-form">
             <input type="password" formControlName="confirmPassword" class="form-control" mdbValidate mdbInput />
-            <label for="confirmPassword">*Confirm Password:</label>
+            <label for="confirmPassword">Confirm Password*</label>
             <mdb-error *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
               <span *ngIf="f.confirmPassword.errors.required">Confirm Password is required</span>
               <span *ngIf="f.confirmPassword.errors.match">Password must match</span>
@@ -59,13 +59,13 @@
             </mdb-success>
           </div>
           <div class="md-form">
-            <label for="role">*Role:</label>
             <select formControlName="role" class="form-control" mdbInput mdbValidate>
-              <option *ngFor="let role of roles | keyvalue; let first = first" 
-               value="{{role.value}}" selected="{{first}}">
+              <option *ngFor="let role of roles | keyvalue; let isFirst = first" 
+               [ngValue]="role.value" selected="{{isFirst}}">
                {{role.value}}
               </option>
             </select>
+            <label for="role">Role*</label>
           </div>
           <br *ngIf="!errorMessage.length">
           <div *ngIf="errorMessage.length" class="alert-danger">{{errorMessage}}</div>

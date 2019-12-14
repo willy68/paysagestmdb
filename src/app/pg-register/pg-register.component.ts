@@ -37,7 +37,7 @@ export class PgRegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]] ,
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
-      role: [null, []]
+      role: [this.roles.User, []]
     }, {
       validator: mustMatch('password', 'confirmPassword')
     });
