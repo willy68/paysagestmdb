@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'; // Reactive form services
 import { first } from 'rxjs/operators';
-// import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 
 // import custom validator to validate that password and confirm password fields match
 import { mustMatch } from '../helpers/must-match.validator';
@@ -18,7 +17,6 @@ export class PgLoginComponent implements OnInit {
   public submitted = false;
   public loading = false;
   public errorMessage = '';
-  // public faSignInAlt = faSignInAlt;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -62,8 +60,7 @@ export class PgLoginComponent implements OnInit {
     .subscribe(
         data => {
             // this.router.navigate([this.returnUrl]);
-            this.alertService.success('SUCCESS!! : ' + data.username + ' '
-                                                    + data.email);
+            this.alertService.success('Bienvenue : ' + data.username);
            // alert('SUCCESS!! :-)\n\n' + JSON.stringify(data));
             this.router.navigate(['/home']);
         },
