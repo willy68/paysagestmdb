@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ResolveStart } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
-// import { faUserCog } from '@fortawesome/free-solid-svg-icons';
 
 import { UserService } from '../services';
 import { AlertService } from '../services';
+import { Role } from '../models';
 
 // import custom validator to validate that password and confirm password fields match
 import { mustMatch } from '../helpers/must-match.validator';
@@ -19,10 +19,10 @@ import { User } from '../models';
 })
 export class PgRegisterComponent implements OnInit {
   public registerForm: FormGroup;
+  public roles = Role;
   public submitted = false;
   public loading = false;
   public errorMessage = '';
-  // public faUserCog = faUserCog;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -37,7 +37,7 @@ export class PgRegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]] ,
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
-      rememberMe: [null, []]
+      role: [null, []]
     }, {
       validator: mustMatch('password', 'confirmPassword')
     });
@@ -49,7 +49,7 @@ export class PgRegisterComponent implements OnInit {
   get email() { return this.registerForm.get('required'); }
   get password() { return this.registerForm.get('password'); }
   get confirmPassword() { return this.registerForm.get('confirmPassword'); }
-  get rememberMe() { return this.registerForm.get('rememberMe'); }
+  get role() { return this.registerForm.get('role'); }
 
   onSubmit() {
     this.submitted = true;
