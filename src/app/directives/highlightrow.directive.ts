@@ -1,5 +1,7 @@
-import { Directive, ElementRef, HostListener, 
-  EventEmitter, Output, Renderer2, OnInit } from '@angular/core';
+import {
+  Directive, ElementRef, HostListener,
+  EventEmitter, Output, Renderer2, OnInit
+} from '@angular/core';
 
 /**
 * Table directive selection de lignes
@@ -34,47 +36,45 @@ export class HighlightTableRowDirective implements OnInit {
   @Output() selectChange = new EventEmitter<number>();
 
   @HostListener('document:keydown', ['$event'])
-    handleKeyboardEvent(event: KeyboardEvent) {
-        if (!this.trCollection || this.trCollection.length === 0) { 
-          this.trCollection = this.tbody[0].getElementsByTagName('tr');
-          if (this.trCollection.length === 0) {
-           return;
-          }
-        }
-        const index: number = this.selectedRow;
-        if (event.code === 'ArrowDown') {
-          if (this.selectedRow === this.trCollection.length - 1) {
-            this.selectedRow = -1;
-          }
-          this.selectedRow ++;
-          this.disableClass(index);
-          this.setClickedRow(this.selectedRow);
-          this.doScroll(this.selectedRow);
-          this.selectChange.emit(this.selectedRow);
-        }
-        else if (event.code === 'ArrowUp') {
-          if (this.selectedRow === 0 || this.selectedRow === -1) {
-            this.selectedRow = this.trCollection.length;
-          }
-          this.selectedRow --;
-          this.disableClass(index);
-          this.setClickedRow(this.selectedRow);
-          this.doScroll(this.selectedRow);
-          this.selectChange.emit(this.selectedRow);
-        }
-        else if (event.code === 'Enter') {
-          if (this.selectedRow !== -1) {
-            this.selectItem.emit(this.selectedRow);
-          }
-        }
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (!this.trCollection || this.trCollection.length === 0) {
+      this.trCollection = this.tbody[0].getElementsByTagName('tr');
+      if (this.trCollection.length === 0) {
+        return;
+      }
     }
+    const index: number = this.selectedRow;
+    if (event.code === 'ArrowDown') {
+      if (this.selectedRow === this.trCollection.length - 1) {
+        this.selectedRow = -1;
+      }
+      this.selectedRow++;
+      this.disableClass(index);
+      this.setClickedRow(this.selectedRow);
+      this.doScroll(this.selectedRow);
+      this.selectChange.emit(this.selectedRow);
+    } else if (event.code === 'ArrowUp') {
+      if (this.selectedRow === 0 || this.selectedRow === -1) {
+        this.selectedRow = this.trCollection.length;
+      }
+      this.selectedRow--;
+      this.disableClass(index);
+      this.setClickedRow(this.selectedRow);
+      this.doScroll(this.selectedRow);
+      this.selectChange.emit(this.selectedRow);
+    } else if (event.code === 'Enter') {
+      if (this.selectedRow !== -1) {
+        this.selectItem.emit(this.selectedRow);
+      }
+    }
+  }
 
   @HostListener('click', ['$event']) onMouseClick(event: MouseEvent) {
     const index: number = this.selectedRow;
-    if (!this.trCollection || this.trCollection.length === 0) { 
+    if (!this.trCollection || this.trCollection.length === 0) {
       this.trCollection = this.tbody[0].getElementsByTagName('tr');
       if (this.trCollection.length === 0) {
-       return;
+        return;
       }
     }
 
@@ -91,7 +91,7 @@ export class HighlightTableRowDirective implements OnInit {
     this.setClickedRow(this.selectedRow);
     this.doScroll(this.selectedRow);
     this.selectChange.emit(this.selectedRow);
-}
+  }
 
   private setClickedRow(index: number) {
     if (index > -1 && index < this.trCollection.length) {
@@ -112,39 +112,37 @@ export class HighlightTableRowDirective implements OnInit {
       this.cancelScroll = false;
     }
   }
-  
+
   private doScroll(index: number) {
-    let scrollBody = document.getElementsByClassName('fixed-header');
-    if (!scrollBody.length)
-      return;
+    const scrollBody = document.getElementsByClassName('fixed-header');
+    if (!scrollBody.length) { return; }
 
     let scrollBodyEl: any;
     let theadHeight = 0;
-    let theadFixed = this.thead[0];
+    const theadFixed = this.thead[0];
     if (theadFixed) {
       theadHeight = theadFixed.offsetHeight;
     }
 
     scrollBodyEl = scrollBody[0];
-    let rowEl = this.trCollection[index];
+    const rowEl = this.trCollection[index];
     if (rowEl.offsetTop < scrollBodyEl.scrollTop + theadHeight) {
-        this.scrollTop = scrollBodyEl.scrollTop = rowEl.offsetTop - theadHeight;
-        this.cancelScroll = true;
-    }
-    else if ((rowEl.offsetTop + rowEl.offsetHeight) > 
-            (scrollBodyEl.scrollTop + scrollBodyEl.offsetHeight)) {
-              this.scrollTop = (scrollBodyEl.scrollTop += rowEl.offsetTop + 
+      this.scrollTop = scrollBodyEl.scrollTop = rowEl.offsetTop - theadHeight;
+      this.cancelScroll = true;
+    } else if ((rowEl.offsetTop + rowEl.offsetHeight) >
+      (scrollBodyEl.scrollTop + scrollBodyEl.offsetHeight)) {
+      this.scrollTop = (scrollBodyEl.scrollTop += rowEl.offsetTop +
         rowEl.offsetHeight - scrollBodyEl.scrollTop - scrollBodyEl.offsetHeight);
-        this.cancelScroll = true;
+      this.cancelScroll = true;
     }
   }
 
   @HostListener('dblclick', ['$event']) onMouseDblClick(event: MouseEvent) {
     const index: number = this.selectedRow;
-    if (!this.trCollection || this.trCollection.length === 0) { 
+    if (!this.trCollection || this.trCollection.length === 0) {
       this.trCollection = this.tbody[0].getElementsByTagName('tr');
       if (this.trCollection.length === 0) {
-       return;
+        return;
       }
     }
 
@@ -165,10 +163,10 @@ export class HighlightTableRowDirective implements OnInit {
     }
   }
 
-    ngOnInit() {
+  ngOnInit() {
     this.tbody = this.el.nativeElement.getElementsByTagName('tbody');
     this.thead = this.el.nativeElement.getElementsByTagName('thead');
-     if (this.tbody.length > 0) {
+    if (this.tbody.length > 0) {
       this.trCollection = this.tbody[0].getElementsByTagName('tr');
     } /*else {
       this.trCollection = this.el.nativeElement.getElementsByTagName('tr');
