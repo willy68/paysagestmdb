@@ -24,6 +24,9 @@ export class JwtInterceptor implements HttpInterceptor {
         map(event => {
           if (event instanceof HttpResponse) {
             console.log(event);
+            if (event.headers.has('authorization')) {
+              console.log(event.headers.get('authorization'));
+            }
           }
           return event;
         }));
