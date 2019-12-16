@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../services';
 import { User, Role } from '../models';
@@ -13,7 +14,8 @@ export class PgMenuComponent implements OnInit {
   currentUser: User;
   isCollapsed = true;
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService,
+              private router: Router) {
   }
 
    @Input()
@@ -30,6 +32,7 @@ export class PgMenuComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
+    this.router.navigate(['/']);
   }
 
 }

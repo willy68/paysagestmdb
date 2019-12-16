@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'; // Reactive form services
 import { first } from 'rxjs/operators';
 
@@ -17,14 +17,18 @@ export class PgLoginComponent implements OnInit {
   public submitted = false;
   public loading = false;
   public errorMessage = '';
+  public returnUrl: string;
 
   constructor(private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
     private alertService: AlertService) { }
 
   ngOnInit() {
     this.loginFormBuild();
+    // get return url from route parameters or default to '/'
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields
@@ -59,10 +63,8 @@ export class PgLoginComponent implements OnInit {
     .pipe(first())
     .subscribe(
         data => {
-            // this.router.navigate([this.returnUrl]);
+            this.router.navigate([this.returnUrl]);
             this.alertService.success('Bienvenue : ' + data.username);
-           // alert('SUCCESS!! :-)\n\n' + JSON.stringify(data));
-            this.router.navigate(['/home']);
         },
         error => {
             this.alertService.error(error);
