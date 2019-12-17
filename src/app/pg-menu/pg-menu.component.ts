@@ -30,6 +30,14 @@ export class PgMenuComponent implements OnInit {
   ngOnInit() {
   }
 
+  isAuthenticated() {
+    return this.authenticationService.isAuthenticated();
+  }
+
+  get isAdmin() {
+    return this.currentUser && this.currentUser.role === Role.Admin;
+  }
+
   logout() {
     this.authenticationService.logout();
     this.router.navigate(['/']);
