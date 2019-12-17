@@ -11,15 +11,15 @@ export class EntrepriseService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(params?: '') {
+  getAll(params = '') {
     return this.http.get<Entreprise[]>(apigest + '/entreprises' + params);
   }
 
-  getList(user_id: number, params?: '') {
-    return this.http.get<Entreprise[]>(apigest + `/user/${user_id}/entreprises` + params);
+  getList(user_id: number, params = '') {
+    return this.http.get<Entreprise[]>(apigest + `/user/${user_id}/entreprise/list` + params);
   }
 
-  get(user_id: number, id: number, params?: '') {
+  get(user_id: number, id: number, params = '') {
     return this.http.get<Entreprise>(apigest + `/user/${user_id}/entreprise/${id}` + params);
   }
 

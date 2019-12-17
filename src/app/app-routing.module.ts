@@ -8,6 +8,7 @@ import { ClientsListComponent } from './clients-list/clients-list.component';
 import { PgEntrepriseCreateComponent } from './pg-entreprise-create/pg-entreprise-create.component';
 import { Role } from './models';
 import { AuthGuard } from './guard';
+import { EntreprisesListComponent } from './entreprises-list/entreprises-list.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,8 @@ const routes: Routes = [
   { path: 'new_entreprise', component: PgEntrepriseCreateComponent,
     canActivate: [AuthGuard],
     data: {roles: Role.Admin} },
+  { path: 'open_entreprise', component: EntreprisesListComponent, 
+    canActivate: [AuthGuard]},
 
   // otherwise redirect to home
   { path: '**', redirectTo: '' }

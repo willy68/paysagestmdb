@@ -25,6 +25,7 @@ import { AlertComponent } from './alert/alert.component';
 import { ClientsListComponent } from './clients-list/clients-list.component';
 import { HighlightTableRowDirective } from './directives';
 import { RoundedBtnDirective } from './directives/rounded-btn.directive';
+import { EntreprisesListComponent } from './entreprises-list/entreprises-list.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { RoundedBtnDirective } from './directives/rounded-btn.directive';
     PgRegisterComponent,
     ClientsListComponent,
     HighlightTableRowDirective,
-    RoundedBtnDirective
+    RoundedBtnDirective,
+    EntreprisesListComponent
   ],
   imports: [
     BrowserModule,
