@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
-import { EntrepriseService, EntrepriseStorageService, UserService } from '../services';
+import { EntrepriseService, EntrepriseStorageService } from '../services';
 import { AuthenticationService } from '../services';
 import { Entreprise } from '../models';
+import { Observable, from } from 'rxjs';
 
 @Component({
   selector: 'pg-entreprises-list',
@@ -11,27 +12,13 @@ import { Entreprise } from '../models';
   styleUrls: ['./entreprises-list.component.scss']
 })
 export class EntreprisesListComponent implements OnInit {
-  public entrepriseList: Entreprise[];
+  public entrepriseList: Observable<Entreprise[]>;
   public selectedItem = -1;
   public emptyList = false;
 
   constructor(private entrepriseService: EntrepriseService,
     private entrepriseStorageService: EntrepriseStorageService,
-    private authenticationService: AuthenticationService) {
-      let user = this.authenticationService.currentUserValue;
-      if (user) {
-        this.entrepriseService.getList(user.id)
-        .pipe(first())
-        .subscribe(
-          list => {
-            this.entrepriseList = list;
-          },
-          error => {
-            console.log(error);
-          }
-        );
-      }
-     }
+    private authenticationService: AuthenticationService) {}
 
   open(id: number) {
     this.entrepriseStorageService.open(id)
@@ -51,6 +38,19 @@ export class EntreprisesListComponent implements OnInit {
 
 
   ngOnInit() {
+    let user = this.authenticationService.currentUserValue;
+    if (user) {
+      this.entrepriseList = this.entrepriseService.getList(user.id);
+      //.pipe(first())
+      //.subscribe(
+        //list => {
+          //this.entrepriseList = from(list);
+        //},
+        //error => {
+         //console.log(error);
+        //}
+      //);
+    }
   }
 
 }
