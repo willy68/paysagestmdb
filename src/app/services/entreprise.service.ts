@@ -19,7 +19,7 @@ export class EntrepriseService {
     return this.http.get<Entreprise[]>(apigest + `/user/${user_id}/entreprises` + params);
   }
 
-  getById(user_id: number, id: number, params?: '') {
+  get(user_id: number, id: number, params?: '') {
     return this.http.get<Entreprise>(apigest + `/user/${user_id}/entreprise/${id}` + params);
   }
 

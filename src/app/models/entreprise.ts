@@ -9,7 +9,7 @@ export interface Entreprise {
   cp?: string;
   ville?: string;
   tel?: string;
-  portable: string;
+  portable?: string;
   email?: string;
   regime_commercial?: string;
   logo?: string;
