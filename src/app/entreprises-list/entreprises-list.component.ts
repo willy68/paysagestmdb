@@ -31,9 +31,9 @@ export class EntreprisesListComponent implements OnInit {
 
   open(id: number) {
     this.entrepriseStorageService.open(id)
-    .pipe(map( entreprise => {
+    .subscribe( entreprise => {
       return entreprise;
-    }));
+    });
   }
 
   onOpen(index: number) {
