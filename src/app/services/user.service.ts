@@ -10,22 +10,20 @@ export class UserService {
     constructor(private http: HttpClient) {
      }
 
-    getAll(params?: '') {
+    getAll(params = '') {
         return this.http.get<User[]>(apigest + '/users' + params);
     }
 
-    getList(params: '') {
-        return this.http.get<User[]>(apigest + 
-            `/users${params}`);
+    getList(params = '') {
+        return this.http.get<User[]>(apigest + `/users${params}`);
     }
 
-    getById(id: number, params?: '') {
+    getById(id: number, params = '') {
         return this.http.get<User>(apigest + `/user/${id}` + params);
     }
 
-    getUser(id: number, params?: '') {
-        return this.http.get(apigest + 
-            `/user/${id}${params}`);
+    getUser(id: number, params = '') {
+        return this.http.get(apigest + `/user/${id}${params}`);
     }
 
     register(user: User) {
@@ -33,8 +31,7 @@ export class UserService {
     }
 
     create(user: User) {
-        return this.http.post(apigest + 
-            `/user`, user);
+        return this.http.post(apigest + `/user`, user);
     }
 
     update(user: User) {
