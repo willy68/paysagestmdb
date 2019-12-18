@@ -11,7 +11,7 @@
       </mdb-card-header>
       <mdb-card-body>
         <div class="fixed-header z-depth-1" 
-        pgHighlightTableRow (selectItem)="onSelect($event)" (selectChange)="onSelect($event)">
+        pgHighlightTableRow (selectItem)="onOpen($event)" (selectChange)="onSelect($event)">
           <table class="table table-hover" *ngIf="!emptyList">
             <thead>
               <tr>

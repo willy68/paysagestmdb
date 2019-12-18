@@ -13,7 +13,7 @@ import { Entreprise } from '../models';
   styleUrls: ['./entreprises-list.component.scss']
 })
 export class EntreprisesListComponent implements OnInit {
-  private currentEntrepriseSubject: BehaviorSubject<Entreprise[]>;
+  private currentEntreprisesSubject: BehaviorSubject<Entreprise[]>;
   public entrepriseList: Observable<Entreprise[]>;
   public selectedItem = -1;
   public emptyList = false;
@@ -21,30 +21,32 @@ export class EntreprisesListComponent implements OnInit {
   constructor(private entrepriseService: EntrepriseService,
     private entrepriseStorageService: EntrepriseStorageService,
     private authenticationService: AuthenticationService) {
-      this.currentEntrepriseSubject = new BehaviorSubject<Entreprise[]>([]);
-      this.entrepriseList = this.currentEntrepriseSubject.asObservable();
+      this.currentEntreprisesSubject = new BehaviorSubject<Entreprise[]>([]);
+      this.entrepriseList = this.currentEntreprisesSubject.asObservable();
   }
 
-  public get currentUserValue(): Entreprise[] {
-    return this.currentEntrepriseSubject.value;
+  public get currentEntreprisesValue(): Entreprise[] {
+    return this.currentEntreprisesSubject.value;
   }
 
   open(id: number) {
     this.entrepriseStorageService.open(id)
-    .pipe()
-    .subscribe(
-      data => {
+    .pipe(map( entreprise => {
+      return entreprise;
+    }));
+  }
 
-      },
-      error => {
-
-      });
+  onOpen(index: number) {
+    this.selectedItem = index;
+    let list = this.currentEntreprisesValue;
+    if (list.length > index) {
+      this.open(list[index].id);
+    }
   }
 
   onSelect(index: number) {
     this.selectedItem = index;
-}
-
+  }
 
   ngOnInit() {
     let user = this.authenticationService.currentUserValue;
@@ -53,7 +55,7 @@ export class EntreprisesListComponent implements OnInit {
       .pipe()
       .subscribe(
         list => {
-          this.currentEntrepriseSubject.next(list);
+          this.currentEntreprisesSubject.next(list);
         },
         error => {
          console.log(error);
