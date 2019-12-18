@@ -42,4 +42,9 @@ export class EntrepriseStorageService {
     }
   }
 
+  public close() {
+    localStorage.removeItem('currentEntreprise');
+    this.currentEntrepriseSubject.next(null);
+  }
+
 }

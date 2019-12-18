@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../services';
-import { User, Role } from '../models';
+import { AuthenticationService, EntrepriseStorageService } from '../services';
+import { User, Role, Entreprise } from '../models';
 
 @Component({
   selector: 'pg-menu',
@@ -11,17 +11,16 @@ import { User, Role } from '../models';
 })
 export class PgMenuComponent implements OnInit {
 
-  currentUser: User;
-  isCollapsed = true;
+  public currentUser: User;
+  public currentEntreprise: Entreprise;
+  public isCollapsed = true;
 
   constructor(private authenticationService: AuthenticationService,
+              private entrepriseStorageService: EntrepriseStorageService,
               private router: Router) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.entrepriseStorageService.entreprise.subscribe(x => this.currentEntreprise = x);
   }
-
-   @Input()
-    set user(current: User) {
-      this.currentUser = current;
-    }
 
     get user() {
       return this.currentUser;
@@ -40,6 +39,11 @@ export class PgMenuComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
+    this.router.navigate(['/']);
+  }
+
+  close() {
+    this.entrepriseStorageService.close();
     this.router.navigate(['/']);
   }
 

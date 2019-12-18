@@ -52,7 +52,6 @@ export class EntreprisesListComponent implements OnInit {
     let user = this.authenticationService.currentUserValue;
     if (user) {
       this.entrepriseService.getList(user.id)
-      .pipe()
       .subscribe(
         list => {
           this.currentEntreprisesSubject.next(list);
