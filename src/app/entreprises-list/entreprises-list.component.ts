@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { first } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 import { EntrepriseService, EntrepriseStorageService } from '../services';
 import { AuthenticationService } from '../services';
 import { Entreprise } from '../models';
-import { Observable, from } from 'rxjs';
 
 @Component({
   selector: 'pg-entreprises-list',
@@ -12,17 +13,25 @@ import { Observable, from } from 'rxjs';
   styleUrls: ['./entreprises-list.component.scss']
 })
 export class EntreprisesListComponent implements OnInit {
+  private currentEntrepriseSubject: BehaviorSubject<Entreprise[]>;
   public entrepriseList: Observable<Entreprise[]>;
   public selectedItem = -1;
   public emptyList = false;
 
   constructor(private entrepriseService: EntrepriseService,
     private entrepriseStorageService: EntrepriseStorageService,
-    private authenticationService: AuthenticationService) {}
+    private authenticationService: AuthenticationService) {
+      this.currentEntrepriseSubject = new BehaviorSubject<Entreprise[]>([]);
+      this.entrepriseList = this.currentEntrepriseSubject.asObservable();
+  }
+
+  public get currentUserValue(): Entreprise[] {
+    return this.currentEntrepriseSubject.value;
+  }
 
   open(id: number) {
     this.entrepriseStorageService.open(id)
-    .pipe(first())
+    .pipe()
     .subscribe(
       data => {
 
@@ -40,16 +49,16 @@ export class EntreprisesListComponent implements OnInit {
   ngOnInit() {
     let user = this.authenticationService.currentUserValue;
     if (user) {
-      this.entrepriseList = this.entrepriseService.getList(user.id);
-      //.pipe(first())
-      //.subscribe(
-        //list => {
-          //this.entrepriseList = from(list);
-        //},
-        //error => {
-         //console.log(error);
-        //}
-      //);
+      this.entrepriseService.getList(user.id)
+      .pipe()
+      .subscribe(
+        list => {
+          this.currentEntrepriseSubject.next(list);
+        },
+        error => {
+         console.log(error);
+        }
+      );
     }
   }
 
