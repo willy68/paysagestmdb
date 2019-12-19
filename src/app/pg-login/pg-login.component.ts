@@ -64,7 +64,7 @@ export class PgLoginComponent implements OnInit {
     this.authenticationService.login(
       this.f.email.value,
       this.f.password.value,
-      entreprise.id || null)
+      entreprise ? entreprise.id : null)
       .pipe(first())
       .subscribe(
         data => {

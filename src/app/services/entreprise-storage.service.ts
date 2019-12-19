@@ -26,7 +26,7 @@ export class EntrepriseStorageService {
     this.currentEntrepriseSubject.next(entreprise);
   }
 
-  public open(user_id: number, id: number, params?: '') {
+  public open(user_id: number, id: number, params = '') {
     return this.entrepriseService.get(user_id, id, params).pipe(
       tap(entreprise => {
         if (entreprise) {
