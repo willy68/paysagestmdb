@@ -60,7 +60,7 @@ export class PgLoginComponent implements OnInit {
     }
 
     this.loading = true;
-    let entreprise = this.entrepriseStorageService.currentEntrepriseValue;
+    const entreprise = this.entrepriseStorageService.currentEntrepriseValue;
     this.authenticationService.login(
       this.f.email.value,
       this.f.password.value,
