@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
 
 import { EntrepriseService, EntrepriseStorageService } from '../services';
 import { AuthenticationService } from '../services';
@@ -29,18 +27,21 @@ export class EntreprisesListComponent implements OnInit {
     return this.currentEntreprisesSubject.value;
   }
 
-  open(id: number) {
-    this.entrepriseStorageService.open(id)
+  public open(user_id: number, id: number) {
+    this.entrepriseStorageService.open(user_id, id)
     .subscribe( entreprise => {
       return entreprise;
     });
   }
 
-  onOpen(index: number) {
-    this.selectedItem = index;
-    let list = this.currentEntreprisesValue;
-    if (list.length > index) {
-      this.open(list[index].id);
+  public onOpen(index: number) {
+    let user = this.authenticationService.currentUserValue;
+    if (user) {
+      this.selectedItem = index;
+      let list = this.currentEntreprisesValue;
+      if (list.length > index) {
+        this.open(user.id, list[index].id);
+      }
     }
   }
 
