@@ -35,10 +35,10 @@ export class EntreprisesListComponent implements OnInit {
   }
 
   public onOpen(index: number) {
-    let user = this.authenticationService.currentUserValue;
+    const user = this.authenticationService.currentUserValue;
     if (user) {
       this.selectedItem = index;
-      let list = this.currentEntreprisesValue;
+      const list = this.currentEntreprisesValue;
       if (list.length > index) {
         this.open(user.id, list[index].id);
       }
@@ -50,7 +50,7 @@ export class EntreprisesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    let user = this.authenticationService.currentUserValue;
+    const user = this.authenticationService.currentUserValue;
     if (user) {
       this.entrepriseService.getList(user.id)
       .subscribe(
