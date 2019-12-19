@@ -1,11 +1,13 @@
-<mdb-navbar SideClass="navbar navbar-expand-md fixed-top  navbar-light blue-grey lighten-5">
+<mdb-navbar SideClass="navbar navbar-expand-md fixed-top navbar-light blue-grey lighten-5">
+  <mdb-navbar-brand>
+    <a class="navbar-brand" routerLink="/" href="#">
+    Home
+    </a>
+  </mdb-navbar-brand>
   <links>
-    <ul class="navbar-nav mx-auto">
-      <li class="nav-item">
-        <a class="nav-link" routerLink="/">Home</a>
-      </li>
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown" dropdown>
-        <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="isAuthenticated()">
+        <a dropdownToggle type="button" class="nav-link dropdown-toggle" *ngIf="isAuthenticated()">
           Entreprises
         </a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -41,8 +43,8 @@
         </div>
       </li>
     </ul>
-    <div class="float-md-right mx-auto">
-      <ul class="navbar-nav">
+    <!--<div class="float-md-right mx-auto">-->
+      <ul class="navbar-nav ml-auto nav-flex-icons">
         <li class="nav-item">
           <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="/register">
             <mdb-icon fas icon="user-plus"></mdb-icon> register
@@ -55,23 +57,19 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" *ngIf="isAuthenticated()" (click)="logout()">
-            <span>
               <mdb-icon fas icon="sign-out-alt"></mdb-icon>
-            </span>
             Deconnexion
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" *ngIf="currentEntreprise" (click)="close()">
-            <span>
               <mdb-icon fas icon="sign-out-alt"></mdb-icon>
-            </span>
             Fermer l'entreprise
           </a>
         </li>
 
       </ul>
-    </div>
+    <!--</div>-->
 
   </links>
 </mdb-navbar>
