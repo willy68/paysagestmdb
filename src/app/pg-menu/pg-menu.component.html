@@ -1,78 +1,77 @@
 <mdb-navbar SideClass="navbar navbar-expand-md fixed-top  navbar-light blue-grey lighten-5">
-  <div class="container-fluid">
-    <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportContent">
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/">Home</a>
-        </li>
-        <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="isAuthenticated()">
+  <links>
+    <ul class="navbar-nav mx-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/">Home</a>
+      </li>
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="isAuthenticated()">
           Entreprises
-          </a>
-          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item" routerLink="/open_entreprise">Ouvrir</a>
-            <a *ngIf="isAdmin" class="dropdown-item" routerLink="/new_entreprise">Nouvelle</a>
-            <a *ngIf="isAdmin" class="dropdown-item" routerLink="/">Edit</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="isAuthenticated()">
+        </a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item" routerLink="/open_entreprise">Ouvrir</a>
+          <a *ngIf="isAdmin" class="dropdown-item" routerLink="/new_entreprise">Nouvelle</a>
+          <a *ngIf="isAdmin" class="dropdown-item" routerLink="/">Edit</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="isAuthenticated()">
           Bases de données
+        </a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item" routerLink="/clients">Clients</a>
+          <a class="dropdown-item" routerLink="/">Articles</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" routerLink="/">Contrats</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="isAuthenticated()">
+          Quotidien
+        </a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item" routerLink="/"> Factures</a>
+          <a class="dropdown-item" routerLink="/">Editer</a>
+          <a class="dropdown-item" routerLink="/">Supprimer</a>
+          <div class="dropdown-divider">Devis</div>
+          <!--<li bs-form-popover form-popover-template="views/register-form.html" form-popover-title="Register" form-popover-submit="header.submitRegister(valid, data)">-->
+          <a class="dropdown-item" routerLink="/">Devis</a>
+          <a class="dropdown-item" routerLink="/">Editer</a>
+          <a class="dropdown-item" routerLink="/">Supprimer</a>
+        </div>
+      </li>
+    </ul>
+    <div class="float-md-right mx-auto">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="/register">
+            <mdb-icon fas icon="user-plus"></mdb-icon> register
           </a>
-          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item" routerLink="/clients">Clients</a>
-            <a class="dropdown-item" routerLink="/">Articles</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" routerLink="/">Contrats</a>
-          </div>
         </li>
-        <li class="nav-item dropdown" dropdown>
-          <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="isAuthenticated()">
-            Quotidien
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="/login">
+            <mdb-icon fas icon="user"></mdb-icon> login
           </a>
-          <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-            <a class="dropdown-item" routerLink="/"> Factures</a>
-            <a class="dropdown-item" routerLink="/">Editer</a>
-            <a class="dropdown-item" routerLink="/">Supprimer</a>
-            <div class="dropdown-divider">Devis</div>
-        <!--<li bs-form-popover form-popover-template="views/register-form.html" form-popover-title="Register" form-popover-submit="header.submitRegister(valid, data)">-->
-            <a class="dropdown-item" routerLink="/">Devis</a>
-            <a class="dropdown-item" routerLink="/">Editer</a>
-            <a class="dropdown-item" routerLink="/">Supprimer</a>
-          </div>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="isAuthenticated()" (click)="logout()">
+            <span>
+              <mdb-icon fas icon="sign-out-alt"></mdb-icon>
+            </span>
+            Deconnexion
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" *ngIf="currentEntreprise" (click)="close()">
+            <span>
+              <mdb-icon fas icon="sign-out-alt"></mdb-icon>
+            </span>
+            Fermer l'entreprise
+          </a>
+        </li>
+
       </ul>
-      <div class="float-md-right mx-auto">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="/register">
-              <mdb-icon fas icon="user-plus"></mdb-icon> register
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="/login">
-              <mdb-icon fas icon="user"></mdb-icon> login
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" *ngIf="isAuthenticated()" (click)="logout()">
-                <span><mdb-icon fas icon="sign-out-alt"></mdb-icon></span>
-              Deconnexion
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" *ngIf="currentEntreprise" (click)="close()">
-                <span><mdb-icon fas icon="sign-out-alt"></mdb-icon></span>
-              Fermer l'entreprise
-            </a>
-          </li>
-
-        </ul>
-      </div>
-
     </div>
-  </div>
+
+  </links>
 </mdb-navbar>
