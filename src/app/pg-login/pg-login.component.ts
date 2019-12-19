@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 
 // import custom validator to validate that password and confirm password fields match
 import { mustMatch } from '../helpers/must-match.validator';
-import { AuthenticationService, AlertService } from '../services';
+import { AuthenticationService, AlertService, EntrepriseStorageService } from '../services';
 
 @Component({
   selector: 'pg-login',
@@ -23,6 +23,7 @@ export class PgLoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
+    private entrepriseStorageService: EntrepriseStorageService,
     private alertService: AlertService) { }
 
   ngOnInit() {
@@ -36,12 +37,12 @@ export class PgLoginComponent implements OnInit {
 
   loginFormBuild() {
     this.loginForm = this.fb.group({
-    email: ['', [Validators.required, Validators.email]] ,
-    password: ['', [Validators.required, Validators.minLength(8)]],
-    confirmPassword: ['', [Validators.required]],
-    rememberMe: [null, []]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required]],
+      rememberMe: [null, []]
     }, {
-    validator: mustMatch('password', 'confirmPassword')
+      validator: mustMatch('password', 'confirmPassword')
     });
   }
 
@@ -55,22 +56,26 @@ export class PgLoginComponent implements OnInit {
 
     // stop here if form is invalid
     if (this.loginForm.invalid) {
-        return;
+      return;
     }
 
     this.loading = true;
-    this.authenticationService.login(this.f.email.value, this.f.password.value)
-    .pipe(first())
-    .subscribe(
+    let entreprise = this.entrepriseStorageService.currentEntrepriseValue;
+    this.authenticationService.login(
+      this.f.email.value,
+      this.f.password.value,
+      entreprise.id || null)
+      .pipe(first())
+      .subscribe(
         data => {
-            this.router.navigate([this.returnUrl]);
-            this.alertService.success('Bienvenue : ' + data.username);
+          this.router.navigate([this.returnUrl]);
+          this.alertService.success('Bienvenue : ' + data.username);
         },
         error => {
-            this.alertService.error(error);
-            this.errorMessage = error;
+          this.alertService.error(error);
+          this.errorMessage = error;
         });
-        this.loading = false;
+    this.loading = false;
   }
 
   resetForm() {

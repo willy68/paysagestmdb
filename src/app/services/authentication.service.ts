@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User, Entreprise } from '../models';
+import { User } from '../models';
 import { JwtHelperService } from './jwt-helper.service';
 import { apigest } from '../url';
 
@@ -23,13 +23,12 @@ export class AuthenticationService {
     return this.currentUserSubject.value;
   }
 
-  login(email: string, password: string) {
-    let entreprise: Entreprise = JSON.parse(localStorage.getItem('currentEntreprise'));
-    let entreprise_id = '';
-    if (entreprise) {
-      entreprise_id = '?entreprise_id=' + entreprise.id;
+  login(email: string, password: string, entreprise_id: number = null) {
+    let params = '';
+    if (entreprise_id !== null) {
+      params = '?entreprise_id=' + entreprise_id;
     }
-    return this.http.post<any>(apigest + '/user/login' + entreprise_id, 
+    return this.http.post<any>(apigest + '/user/login' + params, 
       { email, password })
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
