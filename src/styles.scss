@@ -1,7 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
-.table tr.active td {
+.table-sheet tr.active td {
   background-color:#4285f4 !important;
   color: white;
+}
+
+.table-sheet tr td {
+  cursor: pointer;
 }
 
 .fixed-header{
