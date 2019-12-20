@@ -3,7 +3,7 @@ import { Router, ResolveStart } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
-import { UserService } from '../services';
+import { UserService, EntrepriseStorageService } from '../services';
 import { AlertService } from '../services';
 import { Role } from '../models';
 
@@ -19,16 +19,25 @@ import { User } from '../models';
 })
 export class PgRegisterComponent implements OnInit {
   public registerForm: FormGroup;
+  public entreprise_id: number;
   public roles = Role;
+  public Role = Role.Admin;
   public submitted = false;
   public loading = false;
+  public title = "S'enregistrer en tant qu'administrateur";
   public errorMessage = '';
 
   constructor(private fb: FormBuilder,
               private router: Router,
               private userService: UserService,
+              private entrepriseStorageService: EntrepriseStorageService,
               private alertService: AlertService) {
-
+    const currentEntreprise = this.entrepriseStorageService.currentEntrepriseValue;
+    if (currentEntreprise) {
+      this.entreprise_id = currentEntreprise.id;
+      this.Role = Role.User;
+      this.title = `Enregistrer un utilisateur pour ${currentEntreprise.nom}`;
+    }
   }
 
   registerFormBuild() {
@@ -37,7 +46,7 @@ export class PgRegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]] ,
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required]],
-      role: [this.roles.User, []]
+      role: [this.Role, []]
     }, {
       validator: mustMatch('password', 'confirmPassword')
     });
@@ -60,7 +69,8 @@ export class PgRegisterComponent implements OnInit {
     }
 
     this.loading = true;
-    this.userService.register(this.registerForm.value)
+    this.userService.register(this.registerForm.value, 
+      this.entreprise_id ? this.entreprise_id : null)
         .pipe(first())
         .subscribe(
             data => {

@@ -1,9 +1,9 @@
 <div class="row">
-  <div class="col-sm-6 offset-sm-2">
+  <div class="col-sm-7 offset-sm-2">
     <mdb-card>
       <mdb-card-header class="info-color white-text text-center py-4">
         <h5>
-          <strong>Register</strong>
+          <strong>{{title}}</strong>
           <span class="float-right">
             <mdb-icon fas icon="user-plus"></mdb-icon>
           </span>
@@ -61,7 +61,7 @@
           <div class="md-form">
             <select formControlName="role" class="form-control" mdbInput mdbValidate>
               <option *ngFor="let role of roles | keyvalue; let isFirst = first" 
-               [ngValue]="role.value" selected="{{isFirst}}">
+               [ngValue]="role.value">
                {{role.value}}
               </option>
             </select>
