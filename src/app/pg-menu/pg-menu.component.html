@@ -1,6 +1,6 @@
 <mdb-navbar SideClass="navbar navbar-expand-md fixed-top navbar-light blue-grey lighten-5">
   <mdb-navbar-brand>
-    <a class="navbar-brand" routerLink="/" href="#">
+    <a class="navbar-brand" routerLink="{{routes.home}}" href="#">
     Home
     </a>
   </mdb-navbar-brand>
@@ -11,9 +11,9 @@
           Entreprises<span class="caret"></span>
         </a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/open_entreprise" href="#">Ouvrir</a>
-          <a *ngIf="isAdmin" class="dropdown-item waves-light" mdbWavesEffect routerLink="/new_entreprise" href="#">Nouvelle</a>
-          <a *ngIf="isAdmin" class="dropdown-item waves-light" mdbWavesEffect routerLink="/" href="#">Edit</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect routerLink="{{routes.open}}" href="#">Ouvrir</a>
+          <a *ngIf="isAdmin" class="dropdown-item waves-light" mdbWavesEffect routerLink="{{routes.new_entreprise}}" href="#">Nouvelle</a>
+          <a *ngIf="isAdmin" class="dropdown-item waves-light" mdbWavesEffect routerLink="/" href="#">Modifier</a>
         </div>
       </li>
       <li class="nav-item dropdown" dropdown>
@@ -21,7 +21,7 @@
           Bases de données
         </a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item" routerLink="/clients">Clients</a>
+          <a class="dropdown-item" routerLink="{{routes.clients}}">Clients</a>
           <a class="dropdown-item" routerLink="/">Articles</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" routerLink="/">Contrats</a>
@@ -46,12 +46,12 @@
     <!--<div class="float-md-right mx-auto">-->
       <ul class="navbar-nav ml-auto nav-flex-icons">
         <li class="nav-item">
-          <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="/register">
+          <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="{{routes.register}}">
             <mdb-icon fas icon="user-plus"></mdb-icon> register
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="/login">
+          <a class="nav-link" *ngIf="!isAuthenticated()" routerLink="{{routes.login}}">
             <mdb-icon fas icon="user"></mdb-icon> login
           </a>
         </li>
@@ -68,7 +68,7 @@
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
             <a class="dropdown-item" (click)="logout()"><mdb-icon fas icon="sign-out-alt"></mdb-icon> Déconnexion</a>
             <a class="dropdown-item" routerLink="/">Profile</a>
-            <a class="dropdown-item" routerLink="/register">Nouvel utilisateur</a>
+            <a class="dropdown-item" routerLink="{{routes.register}}"><mdb-icon fas icon="user-plus"></mdb-icon> Nouvel utilisateur</a>
           </div>
         </li>
 

@@ -13,7 +13,14 @@ export class PgMenuComponent implements OnInit {
 
   public currentUser: User;
   public currentEntreprise: Entreprise;
-  public isCollapsed = true;
+  public routes: {} = {
+    home: '/',
+    register: '/register',
+    login: '/login',
+    new_entreprise: '/new_entreprise',
+    open: '/open_entreprise',
+    clients: '/clients'
+  };
 
   constructor(private authenticationService: AuthenticationService,
               private entrepriseStorageService: EntrepriseStorageService,
@@ -22,9 +29,13 @@ export class PgMenuComponent implements OnInit {
     this.entrepriseStorageService.entreprise.subscribe(x => this.currentEntreprise = x);
   }
 
-    get user() {
-      return this.currentUser;
-    }
+  get user() {
+    return this.currentUser;
+  }
+
+  get entreprise() {
+    return this.currentEntreprise;
+  }
 
   ngOnInit() {
   }
