@@ -13,7 +13,9 @@ import { EntreprisesListComponent } from './entreprises-list/entreprises-list.co
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: PgLoginComponent },
+  { path: 'entreprise/:entreprise_id/login', component: PgLoginComponent },
   { path: 'register', component: PgRegisterComponent },
+  { path: 'entreprise/:entreprise_id/register', component: PgRegisterComponent },
   { path: 'clients', component: ClientsListComponent, canActivate: [AuthGuard] },
   { path: 'new_entreprise', component: PgEntrepriseCreateComponent,
     canActivate: [AuthGuard],
