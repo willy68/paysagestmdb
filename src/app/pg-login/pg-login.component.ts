@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'; // Reactive form services
+import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Reactive form services
 import { first } from 'rxjs/operators';
 
 // import custom validator to validate that password and confirm password fields match
 import { mustMatch } from '../helpers/must-match.validator';
-import { AuthenticationService, AlertService, EntrepriseStorageService } from '../services';
+import { AuthenticationService, AlertService } from '../services';
 
 @Component({
   selector: 'pg-login',
@@ -18,16 +18,20 @@ export class PgLoginComponent implements OnInit {
   public loading = false;
   public errorMessage = '';
   public returnUrl: string;
+  public entreprise_id: number;
 
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    private entrepriseStorageService: EntrepriseStorageService,
     private alertService: AlertService) { }
 
   ngOnInit() {
     this.loginFormBuild();
+    this.route.paramMap.subscribe(
+      (params: ParamMap) => {
+      this.entreprise_id = +params.get('entreprise_id');
+    });
     // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
@@ -60,11 +64,10 @@ export class PgLoginComponent implements OnInit {
     }
 
     this.loading = true;
-    const entreprise = this.entrepriseStorageService.currentEntrepriseValue;
     this.authenticationService.login(
       this.f.email.value,
       this.f.password.value,
-      entreprise ? entreprise.id : null)
+      this.entreprise_id ? this.entreprise_id : null)
       .pipe(first())
       .subscribe(
         data => {
