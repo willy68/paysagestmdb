@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { AuthenticationService, EntrepriseStorageService } from '../services';
 import { User, Role, Entreprise } from '../models';
@@ -24,7 +24,7 @@ export class PgMenuComponent implements OnInit {
   public currentEntreprise: Entreprise;
   public routes: Links;
 
-  public std_routes: Links = {
+  private std_routes: Links = {
     home:  ['/', {}],
     register: ['/register', {}],
     login: ['/login', {}],
@@ -35,8 +35,7 @@ export class PgMenuComponent implements OnInit {
 
   constructor(private authenticationService: AuthenticationService,
               private entrepriseStorageService: EntrepriseStorageService,
-              private router: Router,
-              private route: ActivatedRoute) {
+              private router: Router) {
     this.routes = Object.assign({}, this.std_routes);
     this.authenticationService.currentUser.subscribe(x => { this.currentUser = x;
       if (x) {
@@ -80,8 +79,7 @@ export class PgMenuComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
-    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || null;
-    this.router.navigate(['/login'], { queryParams: { returnUrl: returnUrl } });
+    this.router.navigate(this.routes.login);
   }
 
   close() {
