@@ -41,6 +41,9 @@ export class PgMenuComponent implements OnInit {
       if (x) {
         this.routes.new_entreprise = ['/new_entreprise', {user_id: x.id}];
         this.routes.open = ['/open_entreprise', {user_id: x.id}];
+      } else {
+        this.routes.new_entreprise = ['/new_entreprise', {}];
+        this.routes.open = ['/open_entreprise', {}];
       }
     });
     this.entrepriseStorageService.entreprise.subscribe(x => {
