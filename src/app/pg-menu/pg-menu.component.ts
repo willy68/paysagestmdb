@@ -71,7 +71,7 @@ export class PgMenuComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout();
-    this.router.navigate([this.routes.home]);
+    this.router.navigate(['/']);
   }
 
   close() {
