@@ -6,8 +6,8 @@
   </mdb-navbar-brand>
   <links>
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown btn-group" dropdown>
-        <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect *ngIf="isAuthenticated()">
+      <li class="nav-item dropdown btn-group" dropdown *ngIf="isAuthenticated()">
+        <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
           Entreprises<span class="caret"></span>
         </a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -16,8 +16,8 @@
           <a *ngIf="isAdmin" class="dropdown-item waves-light" mdbWavesEffect routerLink="/" href="#">Modifier</a>
         </div>
       </li>
-      <li class="nav-item dropdown" dropdown>
-        <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="isAuthenticated()">
+      <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated()">
+        <a dropdownToggle class="nav-link dropdown-toggle">
           Bases de données
         </a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -27,8 +27,8 @@
           <a class="dropdown-item" routerLink="/">Contrats</a>
         </div>
       </li>
-      <li class="nav-item dropdown" dropdown>
-        <a dropdownToggle class="nav-link dropdown-toggle" *ngIf="isAuthenticated()">
+      <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated()">
+        <a dropdownToggle class="nav-link dropdown-toggle">
           Quotidien
         </a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
@@ -45,18 +45,18 @@
     </ul>
     <!--<div class="float-md-right mx-auto">-->
       <ul class="navbar-nav ml-auto nav-flex-icons">
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="!isAuthenticated()" [routerLink]="routes.register">
+        <li class="nav-item" *ngIf="!isAuthenticated()">
+          <a class="nav-link" [routerLink]="routes.register">
             <mdb-icon fas icon="user-plus"></mdb-icon> register
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="!isAuthenticated()" [routerLink]="routes.login">
+        <li class="nav-item" *ngIf="!isAuthenticated()">
+          <a class="nav-link" [routerLink]="routes.login">
             <mdb-icon fas icon="user"></mdb-icon> login
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="currentEntreprise" (click)="close()">
+        <li class="nav-item" *ngIf="currentEntreprise">
+          <a class="nav-link"  (click)="close()">
               <mdb-icon fas icon="sign-out-alt"></mdb-icon>
             Fermer l'entreprise
           </a>
