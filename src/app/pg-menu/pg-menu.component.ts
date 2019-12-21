@@ -4,6 +4,15 @@ import { Router } from '@angular/router';
 import { AuthenticationService, EntrepriseStorageService } from '../services';
 import { User, Role, Entreprise } from '../models';
 
+class Links {
+  home: [any, any];
+  register: [any, any];
+  login: [any, any];
+  new_entreprise: [any, any];
+  open: [any, any];
+  clients: [any, any];
+}
+
 @Component({
   selector: 'pg-menu',
   templateUrl: './pg-menu.component.html',
@@ -13,22 +22,15 @@ export class PgMenuComponent implements OnInit {
 
   public currentUser: User;
   public currentEntreprise: Entreprise;
-  public routes: {
-    home: string, 
-    register: string, 
-    login: string, 
-    new_entreprise: string, 
-    open: string, 
-    clients: string
-  }; 
+  public routes: Links;
 
-  public std_routes = {
-    home: '/',
-    register: '/register',
-    login: '/login',
-    new_entreprise: '/new_entreprise',
-    open: '/open_entreprise',
-    clients: '/clients'
+  public std_routes: Links = {
+    home:  ['/', {}],
+    register: ['/register', {}],
+    login: ['/login', {}],
+    new_entreprise: ['/new_entreprise', {}],
+    open: ['/open_entreprise', {}],
+    clients: ['/clients', {}]
   };
 
   constructor(private authenticationService: AuthenticationService,
@@ -39,10 +41,11 @@ export class PgMenuComponent implements OnInit {
     this.entrepriseStorageService.entreprise.subscribe(x => {
       this.currentEntreprise = x;
       if (x) {
-        this.routes.register = `/entreprise/${x.id}/register`;
-        this.routes.login = `/entreprise/${x.id}/login`;
+        this.routes.register = ['/register', {entreprise_id: x.id}];
+        this.routes.login = ['/login', {entreprise_id: x.id}];
       } else {
-        Object.assign(this.routes, this.std_routes);
+        this.routes.register = ['/register', {}];
+        this.routes.login = ['/login', {}];
       }
     });
   }
