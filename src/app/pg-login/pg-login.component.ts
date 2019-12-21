@@ -71,7 +71,7 @@ export class PgLoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate([this.returnUrl]);
+          this.router.navigateByUrl(this.returnUrl);
           this.alertService.success('Bienvenue : ' + data.username);
         },
         error => {
