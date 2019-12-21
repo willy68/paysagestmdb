@@ -37,7 +37,12 @@ export class PgMenuComponent implements OnInit {
               private entrepriseStorageService: EntrepriseStorageService,
               private router: Router) {
     this.routes = Object.assign({}, this.std_routes);
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    this.authenticationService.currentUser.subscribe(x => { this.currentUser = x;
+      if (x) {
+        this.routes.new_entreprise = ['/new_entreprise', {user_id: x.id}];
+        this.routes.open = ['/open_entreprise', {user_id: x.id}];
+      }
+    });
     this.entrepriseStorageService.entreprise.subscribe(x => {
       this.currentEntreprise = x;
       if (x) {

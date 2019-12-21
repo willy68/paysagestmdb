@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Reactive form services
 import { first } from 'rxjs/operators';
 
@@ -71,12 +71,7 @@ export class PgLoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          const navigationExtras: NavigationExtras = {
-            queryParamsHandling: 'preserve',
-            preserveFragment: true
-          };
-
-          this.router.navigate([this.returnUrl], navigationExtras);
+          this.router.navigate([this.returnUrl]);
           this.alertService.success('Bienvenue : ' + data.username);
         },
         error => {
