@@ -28,7 +28,7 @@ export class AuthenticationService {
     if (entreprise_id !== null) {
       params = '?entreprise_id=' + entreprise_id;
     }
-    return this.http.post<any>(apigest + '/user/login' + params, 
+    return this.http.post<any>(apigest + '/user/login' + params,
       { email, password })
       .pipe(map(user => {
         // login successful if there's a jwt token in the response
