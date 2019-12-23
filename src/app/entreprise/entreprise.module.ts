@@ -6,6 +6,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { DirectivesModule } from '../directives';
+// import { ClientModule } from './client/client.module';
 
 import { EntrepriseRoutingModule } from './entreprise-routing.module';
 import { EntrepriseDashboardComponent } from './entreprise-dashboard/entreprise-dashboard.component';
@@ -30,6 +31,7 @@ import { EntrepriseCreateComponent } from './entreprise-create/entreprise-create
     ReactiveFormsModule,
     FormsModule,
     DirectivesModule,
+    // ClientModule,
     EntrepriseRoutingModule
   ]
 })

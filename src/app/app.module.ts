@@ -8,6 +8,7 @@ import { JwtInterceptor, ErrorInterceptor } from './interceptor';
 import { JwtHelperService } from './services';
 
 import { EntrepriseModule } from './entreprise/entreprise.module';
+import { ClientModule } from './entreprise/client/client.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -49,6 +50,7 @@ import { DirectivesModule } from './directives';
     AccordionModule.forRoot(),
     AlertModule.forRoot(),
     DirectivesModule,
+    ClientModule,
     EntrepriseModule,
     AppRoutingModule
   ],

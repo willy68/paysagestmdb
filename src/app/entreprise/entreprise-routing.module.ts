@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
+import { AuthGuard } from '../guard';
+
 import { EntrepriseComponent } from './entreprise/entreprise.component';
 import { EntrepriseDashboardComponent } from './entreprise-dashboard/entreprise-dashboard.component';
 import { EntrepriseListComponent } from './entreprise-list/entreprise-list.component';
@@ -10,9 +13,11 @@ const entrepriseRoutes: Routes = [
   {
     path: 'entreprise',
     component: EntrepriseComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
+        canActivateChild: [AuthGuard],
         children: [
           { path: 'entreprise-list', component: EntrepriseListComponent },
           { path: 'entreprise-create', component: EntrepriseCreateComponent },
