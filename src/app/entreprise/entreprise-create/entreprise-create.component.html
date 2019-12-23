@@ -1,1 +1,183 @@
-<p>entreprise-create works!</p>
+<div class="row">
+  <div class="col-sm-9 offset-sm-1">
+    <mdb-card class="mb-5">
+      <mdb-card-header class="primary-color white-text text-center py-4">
+        <h5>
+          <strong>Nouvelle entreprise</strong>
+          <span class="float-right">
+            <mdb-icon fas icon="sign-in-alt"></mdb-icon>
+          </span>
+        </h5>
+      </mdb-card-header>
+      <mdb-card-body class="px-lg-5 pt-0">
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="text-center" style="color: #757575;">
+          <!--  -->
+
+          <div class="form-row">
+            <div class="col">
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="siret" id="siret" class="form-control" />
+                <label for="siret">Siret:</label>
+                <mdb-error *ngIf="f.siret.invalid && (f.siret.dirty || f.siret.touched)">
+                  <span *ngIf="f.siret.errors.required">Siret is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.siret.valid && (f.siret.dirty || f.siret.touched)">
+                  Siret valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="nom" id="nom" class="form-control" />
+                <label for="nom">Nom:</label>
+                <mdb-error *ngIf="f.nom.invalid && (f.nom.dirty || f.nom.touched)">
+                  <span *ngIf="f.nom.errors.required">Nom is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.nom.valid && (f.nom.dirty || f.nom.touched)">
+                  Nom valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="adresse" id="adresse" class="form-control" />
+                <label for="adresse">Adresse:</label>
+                <mdb-error *ngIf="f.adresse.invalid && (f.adresse.dirty || f.adresse.touched)">
+                  <span *ngIf="f.adresse.errors.required">adresse is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.adresse.valid && (f.adresse.dirty || f.adresse.touched)">
+                  Adresse valid
+                </mdb-success>
+              </div>
+
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="suite_adresse" id="suite_adresse"
+                  class="form-control" />
+                <label for="suite_adresse">Adresse suite:</label>
+                <mdb-error *ngIf="f.suite_adresse.invalid && (f.suite_adresse.dirty || f.suite_adresse.touched)">
+                  <span *ngIf="f.suite_adresse.errors.required">adresse is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.suite_adresse.valid && (f.suite_adresse.dirty || f.suite_adresse.touched)">
+                  Adresse valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="cp" id="cp" class="form-control" />
+                <label for="cp">Code Postal:</label>
+                <mdb-error *ngIf="f.cp.invalid && (f.cp.dirty || f.cp.touched)">
+                  <span *ngIf="f.cp.errors.required">Code Postal is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.cp.valid && (f.cp.dirty || f.cp.touched)">
+                  Code Postal valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="ville" id="ville" class="form-control" />
+                <label for="ville">Ville:</label>
+                <mdb-error *ngIf="f.ville.invalid && (f.ville.dirty || f.ville.touched)">
+                  <span *ngIf="f.adresse.errors.required">ville is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.ville.valid && (f.ville.dirty || f.ville.touched)">
+                  Ville valid
+                </mdb-success>
+              </div>
+            </div>
+
+            <div class="col">
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="ape" id="ape" class="form-control" />
+                <label for="ape">APE:</label>
+                <mdb-error *ngIf="f.ape.invalid && (f.ape.dirty || f.ape.touched)">
+                  <span *ngIf="f.ape.errors.required">APE is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.ape.valid && (f.ape.dirty || f.ape.touched)">
+                  APE valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="tva_intracom" id="tva_intracom"
+                  class="form-control" />
+                <label for="tva_intracom">TVA Intra-communautaire:</label>
+                <mdb-error *ngIf="f.tva_intracom.invalid && (f.tva_intracom.dirty || f.tva_intracom.touched)">
+                  <span *ngIf="f.tva_intracom.errors.required">TVA intracommunautaire is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.tva_intracom.valid && (f.tva_intracom.dirty || f.tva_intracom.touched)">
+                  Numero de TVA intracommunautaire valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="tel" id="tel" class="form-control" />
+                <label for="tel">Telephone:</label>
+                <mdb-error *ngIf="f.tel.invalid && (f.tel.dirty || f.tel.touched)">
+                  <span *ngIf="f.adresse.errors.required">Telephone is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.tel.valid && (f.tel.dirty || f.tel.touched)">
+                  Telephone valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="portable" id="portable" class="form-control" />
+                <label for="portable">Portable:</label>
+                <mdb-error *ngIf="f.portable.invalid && (f.portable.dirty || f.portable.touched)">
+                  <span *ngIf="f.portable.errors.required">Portable is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.portable.valid && (f.portable.dirty || f.portable.touched)">
+                  Portable valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="email" mdbInput mdbValidate formControlName="email" id="email" class="form-control" />
+                <label for="email">Email:</label>
+                <mdb-error *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
+                  <span *ngIf="f.email.errors.required">Email is required</span>
+                  <span *ngIf="f.email.errors.email">This email address is not valid</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.email.valid && (f.email.dirty || f.email.touched)">
+                  Email valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="regime_commercial" id="regime_commercial"
+                  class="form-control" />
+                <label for="regime_commercial">Regime commercial:</label>
+                <mdb-error
+                  *ngIf="f.regime_commercial.invalid && (f.regime_commercial.dirty || f.regime_commercial.touched)">
+                  <span *ngIf="f.regime_commercial.errors.required">Regime commercial is required</span>
+                </mdb-error>
+                <mdb-success
+                  *ngIf="f.regime_commercial.valid && (f.regime_commercial.dirty || f.regime_commercial.touched)">
+                  Regime commercial valid
+                </mdb-success>
+              </div>
+            </div>
+          </div>
+          <!--Form-row-->
+
+          <div class="form-row">
+            <div class="col">
+              <div>
+                <input type="file" #logo formControlName="logo" id="logo" accept="image/*"
+                  (change)="previewLogo(logo.files)" />
+                <label for="logo" mdbWavesEffect> Image pour votre logo</label>
+              </div>
+            </div>
+            <div class="col">
+              <div class="h120">
+                <img class="image h120" [src]="imgURL" *ngIf="imgURL" />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button pgRoundedBtn type="reset" mdbBtn color="secondary" outline="true" mdbWavesEffect
+              (click)="resetForm()">
+              Annuler
+            </button>
+            <button mdbBtn pgRoundedBtn class="mr-2" color="primary" outline="true" mdbWavesEffect type="submit">
+              Créer
+            </button>
+            <img *ngIf="loading" class="pl-2"
+              src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </div>
+
+        </form>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+</div>
