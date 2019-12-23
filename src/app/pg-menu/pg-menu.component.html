@@ -11,7 +11,7 @@
           Entreprises<span class="caret"></span>
         </a>
         <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect routerLink="/entreprise" href="#">Entreprise</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="routes.entreprise" href="#">Entreprise</a>
           <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="routes.open" href="#">Ouvrir</a>
           <a *ngIf="isAdmin" class="dropdown-item waves-light" mdbWavesEffect [routerLink]="routes.new_entreprise" href="#">Nouvelle</a>
           <a *ngIf="isAdmin" class="dropdown-item waves-light" mdbWavesEffect routerLink="/" href="#">Modifier</a>

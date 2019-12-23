@@ -9,7 +9,7 @@ import { AuthGuard } from 'src/app/guard';
 
 const clientRoutes: Routes = [
   {
-    path: 'entreprise/clients',
+    path: 'entreprise/:entreprise_id/clients',
     component: ClientComponent,
     canActivate: [AuthGuard],
     children: [

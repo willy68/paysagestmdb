@@ -21,7 +21,7 @@ const entrepriseRoutes: Routes = [
         children: [
           { path: 'entreprise-list', component: EntrepriseListComponent },
           { path: 'entreprise-create', component: EntrepriseCreateComponent },
-          { path: '', component: EntrepriseDashboardComponent }
+          { path: ':id', component: EntrepriseDashboardComponent }
         ]
       }
     ]

@@ -8,6 +8,7 @@ class Links {
   home: [any, any];
   register: [any, any];
   login: [any, any];
+  entreprise: [any, any];
   new_entreprise: [any, any];
   open: [any, any];
   clients: [any, any];
@@ -28,6 +29,7 @@ export class PgMenuComponent implements OnInit {
     home:  ['/', {}],
     register: ['/register', {}],
     login: ['/login', {}],
+    entreprise: ['/entreprise', {}],
     new_entreprise: ['/new_entreprise', {}],
     open: ['/open_entreprise', {}],
     clients: ['/clients', {}]
@@ -49,9 +51,11 @@ export class PgMenuComponent implements OnInit {
     this.entrepriseStorageService.entreprise.subscribe(x => {
       this.currentEntreprise = x;
       if (x) {
+        this.routes.entreprise = ['/entreprise', x.id];
         this.routes.register = ['/register', {entreprise_id: x.id}];
         this.routes.login = ['/login', {entreprise_id: x.id}];
       } else {
+        this.routes.entreprise = ['/entreprise', {}];
         this.routes.register = ['/register', {}];
         this.routes.login = ['/login', {}];
       }

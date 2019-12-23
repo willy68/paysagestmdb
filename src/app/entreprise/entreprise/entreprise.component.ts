@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+//import { ActivatedRoute, ParamMap } from '@angular/router';
+
+import { EntrepriseStorageService } from '../../services';
 
 @Component({
   selector: 'pg-entreprise',
@@ -6,8 +9,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./entreprise.component.scss']
 })
 export class EntrepriseComponent implements OnInit {
-
-  constructor() { }
+  public entreprise_id: number = -1;
+  
+  constructor( private entrepriseStorageService: EntrepriseStorageService) {
+    this.entrepriseStorageService.entreprise.subscribe(x => {
+      if (x) {
+        this.entreprise_id = x.id;
+      }
+    })
+  }
 
   ngOnInit() {
   }
