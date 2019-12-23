@@ -7,6 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor, ErrorInterceptor } from './interceptor';
 import { JwtHelperService } from './services';
 
+import { EntrepriseModule } from './entreprise/entreprise.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -23,9 +24,8 @@ import { PgRegisterComponent } from './pg-register/pg-register.component';
 import { PgLoginComponent } from './pg-login/pg-login.component';
 import { AlertComponent } from './alert/alert.component';
 import { ClientsListComponent } from './clients-list/clients-list.component';
-import { HighlightTableRowDirective } from './directives';
-import { RoundedBtnDirective } from './directives/rounded-btn.directive';
 import { EntreprisesListComponent } from './entreprises-list/entreprises-list.component';
+import { DirectivesModule } from './directives';
 
 @NgModule({
   declarations: [
@@ -37,20 +37,20 @@ import { EntreprisesListComponent } from './entreprises-list/entreprises-list.co
     PgLoginComponent,
     PgRegisterComponent,
     ClientsListComponent,
-    HighlightTableRowDirective,
-    RoundedBtnDirective,
     EntreprisesListComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     MDBBootstrapModule.forRoot(),
     ReactiveFormsModule,
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
     AccordionModule.forRoot(),
-    AlertModule.forRoot()
+    AlertModule.forRoot(),
+    DirectivesModule,
+    EntrepriseModule,
+    AppRoutingModule
   ],
   providers: [
     JwtHelperService,

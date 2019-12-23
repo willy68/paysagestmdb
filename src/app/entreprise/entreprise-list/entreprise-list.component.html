@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-sm-11">
+    <mdb-card>
+      <mdb-card-header class="primary-color white-text text-center py-4">
+        <h3>
+          Liste des entreprises
+          <span class="float-right">
+            <mdb-icon fas icon="address-book"></mdb-icon>
+          </span>
+        </h3>
+      </mdb-card-header>
+      <mdb-card-body>
+        <div class="fixed-header z-depth-1" 
+        pgHighlightTableRow (selectItem)="onOpen($event)" (selectChange)="onSelect($event)">
+          <table class="table table-hover table-sheet" *ngIf="!emptyList">
+            <thead>
+              <tr>
+                <th>SIRET</th>
+                <th>NOM</th>
+                <th>VILLE</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let entreprise of entrepriseList | async as entreprises; let i = index">
+                <td>{{entreprise.siret}}</td>
+                <td>{{entreprise.nom}}</td>
+                <td>{{entreprise.ville}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <span>Index de selection: {{selectedItem}}</span>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+</div>
