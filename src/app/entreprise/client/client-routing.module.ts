@@ -18,7 +18,7 @@ const clientRoutes: Routes = [
         canActivateChild: [AuthGuard],
         children: [
           { path: 'client-create', component: ClientCreateComponent },
-          { path: 'client-update', component: ClientUpdateComponent },
+          { path: 'client-update/:id', component: ClientUpdateComponent },
           { path: '', component: ClientsListComponent }
         ]
       }
