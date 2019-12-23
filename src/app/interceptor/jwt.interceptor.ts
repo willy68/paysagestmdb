@@ -24,7 +24,7 @@ export class JwtInterceptor implements HttpInterceptor {
         map(event => {
           if (event instanceof HttpResponse) {
             if (event.headers.has('authorization')) {
-              const head = event.headers.get('authorization').split('');
+              const head = event.headers.get('authorization').split(' ');
               if (head.length === 2 && head[1].length) {
                 currentUser.token = head[1];
                 this.authenticationService.updateUser(currentUser);
