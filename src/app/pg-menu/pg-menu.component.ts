@@ -11,7 +11,7 @@ class Links {
   entreprise: [any, any];
   new_entreprise: [any, any];
   open: [any, any];
-  clients: [any, any];
+  clients: [any, any, any];
 }
 
 @Component({
@@ -32,7 +32,7 @@ export class PgMenuComponent implements OnInit {
     entreprise: ['/entreprise', {}],
     new_entreprise: ['/new_entreprise', {}],
     open: ['/entreprise/entreprise-list', {}],
-    clients: ['/clients', {}]
+    clients: ['/clients', {}, {}]
   };
 
   constructor(private authenticationService: AuthenticationService,
@@ -52,10 +52,12 @@ export class PgMenuComponent implements OnInit {
       this.currentEntreprise = x;
       if (x) {
         this.routes.entreprise = ['/entreprise', x.id];
+        this.routes.clients = ['/entreprise', x.id, 'clients'];
         this.routes.register = ['/register', {entreprise_id: x.id}];
         this.routes.login = ['/login', {entreprise_id: x.id}];
       } else {
         this.routes.entreprise = ['/entreprise', {}];
+        this.routes.clients = ['/entreprise', {}, {}];
         this.routes.register = ['/register', {}];
         this.routes.login = ['/login', {}];
       }

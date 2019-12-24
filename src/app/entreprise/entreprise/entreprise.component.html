@@ -1,6 +1,5 @@
-<p>entreprise works!</p>
 <nav>
-  <a *ngIf="entreprise_id !== -1" [routerLink]="['./', entreprise_id ]" routerLinkActive="active"
+  <a *ngIf="entreprise_id" [routerLink]="['./', entreprise_id ]" routerLinkActive="active"
     [routerLinkActiveOptions]="{ exact: true }">Dashboard </a>
   <a routerLink="./entreprise-list" routerLinkActive="active">Liste des entreprises </a>
   <a routerLink="./entreprise-create" routerLinkActive="active">Créer une entreprise </a>

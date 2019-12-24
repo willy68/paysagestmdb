@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-sm-9 offset-sm-1">
+  <div class="col-sm-11">
     <mdb-card class="mb-5">
       <mdb-card-header class="primary-color white-text text-center py-4">
         <h5>
@@ -14,7 +14,7 @@
           <!--  -->
 
           <div class="form-row">
-            <div class="col">
+            <div class="col-md">
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="siret" id="siret" class="form-control" />
                 <label for="siret">Siret:</label>
@@ -79,7 +79,7 @@
               </div>
             </div>
 
-            <div class="col">
+            <div class="col-md">
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="ape" id="ape" class="form-control" />
                 <label for="ape">APE:</label>
@@ -93,7 +93,7 @@
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="tva_intracom" id="tva_intracom"
                   class="form-control" />
-                <label for="tva_intracom">TVA Intra-communautaire:</label>
+                <label for="tva_intracom">TVA Intra-comm:</label>
                 <mdb-error *ngIf="f.tva_intracom.invalid && (f.tva_intracom.dirty || f.tva_intracom.touched)">
                   <span *ngIf="f.tva_intracom.errors.required">TVA intracommunautaire is required</span>
                 </mdb-error>
@@ -146,22 +146,17 @@
                 </mdb-success>
               </div>
             </div>
-          </div>
-          <!--Form-row-->
-
-          <div class="form-row">
-            <div class="col">
+            <div class="col-md py-4 pl-4">
               <div>
                 <input type="file" #logo formControlName="logo" id="logo" accept="image/*"
                   (change)="previewLogo(logo.files)" />
                 <label for="logo" mdbWavesEffect> Image pour votre logo</label>
               </div>
-            </div>
-            <div class="col">
-              <div class="h120">
+              <div class="h120 my-3">
                 <img class="image h120" [src]="imgURL" *ngIf="imgURL" />
               </div>
             </div>
+
           </div>
 
           <div>
