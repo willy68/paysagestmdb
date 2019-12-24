@@ -31,7 +31,7 @@ export class PgMenuComponent implements OnInit {
     login: ['/login', {}],
     entreprise: ['/entreprise', {}],
     new_entreprise: ['/new_entreprise', {}],
-    open: ['/open_entreprise', {}],
+    open: ['/entreprise/entreprise-list', {}],
     clients: ['/clients', {}]
   };
 
@@ -42,10 +42,10 @@ export class PgMenuComponent implements OnInit {
     this.authenticationService.currentUser.subscribe(x => { this.currentUser = x;
       if (x) {
         this.routes.new_entreprise = ['/new_entreprise', {user_id: x.id}];
-        this.routes.open = ['/open_entreprise', {user_id: x.id}];
+        this.routes.open = ['/entreprise/entreprise-list', {user_id: x.id}];
       } else {
         this.routes.new_entreprise = ['/new_entreprise', {}];
-        this.routes.open = ['/open_entreprise', {}];
+        this.routes.open = ['/entreprise/entreprise-list', {}];
       }
     });
     this.entrepriseStorageService.entreprise.subscribe(x => {

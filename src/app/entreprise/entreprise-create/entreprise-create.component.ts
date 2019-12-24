@@ -111,10 +111,9 @@ export class EntrepriseCreateComponent implements OnInit {
     .pipe(first())
     .subscribe(
         data => {
-            // this.router.navigate([this.returnUrl]);
             this.alertService.success('SUCCESS!! : ' + data.nom );
-           // alert('SUCCESS!! :-)\n\n' + JSON.stringify(data));
-            this.router.navigate(['/home']);
+           // navigue vers entreprise-list pour ouvrir cette entreprise
+            this.router.navigate(['/entreprise/entreprise-list']);
         },
         error => {
             this.alertService.error(error);
