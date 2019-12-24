@@ -5,13 +5,13 @@ import { AuthenticationService, EntrepriseStorageService } from '../services';
 import { User, Role, Entreprise } from '../models';
 
 class Links {
-  home: [any, any];
-  register: [any, any];
-  login: [any, any];
-  entreprise: [any, any];
-  new_entreprise: [any, any];
-  open: [any, any];
-  clients: [any, any, any];
+  home: Array<any | number | string>;
+  register: Array<any | number | string>;
+  login: Array<any | number | string>;
+  entreprise: Array<any | number | string>;
+  new_entreprise: Array<any | number | string>;
+  open: Array<any | number | string>;
+  clients: Array<any | number | string>;
 }
 
 @Component({
@@ -26,13 +26,13 @@ export class PgMenuComponent implements OnInit {
   public routes: Links;
 
   private std_routes: Links = {
-    home:  ['/', {}],
-    register: ['/register', {}],
-    login: ['/login', {}],
-    entreprise: ['/entreprise', {}],
-    new_entreprise: ['/new_entreprise', {}],
-    open: ['/entreprise/entreprise-list', {}],
-    clients: ['/clients', {}, {}]
+    home:  ['/'],
+    register: ['/register'],
+    login: ['/login'],
+    entreprise: ['/entreprise'],
+    new_entreprise: ['/new_entreprise'],
+    open: ['/entreprise/entreprise-list'],
+    clients: ['/clients']
   };
 
   constructor(private authenticationService: AuthenticationService,
@@ -44,8 +44,8 @@ export class PgMenuComponent implements OnInit {
         this.routes.new_entreprise = ['/new_entreprise', {user_id: x.id}];
         this.routes.open = ['/entreprise/entreprise-list', {user_id: x.id}];
       } else {
-        this.routes.new_entreprise = ['/new_entreprise', {}];
-        this.routes.open = ['/entreprise/entreprise-list', {}];
+        this.routes.new_entreprise = ['/new_entreprise'];
+        this.routes.open = ['/entreprise/entreprise-list'];
       }
     });
     this.entrepriseStorageService.entreprise.subscribe(x => {
@@ -56,10 +56,10 @@ export class PgMenuComponent implements OnInit {
         this.routes.register = ['/register', {entreprise_id: x.id}];
         this.routes.login = ['/login', {entreprise_id: x.id}];
       } else {
-        this.routes.entreprise = ['/entreprise', {}];
-        this.routes.clients = ['/entreprise', {}, {}];
-        this.routes.register = ['/register', {}];
-        this.routes.login = ['/login', {}];
+        this.routes.entreprise = ['/entreprise'];
+        this.routes.clients = ['/entreprise'];
+        this.routes.register = ['/register'];
+        this.routes.login = ['/login'];
       }
     });
   }
