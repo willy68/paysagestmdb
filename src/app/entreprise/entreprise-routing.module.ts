@@ -7,6 +7,7 @@ import { EntrepriseComponent } from './entreprise/entreprise.component';
 import { EntrepriseDashboardComponent } from './entreprise-dashboard/entreprise-dashboard.component';
 import { EntrepriseListComponent } from './entreprise-list/entreprise-list.component';
 import { EntrepriseCreateComponent } from './entreprise-create/entreprise-create.component';
+import { EntrepriseEditComponent } from './entreprise-edit/entreprise-edit.component';
 import { Role } from '../models';
 
 
@@ -23,6 +24,10 @@ const entrepriseRoutes: Routes = [
           { path: 'entreprise-list', component: EntrepriseListComponent },
           { path: 'entreprise-create',
             component: EntrepriseCreateComponent,
+            data: {roles: Role.Admin}
+          },
+          { path: 'entreprise-edit/:id',
+            component: EntrepriseEditComponent,
             data: {roles: Role.Admin}
           },
           { path: ':id', component: EntrepriseDashboardComponent }

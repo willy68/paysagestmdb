@@ -10,6 +10,7 @@ class Links {
   login: Array<any | number | string>;
   entreprise: Array<any | number | string>;
   new_entreprise: Array<any | number | string>;
+  edit_entreprise: Array<any | number | string>;
   open: Array<any | number | string>;
   clients: Array<any | number | string>;
 }
@@ -30,7 +31,8 @@ export class PgMenuComponent implements OnInit {
     register: ['/register'],
     login: ['/login'],
     entreprise: ['/entreprise'],
-    new_entreprise: ['/new_entreprise'],
+    new_entreprise: ['/entreprise/entreprise-create'],
+    edit_entreprise: ['/entreprise/entreprise-edit'],
     open: ['/entreprise/entreprise-list'],
     clients: ['/clients']
   };
@@ -41,10 +43,10 @@ export class PgMenuComponent implements OnInit {
     this.routes = Object.assign({}, this.std_routes);
     this.authenticationService.currentUser.subscribe(x => { this.currentUser = x;
       if (x) {
-        this.routes.new_entreprise = ['/new_entreprise', {user_id: x.id}];
+        this.routes.new_entreprise = ['/entreprise/entreprise-create', {user_id: x.id}];
         this.routes.open = ['/entreprise/entreprise-list', {user_id: x.id}];
       } else {
-        this.routes.new_entreprise = ['/new_entreprise'];
+        this.routes.new_entreprise = ['/entreprise/entreprise-create'];
         this.routes.open = ['/entreprise/entreprise-list'];
       }
     });
@@ -52,6 +54,7 @@ export class PgMenuComponent implements OnInit {
       this.currentEntreprise = x;
       if (x) {
         this.routes.entreprise = ['/entreprise', x.id];
+        this.routes.edit_entreprise = ['entreprise/entreprise-edit', x.id];
         this.routes.clients = ['/entreprise', x.id, 'clients'];
         this.routes.register = ['/register', {entreprise_id: x.id}];
         this.routes.login = ['/login', {entreprise_id: x.id}];
