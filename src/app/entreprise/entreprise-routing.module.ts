@@ -21,7 +21,7 @@ const entrepriseRoutes: Routes = [
         canActivateChild: [AuthGuard],
         children: [
           { path: 'entreprise-list', component: EntrepriseListComponent },
-          { path: 'entreprise-create', 
+          { path: 'entreprise-create',
             component: EntrepriseCreateComponent,
             data: {roles: Role.Admin}
           },
