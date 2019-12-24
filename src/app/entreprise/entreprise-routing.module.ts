@@ -7,6 +7,7 @@ import { EntrepriseComponent } from './entreprise/entreprise.component';
 import { EntrepriseDashboardComponent } from './entreprise-dashboard/entreprise-dashboard.component';
 import { EntrepriseListComponent } from './entreprise-list/entreprise-list.component';
 import { EntrepriseCreateComponent } from './entreprise-create/entreprise-create.component';
+import { Role } from '../models';
 
 
 const entrepriseRoutes: Routes = [
@@ -20,7 +21,10 @@ const entrepriseRoutes: Routes = [
         canActivateChild: [AuthGuard],
         children: [
           { path: 'entreprise-list', component: EntrepriseListComponent },
-          { path: 'entreprise-create', component: EntrepriseCreateComponent },
+          { path: 'entreprise-create', 
+            component: EntrepriseCreateComponent,
+            data: {roles: Role.Admin}
+          },
           { path: ':id', component: EntrepriseDashboardComponent }
         ]
       }
