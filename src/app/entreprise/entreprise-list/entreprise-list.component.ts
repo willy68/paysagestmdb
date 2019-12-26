@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { EntrepriseService, EntrepriseStorageService } from '../../services';
@@ -18,7 +19,8 @@ export class EntrepriseListComponent implements OnInit {
 
   constructor(private entrepriseService: EntrepriseService,
     private entrepriseStorageService: EntrepriseStorageService,
-    private authenticationService: AuthenticationService) {
+    private authenticationService: AuthenticationService,
+    private router: Router) {
       this.currentEntreprisesSubject = new BehaviorSubject<Entreprise[]>([]);
       this.entrepriseList = this.currentEntreprisesSubject.asObservable();
   }
@@ -28,8 +30,9 @@ export class EntrepriseListComponent implements OnInit {
   }
 
   public open(user_id: number, id: number) {
-    this.entrepriseStorageService.open(user_id, id)
+    return this.entrepriseStorageService.open(user_id, id)
     .subscribe( entreprise => {
+      this.router.navigate(['entreprise', entreprise.id]);
       return entreprise;
     });
   }
