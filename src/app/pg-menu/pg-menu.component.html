@@ -14,10 +14,10 @@
           <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="routes.entreprise" href="#">Entreprise</a>
           <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="routes.open" href="#">Ouvrir</a>
           <a *ngIf="isAdmin" class="dropdown-item waves-light" mdbWavesEffect [routerLink]="routes.new_entreprise" href="#">Nouvelle</a>
-          <a *ngIf="isAdmin" class="dropdown-item waves-light" mdbWavesEffect [routerLink]="routes.edit_entreprise" href="#">Modifier</a>
+          <a *ngIf="isAdmin && entreprise" class="dropdown-item waves-light" mdbWavesEffect [routerLink]="routes.edit_entreprise" href="#">Modifier</a>
         </div>
       </li>
-      <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated()">
+      <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated() && entreprise">
         <a dropdownToggle class="nav-link dropdown-toggle">
           Bases de données
         </a>
@@ -28,7 +28,7 @@
           <a class="dropdown-item" routerLink="/">Contrats</a>
         </div>
       </li>
-      <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated()">
+      <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated() && entreprise">
         <a dropdownToggle class="nav-link dropdown-toggle">
           Quotidien
         </a>
