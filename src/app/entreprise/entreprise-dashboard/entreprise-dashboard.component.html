@@ -1,2 +1,72 @@
-<p>entreprise-dashboard works!</p>
-<a routerLink="./clients" routerLinkActive="active">Liste des clients </a>
+<div class="row">
+  <div class="col-md-8 mb-4">
+    <a href="#" mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Nouvelle facture</a>
+    <a href="#" mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Nouveau devis</a>
+    <a href="#" mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Nouvel article</a>
+    <!--<a href="#" mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Nouveau client</a>-->
+  </div>
+  <div class="col-md mb-4">
+    <mdb-card>
+      <mdb-card-header>
+        <h6 class="fw-400">Chiffre d'affaire sur 12 mois</h6>
+      </mdb-card-header>
+      <mdb-card-body>
+        <mdb-card-text>Aucun chiffre d'affaire ces 12 dernier mois</mdb-card-text>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+</div>
+<div class="row mb-4">
+  <div class="col-md-6">
+    <h4 class="fw-400">10 dernières factures</h4>
+
+    <div class="fixed-header z-depth-1 ft-09 mb-4" pgHighlightTableRow (selectItem)="onOpen($event)"
+      (selectChange)="onSelect($event)">
+      <table class="table table-hover table-sheet" *ngIf="!emptyList">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Client</th>
+            <th>Total h.t.</th>
+            <th>Etat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entreprise of entrepriseList | async as entreprises; let i = index">
+            <td>{{entreprise.num}}</td>
+            <td>{{entreprise.client}}</td>
+            <td>{{entreprise.total_th}}</td>
+            <td>{{entreprise.etat}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="col-md-6">
+    <h4 class="fw-400">10 derniers devis</h4>
+    <!--Text-->
+    <div class="fixed-header z-depth-1 ft-09 mb-4" pgHighlightTableRow (selectItem)="onOpen($event)"
+      (selectChange)="onSelect($event)">
+      <table class="table table-hover table-sheet" *ngIf="!emptyList">
+        <thead>
+          <tr>
+            <th>N°</th>
+            <th>Client</th>
+            <th>Total h.t.</th>
+            <th>Etat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entreprise of entrepriseList | async as entreprises; let i = index">
+            <td>{{entreprise.num}}</td>
+            <td>{{entreprise.client}}</td>
+            <td>{{entreprise.total_th}}</td>
+            <td>{{entreprise.etat}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

@@ -8,7 +8,7 @@ export class RoundedBtnDirective implements OnInit {
   constructor(private el: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
-    this.renderer.setStyle(this.el.nativeElement, 'border-radius', '15% / 50%');
+    this.renderer.setStyle(this.el.nativeElement, 'border-radius', '4rem'/*'15% / 50%'*/);
   }
 
 }
