@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, HostListener,
-  EventEmitter, Output, Renderer2, OnInit
+  EventEmitter, Output, Input, Renderer2, OnInit
 } from '@angular/core';
 
 /**
@@ -30,6 +30,8 @@ export class HighlightTableRowDirective implements OnInit {
   private selectedRow: number;
 
   constructor(private el: ElementRef, private renderer: Renderer2) { }
+
+  @Input() height: string;
 
   @Output() selectItem = new EventEmitter<number>();
 
@@ -164,6 +166,11 @@ export class HighlightTableRowDirective implements OnInit {
   }
 
   ngOnInit() {
+    let height = '25em';
+    if (this.height) {
+      height = this.height;
+    }
+    this.renderer.setStyle(this.el.nativeElement, 'height', height);
     this.tbody = this.el.nativeElement.getElementsByTagName('tbody');
     this.thead = this.el.nativeElement.getElementsByTagName('thead');
     if (this.tbody.length > 0) {
