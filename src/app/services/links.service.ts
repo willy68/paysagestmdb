@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { AuthenticationService, EntrepriseStorageService } from '.';
+import { AuthenticationService } from './authentication.service';
+import { EntrepriseStorageService } from './entreprise-storage.service';
 
 export type link = Array<any>;
 

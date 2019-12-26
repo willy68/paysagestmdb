@@ -1,19 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AuthenticationService, EntrepriseStorageService } from '../services';
+import { AuthenticationService, EntrepriseStorageService, LinksService, Links } from '../services';
 import { User, Role, Entreprise } from '../models';
-
-class Links {
-  home: Array<any | number | string>;
-  register: Array<any | number | string>;
-  login: Array<any | number | string>;
-  entreprise: Array<any | number | string>;
-  new_entreprise: Array<any | number | string>;
-  edit_entreprise: Array<any | number | string>;
-  open: Array<any | number | string>;
-  clients: Array<any | number | string>;
-}
 
 @Component({
   selector: 'pg-menu',
@@ -26,44 +15,18 @@ export class PgMenuComponent implements OnInit {
   public currentEntreprise: Entreprise;
   public routes: Links;
 
-  private std_routes: Links = {
-    home:  ['/'],
-    register: ['/register'],
-    login: ['/login'],
-    entreprise: ['/entreprise'],
-    new_entreprise: ['/entreprise/entreprise-create'],
-    edit_entreprise: ['/entreprise/entreprise-edit'],
-    open: ['/entreprise/entreprise-list'],
-    clients: ['/clients']
-  };
-
   constructor(private authenticationService: AuthenticationService,
               private entrepriseStorageService: EntrepriseStorageService,
+              private linksService: LinksService,
               private router: Router) {
-    this.routes = Object.assign({}, this.std_routes);
-    this.authenticationService.currentUser.subscribe(x => { this.currentUser = x;
-      if (x) {
-        this.routes.new_entreprise = ['/entreprise/entreprise-create', {user_id: x.id}];
-        this.routes.open = ['/entreprise/entreprise-list', {user_id: x.id}];
-      } else {
-        this.routes.new_entreprise = ['/entreprise/entreprise-create'];
-        this.routes.open = ['/entreprise/entreprise-list'];
-      }
+    this.authenticationService.currentUser.subscribe(x => {
+      this.currentUser = x;
     });
     this.entrepriseStorageService.entreprise.subscribe(x => {
       this.currentEntreprise = x;
-      if (x) {
-        this.routes.entreprise = ['/entreprise', x.id];
-        this.routes.edit_entreprise = ['entreprise/entreprise-edit', x.id];
-        this.routes.clients = ['/entreprise', x.id, 'clients'];
-        this.routes.register = ['/register', {entreprise_id: x.id}];
-        this.routes.login = ['/login', {entreprise_id: x.id}];
-      } else {
-        this.routes.entreprise = ['/entreprise'];
-        this.routes.clients = ['/entreprise'];
-        this.routes.register = ['/register'];
-        this.routes.login = ['/login'];
-      }
+    });
+    this.linksService.currentLinks.subscribe(x => {
+        this.routes = x;
     });
   }
 
