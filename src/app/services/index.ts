@@ -4,3 +4,4 @@ export * from './alert.service';
 export * from './jwt-helper.service';
 export * from './entreprise.service';
 export * from './entreprise-storage.service';
+export * from './links.service';
