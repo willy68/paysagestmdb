@@ -59,7 +59,6 @@ export class LinksService {
           routes.login = ['/login', {entreprise_id: x.id}];
         } else {
           routes.entreprise = ['/entreprise'];
-          routes.clients = ['/entreprise'];
           routes.register = ['/register'];
           routes.login = ['/login'];
         }
