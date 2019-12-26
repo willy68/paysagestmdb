@@ -30,10 +30,9 @@ export class EntrepriseListComponent implements OnInit {
   }
 
   public open(user_id: number, id: number) {
-    return this.entrepriseStorageService.open(user_id, id)
+    this.entrepriseStorageService.open(user_id, id)
     .subscribe( entreprise => {
       this.router.navigate(['entreprise', entreprise.id]);
-      return entreprise;
     });
   }
 
