@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -11,7 +11,7 @@ import { Entreprise } from '../../models';
   templateUrl: './entreprise-list.component.html',
   styleUrls: ['./entreprise-list.component.scss']
 })
-export class EntrepriseListComponent implements OnInit {
+export class EntrepriseListComponent implements OnInit, OnDestroy {
   private currentEntreprisesSubject: BehaviorSubject<Entreprise[]>;
   public entrepriseList: Observable<Entreprise[]>;
   public selectedItem = -1;
@@ -64,6 +64,11 @@ export class EntrepriseListComponent implements OnInit {
         }
       );
     }
+  }
+
+  ngOnDestroy() {
+    this.currentEntreprisesSubject.next(null);
+    this.currentEntreprisesSubject.complete();
   }
 
 }
