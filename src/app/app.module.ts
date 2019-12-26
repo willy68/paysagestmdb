@@ -20,12 +20,12 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { PgMenuComponent } from './pg-menu/pg-menu.component';
 // import { PgLoginFormComponent } from './pg-login-form/pg-login-form.component';
 // import { RegisterModalFormComponent } from './register-modal-form/register-modal-form.component';
-import { PgEntrepriseCreateComponent } from './pg-entreprise-create/pg-entreprise-create.component';
+// import { PgEntrepriseCreateComponent } from './pg-entreprise-create/pg-entreprise-create.component';
 import { PgRegisterComponent } from './pg-register/pg-register.component';
 import { PgLoginComponent } from './pg-login/pg-login.component';
 import { AlertComponent } from './alert/alert.component';
-import { ClientsListComponent } from './clients-list/clients-list.component';
-import { EntreprisesListComponent } from './entreprises-list/entreprises-list.component';
+// import { ClientsListComponent } from './clients-list/clients-list.component';
+// import { EntreprisesListComponent } from './entreprises-list/entreprises-list.component';
 import { DirectivesModule } from './directives';
 
 @NgModule({
@@ -34,11 +34,11 @@ import { DirectivesModule } from './directives';
     AlertComponent,
     PgMenuComponent,
     HomeComponent,
-    PgEntrepriseCreateComponent,
+    // PgEntrepriseCreateComponent,
     PgLoginComponent,
     PgRegisterComponent,
-    ClientsListComponent,
-    EntreprisesListComponent
+    // ClientsListComponent,
+    // EntreprisesListComponent
   ],
   imports: [
     BrowserModule,
