@@ -1,18 +1,18 @@
 <div class="row">
   <div class="col-sm-11">
     <mdb-card>
-      <mdb-card-header class="primary-color white-text text-center py-4">
-        <h5>
-          <strong>Liste des entreprises</strong>
+      <mdb-card-header class="primary-color white-text text-center">
+        <h6 class="fw-400 mb-0">
+          Liste des entreprises
           <span class="float-right">
             <mdb-icon fas icon="address-book"></mdb-icon>
           </span>
-        </h5>
+        </h6>
       </mdb-card-header>
-      <mdb-card-body>
-        <div class="fixed-header z-depth-1" 
+      <mdb-card-body class="p-0">
+        <div class="fixed-header z-depth-1 ft-09" 
         pgHighlightTableRow (selectItem)="onOpen($event)" (selectChange)="onSelect($event)">
-          <table class="table table-hover table-sheet" *ngIf="!emptyList">
+          <table class="table table-hover table-sheet table-sm" *ngIf="!emptyList">
             <thead>
               <tr>
                 <th>SIRET</th>
@@ -29,8 +29,8 @@
             </tbody>
           </table>
         </div>
-        <span>Index de selection: {{selectedItem}}</span>
       </mdb-card-body>
     </mdb-card>
+    <span>Index de selection: {{selectedItem}}</span>
   </div>
 </div>
