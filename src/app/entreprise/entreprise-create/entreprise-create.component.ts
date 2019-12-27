@@ -89,7 +89,7 @@ export class EntrepriseCreateComponent implements OnInit {
     this.submitted = true;
 
     // stop here if form is invalid or currentUser is null
-    if (this.createForm.invalid || this.currentUser) {
+    if (this.createForm.invalid || !this.currentUser) {
         return;
     }
 
