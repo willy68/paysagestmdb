@@ -41,7 +41,7 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     if (user) {
       this.selectedItem = index;
       const list = this.currentEntreprisesValue;
-      if (list.length > index) {
+      if (list.length > index && index !== -1) {
         this.open(user.id, list[index].id);
       }
     }
@@ -49,6 +49,18 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
 
   onSelect(index: number) {
     this.selectedItem = index;
+  }
+
+  onEdit(index: number) {
+    const user = this.authenticationService.currentUserValue;
+    if (user) {
+      this.selectedItem = index;
+      const list = this.currentEntreprisesValue;
+      if (list.length > index && index !== -1) {
+        this.router.navigate(['entreprise/entreprise-edit', list[index].id]);
+      }
+    }
+
   }
 
   ngOnInit() {

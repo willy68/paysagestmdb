@@ -11,62 +11,67 @@
         <h6 class="fw-400 mb-0">Chiffre d'affaire sur 12 mois</h6>
       </mdb-card-header>
       <mdb-card-body>
-        <mdb-card-text>Aucun chiffre d'affaire ces 12 dernier mois</mdb-card-text>
+        <mdb-card-text>Aucun chiffre d'affaire ces 12 derniers mois</mdb-card-text>
       </mdb-card-body>
     </mdb-card>
   </div>
 </div>
 <div class="row mb-4">
   <div class="col-md-6">
-    <h4 class="fw-400">10 dernières factures</h4>
-
-    <div class="fixed-header z-depth-1 ft-09 mb-4" pgHighlightTableRow height="20rem"
-    (selectItem)="onOpen($event)" (selectChange)="onSelect($event)">
-      <table class="table table-hover table-sheet table-sm" *ngIf="!emptyList">
-        <thead>
-          <tr>
-            <th>N°</th>
-            <th>Client</th>
-            <th>Total h.t.</th>
-            <th>Etat</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let entreprise of entrepriseList | async as entreprises; let i = index">
-            <td>{{entreprise.num}}</td>
-            <td>{{entreprise.client}}</td>
-            <td>{{entreprise.total_th}}</td>
-            <td>{{entreprise.etat}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+    <mdb-card>
+      <mdb-card-header>
+        <h6 class="fw-400 mb-0">10 dernières factures</h6>
+      </mdb-card-header>
+        <div class="fixed-header ft-09" pgHighlightTableRow height="20rem" (selectItem)="onOpen($event)"
+          (selectChange)="onSelect($event)">
+          <table class="table table-hover table-sheet table-sm" *ngIf="!emptyList">
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Client</th>
+                <th>Total h.t.</th>
+                <th>Etat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let entreprise of entrepriseList | async as entreprises; let i = index">
+                <td>{{entreprise.num}}</td>
+                <td>{{entreprise.client}}</td>
+                <td>{{entreprise.total_th}}</td>
+                <td>{{entreprise.etat}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+    </mdb-card>
   </div>
   <div class="col-md-6">
-    <h4 class="fw-400">10 derniers devis</h4>
-    <!--Text-->
-    <div class="fixed-header z-depth-1 ft-09 mb-4" pgHighlightTableRow height="20rem"
-    (selectItem)="onOpen($event)" (selectChange)="onSelect($event)">
-      <table class="table table-hover table-sheet table-sm" *ngIf="!emptyList">
-        <thead>
-          <tr>
-            <th>N°</th>
-            <th>Client</th>
-            <th>Total h.t.</th>
-            <th>Etat</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let entreprise of entrepriseList | async as entreprises; let i = index">
-            <td>{{entreprise.num}}</td>
-            <td>{{entreprise.client}}</td>
-            <td>{{entreprise.total_th}}</td>
-            <td>{{entreprise.etat}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+    <mdb-card>
+      <mdb-card-header>
+        <h6 class="fw-400 mb-0">10 derniers devis</h6>
+      </mdb-card-header>
+      <!--Text-->
+      <div class="fixed-header ft-09" pgHighlightTableRow height="20rem" (selectItem)="onOpen($event)"
+        (selectChange)="onSelect($event)">
+        <table class="table table-hover table-sheet table-sm" *ngIf="!emptyList">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Client</th>
+              <th>Total h.t.</th>
+              <th>Etat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entreprise of entrepriseList | async as entreprises; let i = index">
+              <td>{{entreprise.num}}</td>
+              <td>{{entreprise.client}}</td>
+              <td>{{entreprise.total_th}}</td>
+              <td>{{entreprise.etat}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mdb-card>
   </div>
 </div>
