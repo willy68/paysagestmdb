@@ -1,7 +1,20 @@
 <div class="row">
-  <div class="col-md-8 mb-4">
+  <div class="col-md-4 mb-4">
     <a [routerLink]="['../']" routerLinkActive="router-link-active"  mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Retour à la liste des clients</a>
   </div>
+  <div class="col-md mb-4">
+    <mdb-card>
+      <mdb-card-header class="primary-color white-text">
+        <h6 class="fw-400 mb-0">Information</h6>
+      </mdb-card-header>
+      <mdb-card-body>
+        <mdb-card-text>Une fois le nouveau client créé, 
+          vous serez redirigé vers la création d'une adresse principale pour ce client
+        </mdb-card-text>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+
 </div>
 <div class="row">
   <div class="col-sm-12">
