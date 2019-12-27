@@ -53,6 +53,7 @@ export class HighlightTableRowDirective implements OnInit {
       this.selectedRow++;
       this.disableClass(index);
       this.setClickedRow(this.selectedRow);
+      this.cancelScroll = true;
       this.doScroll(this.selectedRow);
       this.selectChange.emit(this.selectedRow);
     } else if (event.code === 'ArrowUp') {
@@ -62,6 +63,7 @@ export class HighlightTableRowDirective implements OnInit {
       this.selectedRow--;
       this.disableClass(index);
       this.setClickedRow(this.selectedRow);
+      this.cancelScroll = true;
       this.doScroll(this.selectedRow);
       this.selectChange.emit(this.selectedRow);
     } else if (event.code === 'Enter') {
@@ -91,6 +93,7 @@ export class HighlightTableRowDirective implements OnInit {
     }
     this.selectedRow = tr.rowIndex - this.startIndex;
     this.setClickedRow(this.selectedRow);
+    this.cancelScroll = true;
     this.doScroll(this.selectedRow);
     this.selectChange.emit(this.selectedRow);
   }
@@ -130,12 +133,10 @@ export class HighlightTableRowDirective implements OnInit {
     const rowEl = this.trCollection[index];
     if (rowEl.offsetTop < scrollBodyEl.scrollTop + theadHeight) {
       this.scrollTop = scrollBodyEl.scrollTop = rowEl.offsetTop - theadHeight;
-      this.cancelScroll = true;
     } else if ((rowEl.offsetTop + rowEl.offsetHeight) >
       (scrollBodyEl.scrollTop + scrollBodyEl.offsetHeight)) {
       this.scrollTop = (scrollBodyEl.scrollTop += rowEl.offsetTop +
         rowEl.offsetHeight - scrollBodyEl.scrollTop - scrollBodyEl.offsetHeight);
-      this.cancelScroll = true;
     }
   }
 
