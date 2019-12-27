@@ -1,21 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/models';
-import { Router } from '@angular/router';
-import { ClientService, AuthenticationService, AlertService } from 'src/app/services';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ClientService, AlertService } from 'src/app/services';
 import { first } from 'rxjs/operators';
-
-/*
-    'entreprise_id',
-    'code_client',
-    'civilite',
-    'nom',
-    'prenom',
-    'tel',
-    'portable',
-    'email',
-    'tva_intracom'
-*/
 
 @Component({
   selector: 'pg-client-create',
@@ -24,7 +11,7 @@ import { first } from 'rxjs/operators';
 })
 export class ClientCreateComponent implements OnInit {
 
-  currentUser: User;
+  public entreprise_id: number;
   public createForm: FormGroup;
   public submitted = false;
   public loading = false;
@@ -34,14 +21,16 @@ export class ClientCreateComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private router: Router,
+    private route: ActivatedRoute,
     private clientService: ClientService,
-    private authenticationService: AuthenticationService,
-    private alertService: AlertService) {
-      this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-     }
+    private alertService: AlertService) { }
 
   ngOnInit() {
     this.createFormBuild();
+    this.route.paramMap
+      .subscribe((params: ParamMap) => {
+        this.entreprise_id = +params.get('entreprise_id');
+      });
   }
 
   // convenience getter for easy access to form fields
@@ -49,14 +38,14 @@ export class ClientCreateComponent implements OnInit {
 
   createFormBuild() {
     this.createForm = this.fb.group({
-    code_client: ['', [Validators.required]],
-    civilite: ['', []],
-    nom: ['', [Validators.required]],
-    prenom: ['', []],
-    tel: ['', []],
-    portable: ['', []],
-    email: ['', [Validators.required, Validators.email]] ,
-    tva_intracom: ['', []]
+      code_client: ['', [Validators.required]],
+      civilite: ['', []],
+      nom: ['', [Validators.required]],
+      prenom: ['', []],
+      tel: ['', []],
+      portable: ['', []],
+      email: ['', [Validators.required, Validators.email]],
+      tva_intracom: ['', []]
     });
   }
 
@@ -68,33 +57,16 @@ export class ClientCreateComponent implements OnInit {
   get email() { return this.createForm.get('email'); }
   get tva_intracom() { return this.createForm.get('tva_intracom'); }
 
-  previewLogo(files: FileList) {
-    if (files.length === 0) { return; }
-
-    const mimeType = files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.alertService.error('Seul les fichiers image sont supportés');
-      return;
-    }
-
-    const reader = new FileReader();
-    this.imagePath = files;
-    reader.readAsDataURL(files[0]);
-    reader.onload = (event) => {
-      this.imgURL = reader.result;
-    };
-  }
-
   onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid or currentUser is null
-    if (this.createForm.invalid || this.currentUser) {
-        return;
+    if (this.createForm.invalid || this.entreprise_id) {
+      return;
     }
 
     this.loading = true;
-    this.clientService.create(this.currentUser.id, {
+    this.clientService.create(this.entreprise_id, {
       code_client: this.f.siret.value,
       civilite: this.f.nom.value,
       nom: this.f.ape.value,
@@ -104,17 +76,17 @@ export class ClientCreateComponent implements OnInit {
       email: this.f.cp.value,
       tva_intracom: this.f.ville.value
     })
-    .pipe(first())
-    .subscribe(
+      .pipe(first())
+      .subscribe(
         data => {
-            this.alertService.success('SUCCESS!! : ' + data.nom );
-           // navigue vers entreprise-list pour ouvrir cette entreprise
-            this.router.navigate(['/entreprise/entreprise-list']);
+          this.alertService.success('SUCCESS!! : ' + data.nom);
+          // navigue vers clients list pour ouvrir cette entreprise
+          this.router.navigate(['../']);
         },
         error => {
-            this.alertService.error(error);
+          this.alertService.error(error);
         });
-        this.loading = false;
+    this.loading = false;
   }
 
   resetForm() {
