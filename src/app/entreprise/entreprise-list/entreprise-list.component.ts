@@ -37,11 +37,12 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
   }
 
   public onOpen(index: number) {
+    if (index === -1) { return; }
     const user = this.authenticationService.currentUserValue;
     if (user) {
       this.selectedItem = index;
       const list = this.currentEntreprisesValue;
-      if (list.length > index && index !== -1) {
+      if (list.length > index) {
         this.open(user.id, list[index].id);
       }
     }
@@ -52,11 +53,12 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
   }
 
   onEdit(index: number) {
+    if (index === -1) { return; }
     const user = this.authenticationService.currentUserValue;
     if (user) {
       this.selectedItem = index;
       const list = this.currentEntreprisesValue;
-      if (list.length > index && index !== -1) {
+      if (list.length > index) {
         this.router.navigate(['entreprise/entreprise-edit', list[index].id]);
       }
     }
