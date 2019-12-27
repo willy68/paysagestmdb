@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { EntrepriseService, EntrepriseStorageService } from '../../services';
 import { AuthenticationService } from '../../services';
-import { Entreprise } from '../../models';
+import { Entreprise, User } from '../../models';
 
 @Component({
   selector: 'pg-entreprise-list',
@@ -14,6 +14,7 @@ import { Entreprise } from '../../models';
 export class EntrepriseListComponent implements OnInit, OnDestroy {
   private currentEntreprisesSubject: BehaviorSubject<Entreprise[]>;
   public entrepriseList: Observable<Entreprise[]>;
+  public user: User;
   public selectedItem = -1;
   public emptyList = false;
 
@@ -38,12 +39,12 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
 
   public onOpen(index: number) {
     if (index === -1) { return; }
-    const user = this.authenticationService.currentUserValue;
-    if (user) {
+    // const user = this.authenticationService.currentUserValue;
+    if (this.user) {
       this.selectedItem = index;
       const list = this.currentEntreprisesValue;
       if (list.length > index) {
-        this.open(user.id, list[index].id);
+        this.open(this.user.id, list[index].id);
       }
     }
   }
@@ -54,8 +55,8 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
 
   onEdit(index: number) {
     if (index === -1) { return; }
-    const user = this.authenticationService.currentUserValue;
-    if (user) {
+    // const user = this.authenticationService.currentUserValue;
+    if (this.user) {
       this.selectedItem = index;
       const list = this.currentEntreprisesValue;
       if (list.length > index) {
@@ -66,9 +67,9 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const user = this.authenticationService.currentUserValue;
-    if (user) {
-      this.entrepriseService.getList(user.id)
+    this.user = this.authenticationService.currentUserValue;
+    if (this.user) {
+      this.entrepriseService.getList(this.user.id)
       .subscribe(
         list => {
           this.currentEntreprisesSubject.next(list);
