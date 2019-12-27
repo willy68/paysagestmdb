@@ -16,8 +16,8 @@ import { ClientComponent } from './client/client.component';
 
 @NgModule({
   declarations: [
-    ClientsListComponent, 
-    ClientCreateComponent, 
+    ClientsListComponent,
+    ClientCreateComponent,
     ClientUpdateComponent, ClientComponent
   ],
   imports: [
