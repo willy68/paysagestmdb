@@ -9,4 +9,6 @@ export interface Client {
   portable?: string;
   email?: string;
   tva_intracom?: string;
+  created_at?: string;
+  updated_at?: string;
 }
