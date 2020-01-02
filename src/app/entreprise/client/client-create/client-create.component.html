@@ -34,7 +34,8 @@
           <div class="form-row">
             <div class="col-md">
               <div class="md-form">
-                <input type="text" mdbInput mdbValidate formControlName="code_client" id="code_client" class="form-control" />
+                <input type="text" mdbInput mdbValidate formControlName="code_client" 
+                id="code_client" class="form-control" [value]="dernier_code"/>
                 <label for="code_client">Code client: *</label>
                 <mdb-error *ngIf="f.code_client.invalid && (f.code_client.dirty || f.code_client.touched)">
                   <span *ngIf="f.code_client.errors.required">Code client is required</span>

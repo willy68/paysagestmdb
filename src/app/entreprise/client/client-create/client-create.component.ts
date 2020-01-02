@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { ClientService, AlertService } from 'src/app/services';
+import { ClientService, DernierCodeService, AlertService } from 'src/app/services';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -12,6 +12,7 @@ import { first } from 'rxjs/operators';
 export class ClientCreateComponent implements OnInit {
 
   public entreprise_id: number;
+  public dernier_code: string;
   public createForm: FormGroup;
   public submitted = false;
   public loading = false;
@@ -23,14 +24,19 @@ export class ClientCreateComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private clientService: ClientService,
+    private dernierCodeService: DernierCodeService,
     private alertService: AlertService) { }
 
   ngOnInit() {
-    this.createFormBuild();
     this.route.paramMap
       .subscribe((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
       });
+    this.dernierCodeService.getLastCode(this.entreprise_id, 'client')
+    .subscribe( data => {
+      this.dernier_code = data.prochain_code;
+    });
+    this.createFormBuild();
   }
 
   // convenience getter for easy access to form fields
@@ -38,7 +44,7 @@ export class ClientCreateComponent implements OnInit {
 
   createFormBuild() {
     this.createForm = this.fb.group({
-      code_client: ['', [Validators.required]],
+      code_client: [{value: this.dernier_code, disabled: true}, [Validators.required]],
       civilite: ['', []],
       nom: ['', [Validators.required]],
       prenom: ['', []],
@@ -47,6 +53,7 @@ export class ClientCreateComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       tva_intracom: ['', []]
     });
+    this.f.code_client.setValue(this.dernier_code);
   }
 
   get code_client() { return this.createForm.get('code_client'); }
@@ -96,6 +103,7 @@ export class ClientCreateComponent implements OnInit {
     Object.keys(this.createForm.controls).forEach(key => {
       this.createForm.controls[key].setErrors(null);
     });
+    this.f.code_client.setValue(this.dernier_code);
   }
 
 }
