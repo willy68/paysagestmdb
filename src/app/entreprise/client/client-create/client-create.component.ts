@@ -17,9 +17,6 @@ export class ClientCreateComponent implements OnInit {
   public submitted = false;
   public loading = false;
 
-  public imagePath: FileList;
-  public imgURL: any;
-
   constructor(private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
@@ -28,6 +25,7 @@ export class ClientCreateComponent implements OnInit {
     private alertService: AlertService) { }
 
   ngOnInit() {
+    this.createFormBuild();
     this.route.paramMap
       .subscribe((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
@@ -35,8 +33,8 @@ export class ClientCreateComponent implements OnInit {
     this.dernierCodeService.getLastCode(this.entreprise_id, 'client')
     .subscribe( data => {
       this.dernier_code = data.prochain_code;
+      this.createForm.patchValue({code_client: this.dernier_code});
     });
-    this.createFormBuild();
   }
 
   // convenience getter for easy access to form fields
@@ -53,12 +51,12 @@ export class ClientCreateComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       tva_intracom: ['', []]
     });
-    this.f.code_client.setValue(this.dernier_code);
   }
 
   get code_client() { return this.createForm.get('code_client'); }
   get civilite() { return this.createForm.get('civilite'); }
   get nom() { return this.createForm.get('nom'); }
+  get prenom() { return this.createForm.get('prenom'); }
   get tel() { return this.createForm.get('tel'); }
   get portable() { return this.createForm.get('portable'); }
   get email() { return this.createForm.get('email'); }
@@ -67,21 +65,21 @@ export class ClientCreateComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // stop here if form is invalid or currentUser is null
-    if (this.createForm.invalid || this.entreprise_id) {
+    // stop here if form is invalid or entreprise_id is null
+    if (this.createForm.invalid || !this.entreprise_id) {
       return;
     }
 
     this.loading = true;
     this.clientService.create(this.entreprise_id, {
-      code_client: this.f.siret.value,
-      civilite: this.f.nom.value,
-      nom: this.f.ape.value,
-      prenom: this.f.tva_intracom.value,
-      tel: this.f.adresse.value,
-      portable: this.f.suite_adresse.value,
-      email: this.f.cp.value,
-      tva_intracom: this.f.ville.value
+      code_client: this.f.code_client.value,
+      civilite: this.f.civilite.value,
+      nom: this.f.nom.value,
+      prenom: this.f.prenom.value,
+      tel: this.f.tel.value,
+      portable: this.f.portable.value,
+      email: this.f.email.value,
+      tva_intracom: this.f.tva_intracom.value
     })
       .pipe(first())
       .subscribe(
@@ -98,12 +96,11 @@ export class ClientCreateComponent implements OnInit {
 
   resetForm() {
     this.submitted = false;
-    this.imgURL = '';
-    this.createForm.reset();
-    Object.keys(this.createForm.controls).forEach(key => {
-      this.createForm.controls[key].setErrors(null);
-    });
-    this.f.code_client.setValue(this.dernier_code);
+    this.createForm.reset({code_client: {value: this.dernier_code, disabled: true}});
+    // Object.keys(this.createForm.controls).forEach(key => {
+      // this.createForm.controls[key].setErrors(null);
+    // });
+    // this.createForm.patchValue({code_client: this.dernier_code});
   }
 
 }
