@@ -97,10 +97,10 @@ export class ClientCreateComponent implements OnInit {
   resetForm() {
     this.submitted = false;
     this.createForm.reset({code_client: {value: this.dernier_code, disabled: true}});
-    // Object.keys(this.createForm.controls).forEach(key => {
-      // this.createForm.controls[key].setErrors(null);
-    // });
-    // this.createForm.patchValue({code_client: this.dernier_code});
+    /*Object.keys(this.createForm.controls).forEach(key => {
+      this.createForm.controls[key].setErrors(null);
+    });
+    this.createForm.patchValue({code_client: this.dernier_code});*/
   }
 
 }
