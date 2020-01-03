@@ -46,8 +46,9 @@
               </div>
               <div class="md-form">
                 <select formControlName="civilite" class="form-control" mdbInput mdbValidate>
+                  <option></option>
                   <option *ngFor="let civilite of civiliteList | async; let i = index" 
-                   [value]="civilite.libelle">
+                  [ngValue]="civilite.libelle">
                    {{civilite.libelle}}
                   </option>
                 </select>

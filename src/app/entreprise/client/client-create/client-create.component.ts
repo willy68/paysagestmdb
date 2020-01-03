@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { tap } from 'rxjs/operators';
 import { ClientService, DernierCodeService, CiviliteService, AlertService } from 'src/app/services';
 import { first } from 'rxjs/operators';
 import { Civilite } from 'src/app/models';
@@ -35,10 +34,10 @@ export class ClientCreateComponent implements OnInit {
       .subscribe((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
         this.dernierCodeService.getLastCode(this.entreprise_id, 'client')
-        .subscribe( data => {
-          this.dernier_code = data.prochain_code;
-          this.createForm.patchValue({code_client: this.dernier_code});
-        });
+          .subscribe(data => {
+            this.dernier_code = data.prochain_code;
+            this.createForm.patchValue({ code_client: this.dernier_code });
+          });
         this.civiliteList = this.civiliteService.getList(this.entreprise_id);
       });
   }
@@ -48,7 +47,7 @@ export class ClientCreateComponent implements OnInit {
 
   createFormBuild() {
     this.createForm = this.fb.group({
-      code_client: [{value: this.dernier_code, disabled: true}, [Validators.required]],
+      code_client: [{ value: this.dernier_code, disabled: true }, [Validators.required]],
       civilite: ['', []],
       nom: ['', [Validators.required]],
       prenom: ['', []],
@@ -103,8 +102,7 @@ export class ClientCreateComponent implements OnInit {
   resetForm() {
     this.submitted = false;
     this.createForm.reset({
-      code_client: {value: this.dernier_code, disabled: true},
-      civilite: {value: this.f.civilite.value}
+      code_client: { value: this.dernier_code, disabled: true }
     });
     /*Object.keys(this.createForm.controls).forEach(key => {
       this.createForm.controls[key].setErrors(null);
