@@ -34,13 +34,13 @@ export class ClientCreateComponent implements OnInit {
     this.route.paramMap
       .subscribe((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
+        this.dernierCodeService.getLastCode(this.entreprise_id, 'client')
+        .subscribe( data => {
+          this.dernier_code = data.prochain_code;
+          this.createForm.patchValue({code_client: this.dernier_code});
+        });
+        this.civiliteList = this.civiliteService.getList(this.entreprise_id);
       });
-    this.dernierCodeService.getLastCode(this.entreprise_id, 'client')
-    .subscribe( data => {
-      this.dernier_code = data.prochain_code;
-      this.createForm.patchValue({code_client: this.dernier_code});
-    });
-    this.civiliteList = this.civiliteService.getList(this.entreprise_id);
   }
 
   // convenience getter for easy access to form fields
@@ -102,7 +102,10 @@ export class ClientCreateComponent implements OnInit {
 
   resetForm() {
     this.submitted = false;
-    this.createForm.reset({code_client: {value: this.dernier_code, disabled: true}});
+    this.createForm.reset({
+      code_client: {value: this.dernier_code, disabled: true},
+      civilite: {value: this.f.civilite.value}
+    });
     /*Object.keys(this.createForm.controls).forEach(key => {
       this.createForm.controls[key].setErrors(null);
     });
