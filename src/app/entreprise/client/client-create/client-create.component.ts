@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { tap } from 'rxjs/operators';
 import { ClientService, DernierCodeService, CiviliteService, AlertService } from 'src/app/services';
 import { first } from 'rxjs/operators';
 import { Civilite } from 'src/app/models';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'pg-client-create',
@@ -14,7 +16,7 @@ export class ClientCreateComponent implements OnInit {
 
   public entreprise_id: number;
   public dernier_code: string;
-  public civiliteList: Civilite[];
+  public civiliteList: Observable<Civilite[]>;
   public createForm: FormGroup;
   public submitted = false;
   public loading = false;
@@ -38,10 +40,7 @@ export class ClientCreateComponent implements OnInit {
       this.dernier_code = data.prochain_code;
       this.createForm.patchValue({code_client: this.dernier_code});
     });
-    this.civiliteService.getList(this.entreprise_id)
-    .subscribe( data => {
-      this.civiliteList = data;
-    });
+    this.civiliteList = this.civiliteService.getList(this.entreprise_id);
   }
 
   // convenience getter for easy access to form fields

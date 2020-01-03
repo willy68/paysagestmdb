@@ -45,8 +45,13 @@
                 </mdb-success>
               </div>
               <div class="md-form">
-                <input type="text" mdbInput mdbValidate formControlName="civilite" id="civilite" class="form-control" />
-                <label for="civilite">Civilite:</label>
+                <select formControlName="civilite" class="form-control" mdbInput mdbValidate>
+                  <option *ngFor="let civilite of civiliteList | async; let i = index" 
+                   [value]="civilite.libelle">
+                   {{civilite.libelle}}
+                  </option>
+                </select>
+                    <label for="civilite">Civilite:</label>
                 <!--<mdb-error *ngIf="f.civilite.invalid && (f.civilite.dirty || f.civilite.touched)">
                   <span *ngIf="f.civilite.errors.required">Civilite is required</span>
                 </mdb-error>
