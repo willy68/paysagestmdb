@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-md-4 mb-4">
-    <a [routerLink]="['../']" routerLinkActive="router-link-active"  mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Retour à la liste des clients</a>
+    <a [routerLink]="['../']" routerLinkActive="router-link-active" mdbBtn pgRoundedBtn class="mr-2" color="info"
+      outline="true" mdbWavesEffect>Retour à la liste des clients</a>
   </div>
   <div class="col-md mb-4">
     <mdb-card>
@@ -8,7 +9,7 @@
         <h6 class="fw-400 mb-0">Information</h6>
       </mdb-card-header>
       <mdb-card-body>
-        <mdb-card-text>Une fois le nouveau client créé, 
+        <mdb-card-text>Une fois le nouveau client créé,
           vous serez redirigé vers la création d'une adresse principale pour ce client
         </mdb-card-text>
       </mdb-card-body>
@@ -34,8 +35,8 @@
           <div class="form-row">
             <div class="col-md">
               <div class="md-form">
-                <input type="text" mdbInput mdbValidate formControlName="code_client" 
-                id="code_client" class="form-control"/>
+                <input type="text" mdbInput mdbValidate formControlName="code_client" id="code_client"
+                  class="form-control" />
                 <label for="code_client">Code client: *</label>
                 <mdb-error *ngIf="f.code_client.invalid && (f.code_client.dirty || f.code_client.touched)">
                   <span *ngIf="f.code_client.errors.required">Code client is required</span>
@@ -45,14 +46,13 @@
                 </mdb-success>
               </div>
               <div class="md-form">
-                <select formControlName="civilite" class="form-control" mdbInput mdbValidate>
-                  <option></option>
-                  <option *ngFor="let civilite of civiliteList | async; let i = index" 
-                  [ngValue]="civilite.libelle">
-                   {{civilite.libelle}}
+                <input type="text" formControlName="civilite" class="form-control" mdbInput mdbValidate list="civilites"/>
+                <datalist id="civilites">
+                  <option *ngFor="let civilite of civiliteList | async; let i = index" [ngValue]="civilite.libelle">
+                    {{civilite.libelle}}
                   </option>
-                </select>
-                    <label for="civilite">Civilite:</label>
+                </datalist>
+                <label for="civilite">Civilite:</label>
                 <!--<mdb-error *ngIf="f.civilite.invalid && (f.civilite.dirty || f.civilite.touched)">
                   <span *ngIf="f.civilite.errors.required">Civilite is required</span>
                 </mdb-error>
@@ -116,7 +116,8 @@
                 </mdb-success>
               </div>
               <div class="md-form">
-                <input type="text" mdbInput mdbValidate formControlName="tva_intracom" id="tva_intracom" class="form-control" />
+                <input type="text" mdbInput mdbValidate formControlName="tva_intracom" id="tva_intracom"
+                  class="form-control" />
                 <label for="tva_intracom">Tva intracom:</label>
                 <!--<mdb-error *ngIf="f.tva_intracom.invalid && (f.tva_intracom.dirty || f.tva_intracom.touched)">
                   <span *ngIf="f.tva_intracom.errors.required">tva_intracom is required</span>
