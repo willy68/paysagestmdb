@@ -115,20 +115,12 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
       tap(list => {
         if (this.civilite.value.length && !list.find(element => element.libelle === this.civilite.value)) {
           this.openModal();
-          /*this.civiliteService.create(this.entreprise_id,
-            {
-              entreprise_id: this.entreprise_id,
-              libelle: this.civilite.value
-            })
-            .pipe(first())
-            .subscribe();*/
           console.log(this.civilite.value + ' pas dans la liste');
         }
       }),
       takeUntil(this.deadList)
     )
     .subscribe();
-    // sub.unsubscribe();
     console.log('focusout event');
   }
 
@@ -164,6 +156,13 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
 
     this.modalRef.content.action.subscribe( (result: any) => {
       if (result) {
+      /*this.civiliteService.create(this.entreprise_id,
+        {
+          entreprise_id: this.entreprise_id,
+          libelle: this.civilite.value
+        })
+        .pipe(first())
+        .subscribe();*/
         console.log('yes sauvegarde');
       } else {
         console.log('No pas de sauvegarde');
