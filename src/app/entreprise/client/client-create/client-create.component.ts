@@ -110,6 +110,13 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
     .pipe(
       tap(list => {
         if (this.civilite.value.length && !list.find(element => element.libelle === this.civilite.value)) {
+          /*this.civiliteService.create(this.entreprise_id,
+            {
+              entreprise_id: this.entreprise_id,
+              libelle: this.civilite.value
+            })
+            .pipe(first())
+            .subscribe();*/
           console.log(this.civilite.value + ' pas dans la liste');
         }
       }),
