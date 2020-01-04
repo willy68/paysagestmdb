@@ -46,7 +46,8 @@
                 </mdb-success>
               </div>
               <div class="md-form">
-                <input type="text" formControlName="civilite" class="form-control" mdbInput mdbValidate list="civilites"/>
+                <input type="text" formControlName="civilite" class="form-control" mdbInput mdbValidate 
+                list="civilites" (focusout)="civiliteFocusout($event)"/>
                 <datalist id="civilites">
                   <option *ngFor="let civilite of civiliteList | async; let i = index" [ngValue]="civilite.libelle">
                     {{civilite.libelle}}

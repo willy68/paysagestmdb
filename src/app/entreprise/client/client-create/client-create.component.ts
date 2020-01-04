@@ -99,6 +99,17 @@ export class ClientCreateComponent implements OnInit {
     this.loading = false;
   }
 
+  civiliteFocusout(event) {
+    this.civiliteList
+    .subscribe(list => {
+      if (!list.find(element => element.libelle === this.civilite.value)) {
+        console.log(this.civilite.value + ' pas dans la liste');
+      }
+    });
+    // sub.unsubscribe();
+    console.log('focusout event');
+  }
+
   resetForm() {
     this.submitted = false;
     this.createForm.reset({
