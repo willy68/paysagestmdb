@@ -27,6 +27,7 @@ import { AlertComponent } from './alert/alert.component';
 // import { ClientsListComponent } from './clients-list/clients-list.component';
 // import { EntreprisesListComponent } from './entreprises-list/entreprises-list.component';
 import { DirectivesModule } from './directives';
+import { YesnomodalComponent } from './yesnomodal/yesnomodal.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { DirectivesModule } from './directives';
     // PgEntrepriseCreateComponent,
     PgLoginComponent,
     PgRegisterComponent,
+    YesnomodalComponent,
     // ClientsListComponent,
     // EntreprisesListComponent
   ],
