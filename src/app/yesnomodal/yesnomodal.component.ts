@@ -16,11 +16,11 @@ export class YesnomodalComponent implements OnInit {
   constructor(public modalRef: MDBModalRef) { }
 
   onYesClick() {
-    this.action.next('yes');
+    this.action.next(true);
   }
 
   onNoClick() {
-    this.action.next('No');
+    this.action.next(false);
   }
 
   ngOnInit() {

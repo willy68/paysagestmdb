@@ -5,6 +5,8 @@ import { ClientService, DernierCodeService, CiviliteService, AlertService } from
 import { first, tap, takeUntil } from 'rxjs/operators';
 import { Civilite } from 'src/app/models';
 import { Observable, Subject } from 'rxjs';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
+import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
 
 @Component({
   selector: 'pg-client-create',
@@ -21,6 +23,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
   public createForm: FormGroup;
   public submitted = false;
   public loading = false;
+  public modalRef: MDBModalRef;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -28,6 +31,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
     private clientService: ClientService,
     private dernierCodeService: DernierCodeService,
     private civiliteService: CiviliteService,
+    private modalService: MDBModalService,
     private alertService: AlertService) { }
 
   ngOnInit() {
@@ -110,6 +114,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
     .pipe(
       tap(list => {
         if (this.civilite.value.length && !list.find(element => element.libelle === this.civilite.value)) {
+          this.openModal();
           /*this.civiliteService.create(this.entreprise_id,
             {
               entreprise_id: this.entreprise_id,
@@ -136,6 +141,35 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
       this.createForm.controls[key].setErrors(null);
     });
     this.createForm.patchValue({code_client: this.dernier_code});*/
+  }
+
+  openModal() {
+    this.modalRef = this.modalService.show(YesnomodalComponent, {
+        backdrop: true,
+        keyboard: true,
+        focus: true,
+        show: false,
+        ignoreBackdropClick: false,
+        class: '',
+        containerClass: '',
+        animated: true,
+        data: {
+          heading: 'Modal heading',
+          content: {
+            heading: 'Content heading',
+            description: 'Voulez sauvegarder la civilité ' + this.civilite.value
+          }
+        }
+    });
+
+    this.modalRef.content.action.subscribe( (result: any) => {
+      if (result) {
+        console.log('yes sauvegarde');
+      } else {
+        console.log('No pas de sauvegarde');
+      }
+      this.modalRef.hide();
+    });
   }
 
   ngOnDestroy() {

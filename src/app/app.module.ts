@@ -56,6 +56,7 @@ import { YesnomodalComponent } from './yesnomodal/yesnomodal.component';
     EntrepriseModule,
     AppRoutingModule
   ],
+  entryComponents: [ YesnomodalComponent ],
   providers: [
     JwtHelperService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
