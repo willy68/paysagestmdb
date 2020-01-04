@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ClientService, DernierCodeService, CiviliteService, AlertService } from 'src/app/services';
-import { first } from 'rxjs/operators';
+import { first, tap, takeUntil } from 'rxjs/operators';
 import { Civilite } from 'src/app/models';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'pg-client-create',
   templateUrl: './client-create.component.html',
   styleUrls: ['./client-create.component.scss']
 })
-export class ClientCreateComponent implements OnInit {
+export class ClientCreateComponent implements OnInit, OnDestroy {
 
   public entreprise_id: number;
   public dernier_code: string;
   public civiliteList: Observable<Civilite[]>;
+  private deadList = new Subject();
+  private deadCode = new Subject();
   public createForm: FormGroup;
   public submitted = false;
   public loading = false;
@@ -34,10 +36,14 @@ export class ClientCreateComponent implements OnInit {
       .subscribe((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
         this.dernierCodeService.getLastCode(this.entreprise_id, 'client')
-          .subscribe(data => {
-            this.dernier_code = data.prochain_code;
-            this.createForm.patchValue({ code_client: this.dernier_code });
-          });
+          .pipe(
+            tap(data => {
+              this.dernier_code = data.prochain_code;
+              this.createForm.patchValue({ code_client: this.dernier_code });
+            }),
+            takeUntil(this.deadCode)
+          )
+          .subscribe();
         this.civiliteList = this.civiliteService.getList(this.entreprise_id);
       });
   }
@@ -101,11 +107,15 @@ export class ClientCreateComponent implements OnInit {
 
   civiliteFocusout(event) {
     this.civiliteList
-    .subscribe(list => {
-      if (!list.find(element => element.libelle === this.civilite.value)) {
-        console.log(this.civilite.value + ' pas dans la liste');
-      }
-    });
+    .pipe(
+      tap(list => {
+        if (this.civilite.value.length && !list.find(element => element.libelle === this.civilite.value)) {
+          console.log(this.civilite.value + ' pas dans la liste');
+        }
+      }),
+      takeUntil(this.deadList)
+    )
+    .subscribe();
     // sub.unsubscribe();
     console.log('focusout event');
   }
@@ -121,4 +131,10 @@ export class ClientCreateComponent implements OnInit {
     this.createForm.patchValue({code_client: this.dernier_code});*/
   }
 
+  ngOnDestroy() {
+    this.deadList.next();
+    this.deadList.complete();
+    this.deadCode.next();
+    this.deadCode.complete();
+  }
 }

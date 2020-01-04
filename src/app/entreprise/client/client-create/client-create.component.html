@@ -49,7 +49,7 @@
                 <input type="text" formControlName="civilite" class="form-control" mdbInput mdbValidate 
                 list="civilites" (focusout)="civiliteFocusout($event)"/>
                 <datalist id="civilites">
-                  <option *ngFor="let civilite of civiliteList | async; let i = index" [ngValue]="civilite.libelle">
+                  <option *ngFor="let civilite of civiliteList | async; let i = index" [value]="civilite.libelle">
                     {{civilite.libelle}}
                   </option>
                 </datalist>
