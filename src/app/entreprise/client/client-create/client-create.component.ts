@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ClientService, DernierCodeService, CiviliteService, AlertService } from 'src/app/services';
-import { first, tap, takeUntil } from 'rxjs/operators';
+import { first, tap, takeUntil, switchMap } from 'rxjs/operators';
 import { Civilite } from 'src/app/models';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
 
@@ -17,7 +17,9 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
 
   public entreprise_id: number;
   public dernier_code: string;
+  private readonly refreshCiviliteList = new BehaviorSubject(null);
   public civiliteList: Observable<Civilite[]>;
+  public civilites: Civilite[];
   private deadList = new Subject();
   private deadCode = new Subject();
   public createForm: FormGroup;
@@ -48,7 +50,14 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
             takeUntil(this.deadCode)
           )
           .subscribe();
-        this.civiliteList = this.civiliteService.getList(this.entreprise_id);
+        this.civiliteList = this.refreshCiviliteList
+        .pipe(
+          switchMap(() => this.civiliteService.getList(this.entreprise_id)
+            .pipe(
+              tap(data => {this.civilites = data;
+                console.log(this.civilites);
+              })
+            )));
       });
   }
 
@@ -100,7 +109,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           this.alertService.success('SUCCESS!! : ' + data.nom);
-          // navigue vers clients list pour ouvrir cette entreprise
+          // navigue vers clients list
           this.router.navigate(['../']);
         },
         error => {
@@ -110,17 +119,25 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
   }
 
   civiliteFocusout(event) {
-    this.civiliteList
-    .pipe(
-      tap(list => {
-        if (this.civilite.value.length && !list.find(element => element.libelle === this.civilite.value)) {
-          this.openModal();
-          console.log(this.civilite.value + ' pas dans la liste');
+    if (this.civilite.value.length &&
+        !this.civilites.find(element => element.libelle === this.civilite.value)) {
+      this.modalRef = this.openModal();
+      this.modalRef.content.action.subscribe( (result: any) => {
+        if (result) {
+        /*this.civiliteService.create(this.entreprise_id,
+          {
+            entreprise_id: this.entreprise_id,
+            libelle: this.civilite.value
+          })
+          .subscribe(() => this.RefreshCiviliteList.next(null));*/
+          console.log('yes sauvegarde');
+        } else {
+          console.log('No pas de sauvegarde');
         }
-      }),
-      takeUntil(this.deadList)
-    )
-    .subscribe();
+        this.modalRef.hide();
+      });
+      console.log(this.civilite.value + ' pas dans la liste');
+    }
     console.log('focusout event');
   }
 
@@ -131,12 +148,12 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
     });
     /*Object.keys(this.createForm.controls).forEach(key => {
       this.createForm.controls[key].setErrors(null);
-    });
-    this.createForm.patchValue({code_client: this.dernier_code});*/
+    });*/
+    // this.code_client.patchValue(this.dernier_code);
   }
 
-  openModal() {
-    this.modalRef = this.modalService.show(YesnomodalComponent, {
+  openModal(): MDBModalRef {
+    return this.modalRef = this.modalService.show(YesnomodalComponent, {
         backdrop: true,
         keyboard: true,
         focus: true,
@@ -152,22 +169,6 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
             description: 'Voulez sauvegarder la civilité ' + this.civilite.value
           }
         }
-    });
-
-    this.modalRef.content.action.subscribe( (result: any) => {
-      if (result) {
-      /*this.civiliteService.create(this.entreprise_id,
-        {
-          entreprise_id: this.entreprise_id,
-          libelle: this.civilite.value
-        })
-        .pipe(first())
-        .subscribe();*/
-        console.log('yes sauvegarde');
-      } else {
-        console.log('No pas de sauvegarde');
-      }
-      this.modalRef.hide();
     });
   }
 
