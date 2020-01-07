@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, pipe, never, NEVER } from 'rxjs';
+import { BehaviorSubject, Observable, pipe, never, NEVER, of } from 'rxjs';
 
 import { EntrepriseService, EntrepriseStorageService } from '../../services';
 import { AuthenticationService } from '../../services';
@@ -48,11 +48,12 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
         take(1),
         switchMap(list => {
             if (list.length > index) {
-              return this.entrepriseStorageService.open(this.user.id, list[index].id);
+              return of(list);
             } else {
               return NEVER;
             }
-        })
+        }),
+        switchMap(list => this.entrepriseStorageService.open(this.user.id, list[index].id))
       )
       .subscribe( entreprise => {
         this.router.navigate(['entreprise', entreprise.id]);
