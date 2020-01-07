@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ClientService, DernierCodeService, CiviliteService, AlertService } from 'src/app/services';
 import { first, tap, takeUntil, switchMap } from 'rxjs/operators';
 import { Civilite } from 'src/app/models';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, NEVER } from 'rxjs';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
 
@@ -54,9 +54,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
         .pipe(
           switchMap(() => this.civiliteService.getList(this.entreprise_id)
             .pipe(
-              tap(data => {this.civilites = data;
-                console.log(this.civilites);
-              })
+              tap(data => this.civilites = data)
             )));
       });
   }
@@ -122,23 +120,22 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
     if (this.civilite.value.length &&
         !this.civilites.find(element => element.libelle === this.civilite.value)) {
       this.modalRef = this.openModal();
-      this.modalRef.content.action.subscribe( (result: any) => {
-        if (result) {
-        /*this.civiliteService.create(this.entreprise_id,
-          {
-            entreprise_id: this.entreprise_id,
-            libelle: this.civilite.value
-          })
-          .subscribe(() => this.RefreshCiviliteList.next(null));*/
-          console.log('yes sauvegarde');
-        } else {
-          console.log('No pas de sauvegarde');
-        }
-        this.modalRef.hide();
-      });
-      console.log(this.civilite.value + ' pas dans la liste');
+      this.modalRef.content.action
+        .pipe(
+          switchMap( (result: any) => {
+            this.modalRef.hide();
+            if (result) {
+              return this.civiliteService.create(this.entreprise_id,
+                {
+                  entreprise_id: this.entreprise_id,
+                  libelle: this.civilite.value
+                });
+            } else {
+              return NEVER;
+            }
+      }))
+      .subscribe(() => this.refreshCiviliteList.next(null));
     }
-    console.log('focusout event');
   }
 
   resetForm() {
