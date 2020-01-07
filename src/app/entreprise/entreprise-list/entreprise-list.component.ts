@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, pipe } from 'rxjs';
+import { BehaviorSubject, Observable, pipe, never, NEVER } from 'rxjs';
 
 import { EntrepriseService, EntrepriseStorageService } from '../../services';
 import { AuthenticationService } from '../../services';
 import { Entreprise, User } from '../../models';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 
 @Component({
   selector: 'pg-entreprise-list',
@@ -44,10 +44,18 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     if (this.user) {
       this.selectedItem = index;
       this.entrepriseList
-      .subscribe( list => {
-        if (list.length > index) {
-          this.open(this.user.id, list[index].id);
-        }
+      .pipe(
+        take(1),
+        switchMap(list => {
+            if (list.length > index) {
+              return this.entrepriseStorageService.open(this.user.id, list[index].id);
+            } else {
+              return NEVER;
+            }
+        })
+      )
+      .subscribe( entreprise => {
+        this.router.navigate(['entreprise', entreprise.id]);
       });
     }
   }
