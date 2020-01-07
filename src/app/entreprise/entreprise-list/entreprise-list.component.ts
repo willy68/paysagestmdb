@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, pipe } from 'rxjs';
 
 import { EntrepriseService, EntrepriseStorageService } from '../../services';
 import { AuthenticationService } from '../../services';
 import { Entreprise, User } from '../../models';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'pg-entreprise-list',
@@ -42,10 +43,12 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     // const user = this.authenticationService.currentUserValue;
     if (this.user) {
       this.selectedItem = index;
-      const list = this.currentEntreprisesValue;
-      if (list.length > index) {
-        this.open(this.user.id, list[index].id);
-      }
+      this.entrepriseList
+      .subscribe( list => {
+        if (list.length > index) {
+          this.open(this.user.id, list[index].id);
+        }
+      });
     }
   }
 
@@ -58,25 +61,21 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     // const user = this.authenticationService.currentUserValue;
     if (this.user) {
       this.selectedItem = index;
-      const list = this.currentEntreprisesValue;
-      if (list.length > index) {
-        this.router.navigate(['entreprise/entreprise-edit', list[index].id]);
-      }
+      this.entrepriseList
+      .subscribe( list => {
+        if (list.length > index) {
+          this.router.navigate(['entreprise/entreprise-edit', list[index].id]);
+        }
+      });
     }
-
   }
 
   ngOnInit() {
     this.user = this.authenticationService.currentUserValue;
     if (this.user) {
-      this.entrepriseService.getList(this.user.id)
-      .subscribe(
-        list => {
-          this.currentEntreprisesSubject.next(list);
-        },
-        error => {
-         console.log(error);
-        }
+      this.entrepriseList = this.currentEntreprisesSubject
+      .pipe(
+        switchMap(() => this.entrepriseService.getList(this.user.id))
       );
     }
   }
