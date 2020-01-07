@@ -120,19 +120,18 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
     if (this.civilite.value.length &&
         !this.civilites.find(element => element.libelle === this.civilite.value)) {
       this.modalRef = this.openModal();
-      this.modalRef.content.action
-        .pipe(
-          switchMap( (result: any) => {
-            this.modalRef.hide();
-            if (result) {
-              return this.civiliteService.create(this.entreprise_id,
-                {
-                  entreprise_id: this.entreprise_id,
-                  libelle: this.civilite.value
-                });
-            } else {
-              return NEVER;
-            }
+      this.modalRef.content.action.pipe(
+        switchMap( (result: any) => {
+          this.modalRef.hide();
+          if (result) {
+            return this.civiliteService.create(this.entreprise_id,
+              {
+                entreprise_id: this.entreprise_id,
+                libelle: this.civilite.value
+              });
+          } else {
+            return NEVER;
+          }
       }))
       .subscribe(() => this.refreshCiviliteList.next(null));
     }
