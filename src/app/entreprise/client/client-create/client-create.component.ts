@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ClientService, DernierCodeService, CiviliteService, AlertService } from 'src/app/services';
-import { first, tap, takeUntil, switchMap, map } from 'rxjs/operators';
+import { first, tap, takeUntil, switchMap } from 'rxjs/operators';
 import { Civilite } from 'src/app/models';
-import { Observable, Subject, BehaviorSubject, NEVER, of } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, NEVER } from 'rxjs';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
 
