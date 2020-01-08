@@ -77,7 +77,7 @@ export class PgMenuComponent implements OnInit, OnDestroy {
 
   close() {
     this.entrepriseStorageService.close();
-    this.router.navigate(['/']);
+    this.router.navigate(this.routes.open);
   }
 
 }
