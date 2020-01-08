@@ -38,24 +38,23 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createFormBuild();
-    this.route.paramMap.pipe(
+    this.civiliteList = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
-        this.civiliteList = this.refreshCiviliteList
-        .pipe(
-          switchMap(() => this.civiliteService.getList(this.entreprise_id)
-            .pipe(
-              tap(data => this.civilites = data)
-        )));
-        return this.dernierCodeService.getLastCode(this.entreprise_id, 'client')
-          .pipe(
-            tap(data => {
-              this.dernier_code = data.prochain_code;
-              this.createForm.patchValue({ code_client: this.dernier_code });
-            }),
-            takeUntil(this.deadCode)
-          );
-      })).subscribe();
+        return this.dernierCodeService.getLastCode(this.entreprise_id, 'client').pipe(
+          tap(data => {
+            this.dernier_code = data.prochain_code;
+            this.createForm.patchValue({ code_client: this.dernier_code });
+          }),
+          takeUntil(this.deadCode)
+        );
+      }),
+      switchMap(() => this.refreshCiviliteList.pipe(
+        switchMap(() => this.civiliteService.getList(this.entreprise_id).pipe(
+          tap(data => this.civilites = data)
+        ))
+      )
+    ));
   }
 
   // convenience getter for easy access to form fields
