@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ClientService, DernierCodeService, CiviliteService, AlertService } from 'src/app/services';
-import { first, tap, takeUntil, switchMap } from 'rxjs/operators';
+import { first, tap, takeUntil, switchMap, map } from 'rxjs/operators';
 import { Civilite } from 'src/app/models';
-import { Observable, Subject, BehaviorSubject, NEVER } from 'rxjs';
+import { Observable, Subject, BehaviorSubject, NEVER, of } from 'rxjs';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
 
@@ -117,8 +117,33 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
   }
 
   civiliteFocusout(event) {
+    /*this.civiliteList.pipe(
+      switchMap(list => {
+        if (this.civilite.value.length &&
+            !list.find(element => element.libelle === this.civilite.value)) {
+          this.modalRef = this.openModal();
+          return this.modalRef.content.action.pipe(
+            switchMap( (result: any) => {
+              this.modalRef.hide();
+              if (result) {
+                return this.civiliteService.create(this.entreprise_id,
+                  {
+                    entreprise_id: this.entreprise_id,
+                    libelle: this.civilite.value
+                  });
+              } else {
+                return NEVER;
+              }
+            })
+          );
+        } else {
+          return NEVER;
+        }
+      })
+    )
+    .subscribe(() => this.refreshCiviliteList.next(null));*/
     if (this.civilite.value.length &&
-        !this.civilites.find(element => element.libelle === this.civilite.value)) {
+      !this.civilites.find(element => element.libelle === this.civilite.value)) {
       this.modalRef = this.openModal();
       this.modalRef.content.action.pipe(
         switchMap( (result: any) => {
