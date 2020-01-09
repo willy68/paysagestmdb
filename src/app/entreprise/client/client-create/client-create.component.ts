@@ -116,31 +116,6 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
   }
 
   civiliteFocusout(event) {
-    /*this.civiliteList.pipe(
-      switchMap(list => {
-        if (this.civilite.value.length &&
-            !list.find(element => element.libelle === this.civilite.value)) {
-          this.modalRef = this.openModal();
-          return this.modalRef.content.action.pipe(
-            switchMap( (result: any) => {
-              this.modalRef.hide();
-              if (result) {
-                return this.civiliteService.create(this.entreprise_id,
-                  {
-                    entreprise_id: this.entreprise_id,
-                    libelle: this.civilite.value
-                  });
-              } else {
-                return NEVER;
-              }
-            })
-          );
-        } else {
-          return NEVER;
-        }
-      })
-    )
-    .subscribe(() => this.refreshCiviliteList.next(null));*/
     if (this.civilite.value.length &&
       !this.civilites.find(element => element.libelle === this.civilite.value)) {
       this.modalRef = this.openModal();
@@ -167,10 +142,6 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
     this.createForm.reset({
       code_client: { value: this.dernier_code, disabled: true }
     });
-    /*Object.keys(this.createForm.controls).forEach(key => {
-      this.createForm.controls[key].setErrors(null);
-    });*/
-    // this.code_client.patchValue(this.dernier_code);
   }
 
   openModal(): MDBModalRef {
