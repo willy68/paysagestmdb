@@ -24,7 +24,7 @@
         <h6 class="fw-400 mb-0">
           Nouveau client
           <span class="float-left mr-1">
-            <mdb-icon fas icon="sign-in-alt"></mdb-icon>
+            <mdb-icon fas icon="address-card"></mdb-icon>
           </span>
         </h6>
       </mdb-card-header>
@@ -36,7 +36,7 @@
             <div class="col-md">
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="code_client" id="code_client"
-                  class="form-control" />
+                  class="form-control" *ngIf="last_code | async"/>
                 <label for="code_client">Code client: *</label>
                 <mdb-error *ngIf="f.code_client.invalid && (f.code_client.dirty || f.code_client.touched)">
                   <span *ngIf="f.code_client.errors.required">Code client is required</span>

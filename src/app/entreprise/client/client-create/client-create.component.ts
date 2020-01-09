@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ClientService, DernierCodeService, CiviliteService, AlertService } from 'src/app/services';
 import { first, tap, takeUntil, switchMap } from 'rxjs/operators';
-import { Civilite } from 'src/app/models';
+import { Civilite, DernierCode } from 'src/app/models';
 import { Observable, Subject, BehaviorSubject, NEVER } from 'rxjs';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
@@ -17,6 +17,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
 
   public entreprise_id: number;
   public dernier_code: string;
+  public last_code: Observable<DernierCode>;
   private readonly refreshCiviliteList = new BehaviorSubject(null);
   public civiliteList: Observable<Civilite[]>;
   public civilites: Civilite[];
@@ -38,7 +39,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.createFormBuild();
-    this.civiliteList = this.route.paramMap.pipe(
+    this.last_code = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
         return this.dernierCodeService.getLastCode(this.entreprise_id, 'client').pipe(
@@ -48,13 +49,13 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
           }),
           takeUntil(this.deadCode)
         );
-      }),
-      switchMap(() => this.refreshCiviliteList.pipe(
-        switchMap(() => this.civiliteService.getList(this.entreprise_id).pipe(
-          tap(data => this.civilites = data)
-        ))
-      )
-    ));
+      })
+    );
+    this.civiliteList = this.refreshCiviliteList.pipe(
+      switchMap(() => this.civiliteService.getList(this.entreprise_id).pipe(
+        tap(data => this.civilites = data)
+      ))
+    );
   }
 
   // convenience getter for easy access to form fields
