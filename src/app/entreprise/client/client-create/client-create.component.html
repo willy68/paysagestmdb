@@ -38,8 +38,8 @@
                 <input type="text" mdbInput mdbValidate formControlName="code_client" id="code_client"
                   class="form-control" />
                 <label for="code_client">
-                  <ng-container *ngIf="last_code | async; else loading">Code client: *</ng-container>
-                  <ng-template #loading>Loading ...</ng-template>
+                  <ng-container *ngIf="last_code | async; else loadcode">Code client: *</ng-container>
+                  <ng-template #loadcode>Loading ...</ng-template>
                 </label>
                 <mdb-error *ngIf="f.code_client.invalid && (f.code_client.dirty || f.code_client.touched)">
                   <span *ngIf="f.code_client.errors.required">Code client is required</span>
