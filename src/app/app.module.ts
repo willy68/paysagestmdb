@@ -17,6 +17,7 @@ import { HomeComponent } from './home';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { PgMenuComponent } from './pg-menu/pg-menu.component';
 // import { PgLoginFormComponent } from './pg-login-form/pg-login-form.component';
 // import { RegisterModalFormComponent } from './register-modal-form/register-modal-form.component';
@@ -51,6 +52,7 @@ import { YesnomodalComponent } from './yesnomodal/yesnomodal.component';
     BrowserAnimationsModule,
     AccordionModule.forRoot(),
     AlertModule.forRoot(),
+    TypeaheadModule.forRoot(),
     DirectivesModule,
     // ClientModule,
     EntrepriseModule,
