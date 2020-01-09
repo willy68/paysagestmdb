@@ -3,20 +3,20 @@
     <button type="button" class="close pull-right btn-primary" aria-label="Close" (click)="onNoClick()">
       <span aria-hidden="true">×</span>
     </button>
-    <h5 class="modal-title w-100" id="myModalLabel">{{ heading }}</h5>
+    <h5 class="modal-title w-100" id="myModalLabel">{{ heading ? heading : 'Title' }}</h5>
   </div>
   <div class="modal-body">
-    <h5>{{ content.heading }}</h5>
-    <p>{{ content.description }}</p>
+    <h5>{{ content?.heading ? content.heading : 'Content Title'}}</h5>
+    <p>{{ content?.description ? content.description : 'Content description'}}</p>
   </div>
   <div class="modal-footer">
     <button type="button" pgRoundedBtn mdbBtn color="secondary" outline="true" 
     class="waves-light" aria-label="Close" (click)="onNoClick()" mdbWavesEffect>
-    {{button.no ? button.no : 'Close'}}
+    {{button?.no ? button.no : 'Close'}}
     </button>
     <button type="button" pgRoundedBtn mdbBtn color="primary"outline="true" 
     class="relative waves-light" (click)="onYesClick()" mdbWavesEffect>
-      {{button.yes ? button.yes : 'Save!'}}
+      {{button?.yes ? button.yes : 'Save!'}}
     </button>
   </div>
 </div>
