@@ -25,12 +25,11 @@ export class EntrepriseCreateComponent implements OnInit {
     private router: Router,
     private entrepriseService: EntrepriseService,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService) {
-      this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
-     }
+    private alertService: AlertService) {}
 
   ngOnInit() {
     this.createFormBuild();
+    this.currentUser = this.authenticationService.currentUserValue;
   }
 
   // convenience getter for easy access to form fields
@@ -125,9 +124,9 @@ export class EntrepriseCreateComponent implements OnInit {
     this.submitted = false;
     this.imgURL = '';
     this.createForm.reset();
-    Object.keys(this.createForm.controls).forEach(key => {
+    /*Object.keys(this.createForm.controls).forEach(key => {
       this.createForm.controls[key].setErrors(null);
-    });
+    });*/
   }
 
 }
