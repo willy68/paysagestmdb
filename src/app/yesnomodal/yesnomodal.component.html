@@ -10,7 +10,13 @@
     <p>{{ content.description }}</p>
   </div>
   <div class="modal-footer">
-    <button type="button" pgRoundedBtn mdbBtn color="secondary" outline="true" class="waves-light" aria-label="Close" (click)="onNoClick()" mdbWavesEffect>Close</button>
-    <button type="button" pgRoundedBtn mdbBtn color="primary"outline="true" class="relative waves-light" (click)="onYesClick()" mdbWavesEffect>Save!</button>
+    <button type="button" pgRoundedBtn mdbBtn color="secondary" outline="true" 
+    class="waves-light" aria-label="Close" (click)="onNoClick()" mdbWavesEffect>
+    {{button.no ? button.no : 'Close'}}
+    </button>
+    <button type="button" pgRoundedBtn mdbBtn color="primary"outline="true" 
+    class="relative waves-light" (click)="onYesClick()" mdbWavesEffect>
+      {{button.yes ? button.yes : 'Save!'}}
+    </button>
   </div>
 </div>

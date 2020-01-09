@@ -21,8 +21,8 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
   private readonly refreshCiviliteList = new BehaviorSubject(null);
   public civiliteList: Observable<Civilite[]>;
   public civilites: Civilite[];
-  private deadList = new Subject();
-  private deadCode = new Subject();
+  private deadCreate = new Subject();
+  private deadModal = new Subject();
   public createForm: FormGroup;
   public submitted = false;
   public loading = false;
@@ -46,8 +46,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
           tap(data => {
             this.dernier_code = data.prochain_code;
             this.createForm.patchValue({ code_client: this.dernier_code });
-          }),
-          takeUntil(this.deadCode)
+          })
         );
       })
     );
@@ -102,7 +101,8 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
       email: this.f.email.value,
       tva_intracom: this.f.tva_intracom.value
     })
-      .pipe(first())
+      .pipe(first(),
+      takeUntil(this.deadCreate))
       .subscribe(
         data => {
           this.alertService.success('SUCCESS!! : ' + data.nom);
@@ -156,7 +156,8 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
           } else {
             return NEVER;
           }
-      }))
+      }),
+      takeUntil(this.deadModal))
       .subscribe(() => this.refreshCiviliteList.next(null));
     }
   }
@@ -183,19 +184,23 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
         containerClass: '',
         animated: true,
         data: {
-          heading: 'Modal heading',
+          heading: 'Sauvegarde',
           content: {
-            heading: 'Content heading',
+            heading: 'Civilité nouvelle',
             description: 'Voulez sauvegarder la civilité ' + this.civilite.value
+          },
+          button: {
+            yes: 'Sauver!',
+            no: 'Fermer'
           }
         }
     });
   }
 
   ngOnDestroy() {
-    this.deadList.next();
-    this.deadList.complete();
-    this.deadCode.next();
-    this.deadCode.complete();
+    this.deadCreate.next();
+    this.deadCreate.complete();
+    this.deadModal.next();
+    this.deadModal.complete();
   }
 }

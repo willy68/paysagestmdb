@@ -11,6 +11,7 @@ export class YesnomodalComponent implements OnInit {
   public action: Subject<any> = new Subject();
   public heading: string;
   public content: any;
+  public button: any;
 
 
   constructor(public modalRef: MDBModalRef) { }
