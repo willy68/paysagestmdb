@@ -6,3 +6,4 @@ export * from './adresse';
 export * from './adresse-type';
 export * from './civilite';
 export * from './dernier-code';
+export * from './cpville';
