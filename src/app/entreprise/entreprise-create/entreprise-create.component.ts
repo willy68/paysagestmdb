@@ -21,10 +21,8 @@ export class EntrepriseCreateComponent implements OnInit {
   public loading = false;
 
   public cpSearch: Observable<Cpville[]>;
-  asyncSelected: string;
-  typeaheadLoading: boolean;
-  noResult = false;
-  dataSource: Observable<any>;
+  public typeaheadLoading: boolean;
+  public noResult = false;
 
   public imagePath: FileList;
   public imgURL: any;
@@ -45,9 +43,13 @@ export class EntrepriseCreateComponent implements OnInit {
     })
       .pipe(
         mergeMap((token: string) => this.cpvilleService.search('cp', token, '?limit=15').pipe(
-          catchError(() => of<Cpville[]>([{cp: 'error', ville: 'error'}])
+          catchError(() => of<Cpville[]>(null)
         ))
       ));
+  }
+
+  checkCp(fb: FormBuilder) {
+    return !this.noResult;
   }
 
   // convenience getter for easy access to form fields
@@ -68,7 +70,7 @@ export class EntrepriseCreateComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]] ,
     regime_commercial: ['', []],
     logo: ['', []]
-    });
+    }/*, {validator: this.checkCp}*/);
   }
 
   get siret() { return this.createForm.get('siret'); }
@@ -151,9 +153,8 @@ export class EntrepriseCreateComponent implements OnInit {
     this.typeaheadLoading = e;
   }
 
-  typeaheadOnSelect(e: TypeaheadMatch): void {
+  onCpSelect(e: TypeaheadMatch): void {
     this.ville.patchValue(e.item.ville);
-    console.log('Selected value: ', e.value);
   }
 
   typeaheadNoResults(event: boolean): void {
