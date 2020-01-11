@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Reactive form services
-import { first, mergeMap, catchError } from 'rxjs/operators';
+import { first, catchError, switchMap } from 'rxjs/operators';
 
 import { EntrepriseService, CpvilleService, AlertService } from '../../services';
 import { AuthenticationService } from '../../services';
@@ -46,7 +46,7 @@ export class EntrepriseCreateComponent implements OnInit {
       observer.next(this.cp.value);
     })
       .pipe(
-        mergeMap((token: string) => this.cpvilleService.search('cp', token, '?limit=15').pipe(
+        switchMap((token: string) => this.cpvilleService.search('cp', token, '?limit=15').pipe(
           catchError(() => of<Cpville[]>(null)
         ))
       ));
@@ -55,7 +55,7 @@ export class EntrepriseCreateComponent implements OnInit {
         observer.next(this.ville.value);
       })
         .pipe(
-          mergeMap((token: string) => this.cpvilleService.search('ville', token, '?limit=15').pipe(
+          switchMap((token: string) => this.cpvilleService.search('ville', token, '?limit=15').pipe(
             catchError(() => of<Cpville[]>(null)
           ))
         ));
