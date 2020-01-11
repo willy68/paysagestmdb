@@ -10,3 +10,4 @@ export * from './adresse-type.service';
 export * from './adresse.service';
 export * from './civilite.service';
 export * from './dernier-code.service';
+export * from './cpville.service';
