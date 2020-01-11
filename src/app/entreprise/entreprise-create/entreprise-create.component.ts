@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Reactive form services
-import { first, mergeMap } from 'rxjs/operators';
+import { first, mergeMap, catchError } from 'rxjs/operators';
 
 import { EntrepriseService, CpvilleService, AlertService } from '../../services';
 import { AuthenticationService } from '../../services';
 import { User, Cpville } from '../../models';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/ngx-bootstrap-typeahead';
 
 @Component({
@@ -23,7 +23,7 @@ export class EntrepriseCreateComponent implements OnInit {
   public cpSearch: Observable<Cpville[]>;
   asyncSelected: string;
   typeaheadLoading: boolean;
-  typeaheadNoResults: boolean;
+  noResult = false;
   dataSource: Observable<any>;
 
   public imagePath: FileList;
@@ -39,14 +39,15 @@ export class EntrepriseCreateComponent implements OnInit {
   ngOnInit() {
     this.createFormBuild();
     this.currentUser = this.authenticationService.currentUserValue;
-    this.cpSearch = this.cpvilleService.search('cp', this.cp.value, 'limit=15');
-    this.dataSource = Observable.create((observer: any) => {
+    this.cpSearch = Observable.create((observer: any) => {
       // Runs on every search
       observer.next(this.cp.value);
     })
       .pipe(
-        mergeMap((token: string) => this.cpvilleService.search('cp', token, '?limit=15'))
-      );
+        mergeMap((token: string) => this.cpvilleService.search('cp', token, '?limit=15').pipe(
+          catchError(() => of<Cpville[]>([{cp: 'error', ville: 'error'}])
+        ))
+      ));
   }
 
   // convenience getter for easy access to form fields
@@ -151,6 +152,11 @@ export class EntrepriseCreateComponent implements OnInit {
   }
 
   typeaheadOnSelect(e: TypeaheadMatch): void {
+    this.ville.patchValue(e.item.ville);
     console.log('Selected value: ', e.value);
+  }
+
+  typeaheadNoResults(event: boolean): void {
+    this.noResult = event;
   }
 }

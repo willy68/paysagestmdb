@@ -58,15 +58,19 @@
                 </mdb-success>
               </div>
               <ng-template #customItemTemplate let-model="item" let-index="index">
-                <h5>This is: {{model.cp | json}} Index: {{ index }}</h5>
+                <span>This is: <b>{{model.cp | json}}</b> {{model.ville | json}} Index: {{ index }}</span>
               </ng-template>
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="cp" id="cp" class="form-control"
                 [typeaheadAsync]="true"
-                [typeahead]="dataSource"
+                [typeahead]="cpSearch"
                 (typeaheadLoading)="changeTypeaheadLoading($event)"
                 (typeaheadOnSelect)="typeaheadOnSelect($event)"
-                [typeaheadOptionsLimit]="15"/>
+                [typeaheadOptionsLimit]="15"
+                [typeaheadItemTemplate]="customItemTemplate"
+                typeaheadOptionField="cp"
+                (typeaheadNoResults)="typeaheadNoResults($event)"
+                 autocomplete="no"/>
                 <label for="cp">Code Postal:</label>
                 <div *ngIf="typeaheadLoading">Loading</div>
                 <mdb-error *ngIf="f.cp.invalid && (f.cp.dirty || f.cp.touched)">
