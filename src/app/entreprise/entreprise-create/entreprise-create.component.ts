@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Reactive form services
-import { first } from 'rxjs/operators';
+import { first, mergeMap } from 'rxjs/operators';
 
-import { EntrepriseService, AlertService } from '../../services';
+import { EntrepriseService, CpvilleService, AlertService } from '../../services';
 import { AuthenticationService } from '../../services';
-import { User } from '../../models';
+import { User, Cpville } from '../../models';
+import { Observable } from 'rxjs';
+import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/ngx-bootstrap-typeahead';
 
 @Component({
   selector: 'pg-entreprise-create',
@@ -18,18 +20,33 @@ export class EntrepriseCreateComponent implements OnInit {
   public submitted = false;
   public loading = false;
 
+  public cpSearch: Observable<Cpville[]>;
+  asyncSelected: string;
+  typeaheadLoading: boolean;
+  typeaheadNoResults: boolean;
+  dataSource: Observable<any>;
+
   public imagePath: FileList;
   public imgURL: any;
 
   constructor(private fb: FormBuilder,
     private router: Router,
     private entrepriseService: EntrepriseService,
+    private cpvilleService: CpvilleService,
     private authenticationService: AuthenticationService,
     private alertService: AlertService) {}
 
   ngOnInit() {
     this.createFormBuild();
     this.currentUser = this.authenticationService.currentUserValue;
+    this.cpSearch = this.cpvilleService.search('cp', this.cp.value, 'limit=15');
+    this.dataSource = Observable.create((observer: any) => {
+      // Runs on every search
+      observer.next(this.cp.value);
+    })
+      .pipe(
+        mergeMap((token: string) => this.cpvilleService.search('cp', token, '?limit=15'))
+      );
   }
 
   // convenience getter for easy access to form fields
@@ -129,4 +146,11 @@ export class EntrepriseCreateComponent implements OnInit {
     });*/
   }
 
+  changeTypeaheadLoading(e: boolean): void {
+    this.typeaheadLoading = e;
+  }
+
+  typeaheadOnSelect(e: TypeaheadMatch): void {
+    console.log('Selected value: ', e.value);
+  }
 }
