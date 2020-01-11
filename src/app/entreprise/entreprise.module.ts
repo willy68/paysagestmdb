@@ -9,6 +9,8 @@ import { DirectivesModule } from '../directives';
 import { ClientModule } from './client/client.module';
 
 import { EntrepriseRoutingModule } from './entreprise-routing.module';
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+
 import { EntrepriseDashboardComponent } from './entreprise-dashboard/entreprise-dashboard.component';
 import { EntrepriseComponent } from './entreprise/entreprise.component';
 import { EntrepriseListComponent } from './entreprise-list/entreprise-list.component';
@@ -32,7 +34,8 @@ import { EntrepriseCreateComponent } from './entreprise-create/entreprise-create
     FormsModule,
     DirectivesModule,
     ClientModule,
-    EntrepriseRoutingModule
+    EntrepriseRoutingModule,
+    TypeaheadModule.forRoot()
   ]
 })
 export class EntrepriseModule { }
