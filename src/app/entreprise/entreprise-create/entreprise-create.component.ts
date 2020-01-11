@@ -21,8 +21,12 @@ export class EntrepriseCreateComponent implements OnInit {
   public loading = false;
 
   public cpSearch: Observable<Cpville[]>;
-  public typeaheadLoading: boolean;
-  public noResult = false;
+  public TypeheadCpLoading: boolean;
+  public noCpResult = false;
+
+  public villeSearch: Observable<Cpville[]>;
+  public TypeheadVilleLoading: boolean;
+  public noVilleResult = false;
 
   public imagePath: FileList;
   public imgURL: any;
@@ -46,11 +50,16 @@ export class EntrepriseCreateComponent implements OnInit {
           catchError(() => of<Cpville[]>(null)
         ))
       ));
-  }
-
-  checkCp(fb: FormBuilder) {
-    return !this.noResult;
-  }
+      this.villeSearch = Observable.create((observer: any) => {
+        // Runs on every search
+        observer.next(this.ville.value);
+      })
+        .pipe(
+          mergeMap((token: string) => this.cpvilleService.search('ville', token, '?limit=15').pipe(
+            catchError(() => of<Cpville[]>(null)
+          ))
+        ));
+    }
 
   // convenience getter for easy access to form fields
   get f() { return this.createForm.controls; }
@@ -70,7 +79,7 @@ export class EntrepriseCreateComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]] ,
     regime_commercial: ['', []],
     logo: ['', []]
-    }/*, {validator: this.checkCp}*/);
+    });
   }
 
   get siret() { return this.createForm.get('siret'); }
@@ -149,15 +158,28 @@ export class EntrepriseCreateComponent implements OnInit {
     });*/
   }
 
-  changeTypeaheadLoading(e: boolean): void {
-    this.typeaheadLoading = e;
+  cpTypeaheadLoading(e: boolean): void {
+    this.TypeheadCpLoading = e;
   }
 
   onCpSelect(e: TypeaheadMatch): void {
     this.ville.patchValue(e.item.ville);
   }
 
-  typeaheadNoResults(event: boolean): void {
-    this.noResult = event;
+  typeaheadNoCpResults(event: boolean): void {
+    this.noCpResult = event;
   }
+
+  villeTypeaheadLoading(e: boolean): void {
+    this.TypeheadVilleLoading = e;
+  }
+
+  onVilleSelect(e: TypeaheadMatch): void {
+    this.cp.patchValue(e.item.cp);
+  }
+
+  typeaheadNoVilleResults(event: boolean): void {
+    this.noVilleResult = event;
+  }
+
 }

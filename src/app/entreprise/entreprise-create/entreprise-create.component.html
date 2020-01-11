@@ -57,38 +57,52 @@
                   Adresse valid
                 </mdb-success>
               </div>
-              <ng-template #customItemTemplate let-model="item">
+              <ng-template #customItemCpTemplate let-model="item">
                 <span><b>{{model.cp | json}}</b> {{model.ville | json}}</span>
               </ng-template>
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="cp" id="cp" class="form-control"
                 [typeaheadAsync]="true"
                 [typeahead]="cpSearch"
-                (typeaheadLoading)="changeTypeaheadLoading($event)"
+                (typeaheadLoading)="cpTypeaheadLoading($event)"
                 (typeaheadOnSelect)="onCpSelect($event)"
                 [typeaheadOptionsLimit]="15"
-                [typeaheadItemTemplate]="customItemTemplate"
+                [typeaheadItemTemplate]="customItemCpTemplate"
                 typeaheadOptionField="cp"
-                (typeaheadNoResults)="typeaheadNoResults($event)"
+                (typeaheadNoResults)="typeaheadNoCpResults($event)"
                  autocomplete="no"/>
                 <label for="cp">Code Postal:</label>
-                <div *ngIf="typeaheadLoading">Loading</div>
-                <mdb-error *ngIf="noResult"><span>No Results Found</span></mdb-error>
                 <mdb-error *ngIf="f.cp.invalid && (f.cp.dirty || f.cp.touched)">
                   <span *ngIf="f.cp.errors.required">Code Postal is required</span>
                 </mdb-error>
                 <mdb-success *ngIf="f.cp.valid && (f.cp.dirty || f.cp.touched)">
                   Code Postal valid
+                  <div *ngIf="TypeheadCpLoading">Loading</div>
+                  <div *ngIf="noCpResult">No Results Found</div>
                 </mdb-success>
               </div>
+              <ng-template #customItemVilleTemplate let-model="item">
+                <span>{{model.cp | json}} <b>{{model.ville | json}}</b></span>
+              </ng-template>
               <div class="md-form">
-                <input type="text" mdbInput mdbValidate formControlName="ville" id="ville" class="form-control" />
+                <input type="text" mdbInput mdbValidate formControlName="ville" id="ville" class="form-control"
+                [typeaheadAsync]="true"
+                [typeahead]="villeSearch"
+                (typeaheadLoading)="villeTypeaheadLoading($event)"
+                (typeaheadOnSelect)="onVilleSelect($event)"
+                [typeaheadOptionsLimit]="15"
+                [typeaheadItemTemplate]="customItemVilleTemplate"
+                typeaheadOptionField="ville"
+                (typeaheadNoResults)="typeaheadNoVilleResults($event)"
+                 autocomplete="no"/>
                 <label for="ville">Ville:</label>
                 <mdb-error *ngIf="f.ville.invalid && (f.ville.dirty || f.ville.touched)">
                   <span *ngIf="f.adresse.errors.required">ville is required</span>
                 </mdb-error>
                 <mdb-success *ngIf="f.ville.valid && (f.ville.dirty || f.ville.touched)">
                   Ville valid
+                  <div *ngIf="TypeheadVilleLoading">Loading</div>
+                  <div *ngIf="noVilleResult">No Results Found</div>
                 </mdb-success>
               </div>
             </div>
