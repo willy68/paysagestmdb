@@ -19,6 +19,6 @@ export class CpvilleService {
   }
 
   search(column: string, searchTerm: string, params = '') {
-    return this.http.get<Cpville[]>(apigest + `cpville/${column}/${searchTerm}` + params)
+    return this.http.get<Cpville[]>(apigest + `/cpville/search/${column}/${searchTerm}` + params)
   }
 }
