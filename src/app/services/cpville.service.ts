@@ -18,7 +18,12 @@ export class CpvilleService {
     return this.http.get<Cpville[]>(apigest + `/entreprise/${entreprise_id}/civilite/list` + params);
   }
 
-  search(column: string, searchTerm: string, params = '') {
-    return this.http.get<Cpville[]>(apigest + `/cpville/search/${column}/${searchTerm}` + params)
+  search(column: string, searchTerm: string | {[search: string]: string; }, params = '') {
+    if (searchTerm instanceof Object) {
+      return this.http.post<Cpville[]>(apigest + `/cpville/search/${column}` + params, searchTerm);
+    } else {
+      return this.http.get<Cpville[]>(apigest + `/cpville/search/${column}/${searchTerm}` + params);
+    }
   }
+
 }

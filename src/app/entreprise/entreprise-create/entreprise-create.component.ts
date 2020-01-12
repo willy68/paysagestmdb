@@ -46,7 +46,7 @@ export class EntrepriseCreateComponent implements OnInit {
       observer.next(this.cp.value);
     })
       .pipe(
-        switchMap((token: string) => this.cpvilleService.search('cp', token, '?limit=15').pipe(
+        switchMap((token: string) => this.cpvilleService.search('cp', {search: token}, '?limit=15').pipe(
           catchError(() => of<Cpville[]>(null)
         ))
       ));
@@ -55,7 +55,7 @@ export class EntrepriseCreateComponent implements OnInit {
         observer.next(this.ville.value);
       })
         .pipe(
-          switchMap((token: string) => this.cpvilleService.search('ville', token, '?limit=15').pipe(
+          switchMap((token: string) => this.cpvilleService.search('ville', {search: token}, '?limit=15').pipe(
             catchError(() => of<Cpville[]>(null)
           ))
         ));
