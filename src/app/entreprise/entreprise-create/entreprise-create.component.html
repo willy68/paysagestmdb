@@ -1,13 +1,13 @@
 <div class="row">
-  <div class="col-sm-11">
+  <div class="col-sm-12">
     <mdb-card class="mb-5">
-      <mdb-card-header class="primary-color white-text text-center py-4">
-        <h5>
-          <strong>Nouvelle entreprise</strong>
-          <span class="float-right">
+      <mdb-card-header class="primary-color white-text">
+        <h6 class="fw-400 mb-0">
+          Nouvelle entreprise
+          <span class="float-left mr-1">
             <mdb-icon fas icon="sign-in-alt"></mdb-icon>
           </span>
-        </h5>
+        </h6>
       </mdb-card-header>
       <mdb-card-body class="px-lg-5 pt-0">
         <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="text-center" style="color: #757575;">
