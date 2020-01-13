@@ -41,7 +41,7 @@ export class EntrepriseCreateComponent implements OnInit {
   ngOnInit() {
     this.createFormBuild();
     this.currentUser = this.authenticationService.currentUserValue;
-    this.cpSearch = Observable.create((observer: any) => {
+    this.cpSearch = new Observable((observer: any) => {
       // Runs on every search
       observer.next(this.cp.value);
     })
@@ -50,7 +50,7 @@ export class EntrepriseCreateComponent implements OnInit {
           catchError(() => of<Cpville[]>(null)
         ))
       ));
-      this.villeSearch = Observable.create((observer: any) => {
+      this.villeSearch = new Observable((observer: any) => {
         // Runs on every search
         observer.next(this.ville.value);
       })
