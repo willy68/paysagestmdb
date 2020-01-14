@@ -18,11 +18,12 @@ export class AuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     const currentUser = this.authenticationService.currentUserValue;
+    const url = state.url;
     if (currentUser) {
       // check if route is restricted by role
       if (route.data.roles && route.data.roles.indexOf(currentUser.role) === -1) {
         // role not authorised so redirect to home page
-        this.router.navigate(['/']);
+        this.router.navigate(['/entreprise']);
         return false;
       }
 
@@ -31,6 +32,7 @@ export class AuthGuard implements CanActivate {
     }
 
     // not logged in so redirect to login page with the return url
+    this.authenticationService.returnUrl = url;
     this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
     return false;
   }

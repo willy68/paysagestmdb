@@ -13,6 +13,7 @@ import { apigest } from '../url';
 export class AuthenticationService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
+  public returnUrl: string;
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));

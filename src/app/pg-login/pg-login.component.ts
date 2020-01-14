@@ -17,7 +17,7 @@ export class PgLoginComponent implements OnInit {
   public submitted = false;
   public loading = false;
   public errorMessage = '';
-  public returnUrl: string;
+  // public returnUrl: string;
   public entreprise_id: number;
 
   constructor(private fb: FormBuilder,
@@ -33,7 +33,7 @@ export class PgLoginComponent implements OnInit {
       this.entreprise_id = +params.get('entreprise_id');
     });
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   // convenience getter for easy access to form fields
@@ -71,7 +71,11 @@ export class PgLoginComponent implements OnInit {
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigateByUrl(this.returnUrl);
+          const id = this.entreprise_id ? '/' + this.entreprise_id : '';
+          const url = this.authenticationService.returnUrl ?
+                      this.router.parseUrl(this.authenticationService.returnUrl) :
+                      '/entreprise' + id;
+          this.router.navigateByUrl(url);
           this.alertService.success('Bienvenue : ' + data.username);
         },
         error => {
