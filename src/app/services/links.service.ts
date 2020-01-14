@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, merge } from 'rxjs';
 
 import { AuthenticationService } from './authentication.service';
 import { EntrepriseStorageService } from './entreprise-storage.service';
+import { switchMap, map } from 'rxjs/operators';
 
 export type link = Array<any>;
 
@@ -27,41 +28,52 @@ export class LinksService {
 
   constructor(private authenticationService: AuthenticationService,
     private entrepriseStorageService: EntrepriseStorageService) {
-      this.currentLinksSubject = new BehaviorSubject<Links>({
-        home:  ['/'],
-        register: ['/register'],
-        login: ['/login'],
-        entreprise: ['/entreprise'],
-        new_entreprise: ['/entreprise/entreprise-create'],
-        edit_entreprise: ['/entreprise/entreprise-edit'],
-        open: ['/entreprise/entreprise-list'],
-        clients: ['/clients']
-      });
-      this.currentLinks = this.currentLinksSubject.asObservable();
-      this.authenticationService.currentUser.subscribe(x => {
-        const routes = this.currentLinksSubject.value;
-        if (x) {
-          routes.new_entreprise = ['/entreprise/entreprise-create', {user_id: x.id}];
-          routes.open = ['/entreprise/entreprise-list', {user_id: x.id}];
-        } else {
-          routes.new_entreprise = ['/entreprise/entreprise-create'];
-          routes.open = ['/entreprise/entreprise-list'];
-        }
-        this.currentLinksSubject.next(routes);
-      });
-      this.entrepriseStorageService.entreprise.subscribe(x => {
-        const routes = this.currentLinksSubject.value;
-        if (x) {
-          routes.entreprise = ['/entreprise', x.id];
-          routes.edit_entreprise = ['entreprise/entreprise-edit', x.id];
-          routes.clients = ['/entreprise', x.id, 'clients'];
-          routes.register = ['/register', {entreprise_id: x.id}];
-          routes.login = ['/login', {entreprise_id: x.id}];
-        } else {
-          routes.entreprise = ['/entreprise'];
-          routes.register = ['/register'];
-          routes.login = ['/login'];
-        }
-      });
-    }
+    this.currentLinksSubject = new BehaviorSubject<Links>({
+      home: ['/'],
+      register: ['/register'],
+      login: ['/login'],
+      entreprise: ['/entreprise'],
+      new_entreprise: ['/entreprise/entreprise-create'],
+      edit_entreprise: ['/entreprise/entreprise-edit'],
+      open: ['/entreprise/entreprise-list'],
+      clients: ['/clients']
+    });
+    this.currentLinks = merge(this.authenticationService.currentUser.pipe(
+      switchMap((user) => {
+        return this.currentLinksSubject.pipe(
+          map((routes) => {
+            if (user) {
+              routes.new_entreprise = ['/entreprise/entreprise-create', { user_id: user.id }];
+              routes.open = ['/entreprise/entreprise-list', { user_id: user.id }];
+            } else {
+              routes.new_entreprise = ['/entreprise/entreprise-create'];
+              routes.open = ['/entreprise/entreprise-list'];
+            }
+            return routes;
+          })
+        );
+      })
+    ),
+      this.entrepriseStorageService.entreprise.pipe(
+        switchMap((entreprise) => {
+          return this.currentLinksSubject.pipe(
+            map((routes) => {
+              if (entreprise) {
+                routes.entreprise = ['/entreprise', entreprise.id];
+                routes.edit_entreprise = ['entreprise/entreprise-edit', entreprise.id];
+                routes.clients = ['/entreprise', entreprise.id, 'clients'];
+                routes.register = ['/register', { entreprise_id: entreprise.id }];
+                routes.login = ['/login', { entreprise_id: entreprise.id }];
+              } else {
+                routes.entreprise = ['/entreprise'];
+                routes.register = ['/register'];
+                routes.login = ['/login'];
+              }
+              return routes;
+            })
+          );
+        })
+      )
+    );
+  }
 }
