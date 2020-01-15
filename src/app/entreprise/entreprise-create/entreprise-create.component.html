@@ -10,7 +10,8 @@
         </h6>
       </mdb-card-header>
       <mdb-card-body class="px-lg-5 pt-0">
-        <form [formGroup]="createForm" (ngSubmit)="onSubmit()" class="text-center" style="color: #757575;">
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()" (reset)="$event.preventDefault()"
+        class="text-center" style="color: #757575;">
           <!--  -->
 
           <div class="form-row">

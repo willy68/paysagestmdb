@@ -36,7 +36,7 @@ export class EntrepriseCreateComponent implements OnInit {
     private entrepriseService: EntrepriseService,
     private cpvilleService: CpvilleService,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService) {}
+    private alertService: AlertService) { }
 
   ngOnInit() {
     this.createFormBuild();
@@ -46,39 +46,39 @@ export class EntrepriseCreateComponent implements OnInit {
       observer.next(this.cp.value);
     })
       .pipe(
-        switchMap((token: string) => this.cpvilleService.search('cp', {search: token}, '?limit=15').pipe(
+        switchMap((token: string) => this.cpvilleService.search('cp', { search: token }, '?limit=15').pipe(
           catchError(() => of<Cpville[]>(null)
-        ))
-      ));
-      this.villeSearch = new Observable((observer: any) => {
-        // Runs on every search
-        observer.next(this.ville.value);
-      })
-        .pipe(
-          switchMap((token: string) => this.cpvilleService.search('ville', {search: token}, '?limit=15').pipe(
-            catchError(() => of<Cpville[]>(null)
           ))
         ));
-    }
+    this.villeSearch = new Observable((observer: any) => {
+      // Runs on every search
+      observer.next(this.ville.value);
+    })
+      .pipe(
+        switchMap((token: string) => this.cpvilleService.search('ville', { search: token }, '?limit=15').pipe(
+          catchError(() => of<Cpville[]>(null)
+          ))
+        ));
+  }
 
   // convenience getter for easy access to form fields
   get f() { return this.createForm.controls; }
 
   createFormBuild() {
     this.createForm = this.fb.group({
-    siret: ['', [Validators.required]],
-    nom: ['', [Validators.required]],
-    ape: ['', [Validators.required]],
-    tva_intracom: ['', [Validators.required]],
-    adresse: ['', [Validators.required]],
-    suite_adresse: ['', []],
-    cp: ['', [Validators.required]],
-    ville: ['', [Validators.required]],
-    tel: ['', []],
-    portable: ['', [Validators.required]],
-    email: ['', [Validators.required, Validators.email]] ,
-    regime_commercial: ['', []],
-    logo: ['', []]
+      siret: ['', [Validators.required]],
+      nom: ['', [Validators.required]],
+      ape: ['', [Validators.required]],
+      tva_intracom: ['', [Validators.required]],
+      adresse: ['', [Validators.required]],
+      suite_adresse: ['', []],
+      cp: ['', [Validators.required]],
+      ville: ['', [Validators.required]],
+      tel: ['', []],
+      portable: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      regime_commercial: ['', []],
+      logo: ['', []]
     });
   }
 
@@ -118,7 +118,7 @@ export class EntrepriseCreateComponent implements OnInit {
 
     // stop here if form is invalid or currentUser is null
     if (this.createForm.invalid || !this.currentUser) {
-        return;
+      return;
     }
 
     this.loading = true;
@@ -135,18 +135,19 @@ export class EntrepriseCreateComponent implements OnInit {
       portable: this.f.portable.value,
       email: this.f.email.value,
       regime_commercial: this.f.regime_commercial.value,
-      logo: this.imgURL ? this.imgURL : '' } )
-    .pipe(first())
-    .subscribe(
+      logo: this.imgURL ? this.imgURL : ''
+    })
+      .pipe(first())
+      .subscribe(
         data => {
-            this.alertService.success('SUCCESS!! : ' + data.nom );
-           // navigue vers entreprise-list pour ouvrir cette entreprise
-            this.router.navigate(['/entreprise/entreprise-list']);
+          this.alertService.success('SUCCESS!! : ' + data.nom);
+          // navigue vers entreprise-list pour ouvrir cette entreprise
+          this.router.navigate(['/entreprise/entreprise-list']);
         },
         error => {
-            this.alertService.error(error);
+          this.alertService.error(error);
         });
-        this.loading = false;
+    this.loading = false;
   }
 
   resetForm() {
