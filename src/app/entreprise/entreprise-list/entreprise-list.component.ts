@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, NEVER, of } from 'rxjs';
+import { Observable, NEVER } from 'rxjs';
 
 import { EntrepriseService, EntrepriseStorageService } from '../../services';
 import { AuthenticationService } from '../../services';
 import { Entreprise, User } from '../../models';
-import { switchMap, take } from 'rxjs/operators';
+import { switchMap, take, catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'pg-entreprise-list',
@@ -13,47 +13,33 @@ import { switchMap, take } from 'rxjs/operators';
   styleUrls: ['./entreprise-list.component.scss']
 })
 export class EntrepriseListComponent implements OnInit, OnDestroy {
-  private currentEntreprisesSubject: BehaviorSubject<Entreprise[]>;
   public entrepriseList: Observable<Entreprise[]>;
-  public user: User;
   public selectedItem = -1;
   public emptyList = false;
 
   constructor(private entrepriseService: EntrepriseService,
     private entrepriseStorageService: EntrepriseStorageService,
     private authenticationService: AuthenticationService,
-    private router: Router) {
-      this.currentEntreprisesSubject = new BehaviorSubject<Entreprise[]>([]);
-      this.entrepriseList = this.currentEntreprisesSubject.asObservable();
-  }
+    private router: Router) {}
 
-  public get currentEntreprisesValue(): Entreprise[] {
-    return this.currentEntreprisesSubject.value;
+  get user(): User {
+    return this.authenticationService.currentUserValue;
   }
-
-  public open(user_id: number, id: number) {
-    this.entrepriseStorageService.open(user_id, id)
-    .subscribe( entreprise => {
-      this.router.navigate(['entreprise', entreprise.id]);
-    });
-  }
-
   public onOpen(index: number) {
     if (index === -1) { return; }
-    // const user = this.authenticationService.currentUserValue;
-    if (this.user) {
+    const user = this.authenticationService.currentUserValue;
+    if (user) {
       this.selectedItem = index;
       this.entrepriseList
       .pipe(
         take(1),
         switchMap(list => {
             if (list.length > index) {
-              return of(list);
+              return this.entrepriseStorageService.open(user.id, list[index].id);
             } else {
               return NEVER;
             }
-        }),
-        switchMap(list => this.entrepriseStorageService.open(this.user.id, list[index].id))
+        })
       )
       .subscribe( entreprise => {
         this.router.navigate(['entreprise', entreprise.id]);
@@ -67,8 +53,8 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
 
   onEdit(index: number) {
     if (index === -1) { return; }
-    // const user = this.authenticationService.currentUserValue;
-    if (this.user) {
+    const user = this.authenticationService.currentUserValue;
+    if (user) {
       this.selectedItem = index;
       this.entrepriseList
       .subscribe( list => {
@@ -80,18 +66,19 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.user = this.authenticationService.currentUserValue;
-    if (this.user) {
-      this.entrepriseList = this.currentEntreprisesSubject
-      .pipe(
-        switchMap(() => this.entrepriseService.getList(this.user.id))
-      );
-    }
+    this.entrepriseList = this.authenticationService.currentUser
+    .pipe(
+      switchMap((user) => this.entrepriseService.getList(user.id).pipe(
+        tap(list => console.log(list)),
+        catchError(() => {
+          this.emptyList = true;
+          return [];
+        })
+      ))
+    );
   }
 
   ngOnDestroy() {
-    this.currentEntreprisesSubject.next(null);
-    this.currentEntreprisesSubject.complete();
   }
 
 }
