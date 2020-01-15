@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, NEVER } from 'rxjs';
+import { Observable, NEVER, BehaviorSubject } from 'rxjs';
 
 import { EntrepriseService, EntrepriseStorageService } from '../../services';
 import { AuthenticationService } from '../../services';
@@ -13,6 +13,7 @@ import { switchMap, take, catchError, tap } from 'rxjs/operators';
   styleUrls: ['./entreprise-list.component.scss']
 })
 export class EntrepriseListComponent implements OnInit, OnDestroy {
+  private entrepriseListBehavior: BehaviorSubject<any>;
   public entrepriseList: Observable<Entreprise[]>;
   public selectedItem = -1;
   public emptyList = false;
@@ -20,7 +21,9 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
   constructor(private entrepriseService: EntrepriseService,
     private entrepriseStorageService: EntrepriseStorageService,
     private authenticationService: AuthenticationService,
-    private router: Router) {}
+    private router: Router) {
+      this.entrepriseListBehavior = new BehaviorSubject(null);
+    }
 
   get user(): User {
     return this.authenticationService.currentUserValue;
@@ -66,15 +69,16 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.entrepriseList = this.authenticationService.currentUser
+    const user = this.authenticationService.currentUserValue;
+    this.entrepriseList = this.entrepriseListBehavior
     .pipe(
-      switchMap((user) => this.entrepriseService.getList(user.id).pipe(
-        tap(list => console.log(list)),
-        catchError(() => {
-          this.emptyList = true;
-          return [];
-        })
-      ))
+        switchMap(() => this.entrepriseService.getList(user.id).pipe(
+            tap(list => console.log(list)),
+            catchError(() => {
+              this.emptyList = true;
+              return [];
+            })
+          ))
     );
   }
 
