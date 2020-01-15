@@ -10,7 +10,8 @@
         </h5>
       </mdb-card-header>
       <mdb-card-body class="px-lg-5 pt-0">
-        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="text-center" style="color: #757575;">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" (reset)="$event.preventDefault()"
+        class="text-center" style="color: #757575;">
           <!--  -->
           <div class="md-form">
             <input type="text" mdbInput mdbValidate formControlName="username" id="username" class="form-control" />

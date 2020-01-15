@@ -88,9 +88,9 @@ export class PgRegisterComponent implements OnInit {
     this.submitted = false;
     this.errorMessage = '';
     this.registerForm.reset();
-    Object.keys(this.registerForm.controls).forEach(key => {
+    /*Object.keys(this.registerForm.controls).forEach(key => {
       this.registerForm.controls[key].setErrors(null);
-    });
+    });*/
   }
 
   ngOnInit() {
