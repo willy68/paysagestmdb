@@ -17,7 +17,7 @@
           <a *ngIf="isAdmin && entreprise" class="dropdown-item waves-light" mdbWavesEffect [routerLink]="routes.edit_entreprise" href="#">Modifier</a>
         </div>
       </li>
-      <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated() && entreprise">
+      <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated() && (currentEntreprise | async)">
         <a dropdownToggle class="nav-link dropdown-toggle">
           Bases de données
         </a>
@@ -28,7 +28,7 @@
           <a class="dropdown-item" routerLink="/">Contrats</a>
         </div>
       </li>
-      <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated() && entreprise">
+      <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated() && (currentEntreprise | async)">
         <a dropdownToggle class="nav-link dropdown-toggle">
           Quotidien
         </a>
@@ -56,7 +56,7 @@
             <mdb-icon fas icon="user"></mdb-icon> login
           </a>
         </li>
-        <li class="nav-item" *ngIf="currentEntreprise">
+        <li class="nav-item" *ngIf="currentEntreprise | async">
           <a class="nav-link"  (click)="close()">
               <mdb-icon fas icon="sign-out-alt"></mdb-icon>
             Fermer l'entreprise
@@ -64,7 +64,7 @@
         </li>
         <li class="nav-item dropdown" dropdown *ngIf="isAuthenticated()">
           <a dropdownToggle class="nav-link dropdown-toggle">
-            {{user.username}}
+            {{(currentUser | async)?.username}}
           </a>
           <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary dropdown-menu-right" role="menu">
             <a class="dropdown-item" (click)="logout()"><mdb-icon fas icon="sign-out-alt"></mdb-icon> Déconnexion</a>

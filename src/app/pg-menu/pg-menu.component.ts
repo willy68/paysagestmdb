@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Subject, Observable } from 'rxjs';
+import { takeUntil, shareReplay } from 'rxjs/operators';
 
 import { AuthenticationService, EntrepriseStorageService, LinksService, Links } from '../services';
 import { User, Role, Entreprise } from '../models';
@@ -13,12 +13,10 @@ import { User, Role, Entreprise } from '../models';
 })
 export class PgMenuComponent implements OnInit, OnDestroy {
 
-  private unsubscribAuthService: Subject<any> = new Subject<any>();
-  private unsubscribEntrStorageService: Subject<any> = new Subject<any>();
   private unsubscribLinksService: Subject<any> = new Subject<any>();
 
-  public currentUser: User;
-  public currentEntreprise: Entreprise;
+  public currentUser: Observable<User>;
+  public currentEntreprise: Observable<Entreprise>;
   public routes: Links;
 
   constructor(private authenticationService: AuthenticationService,
@@ -36,16 +34,12 @@ export class PgMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.authenticationService.currentUser
-    .pipe(takeUntil(this.unsubscribAuthService))
-    .subscribe(x => {
-      this.currentUser = x;
-    });
-    this.entrepriseStorageService.entreprise
-    .pipe(takeUntil(this.unsubscribEntrStorageService))
-    .subscribe(x => {
-      this.currentEntreprise = x;
-    });
+    this.currentUser = this.authenticationService.currentUser.pipe(
+      shareReplay(1)
+    );
+    this.currentEntreprise = this.entrepriseStorageService.entreprise.pipe(
+      shareReplay(1)
+    );
     this.linksService.currentLinks
     .pipe(takeUntil(this.unsubscribLinksService))
     .subscribe(x => {
@@ -54,10 +48,6 @@ export class PgMenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.unsubscribAuthService.next();
-    this.unsubscribAuthService.complete();
-    this.unsubscribEntrStorageService.next();
-    this.unsubscribEntrStorageService.complete();
     this.unsubscribLinksService.next();
     this.unsubscribLinksService.complete();
   }
@@ -67,7 +57,8 @@ export class PgMenuComponent implements OnInit, OnDestroy {
   }
 
   get isAdmin() {
-    return this.currentUser && this.currentUser.role === Role.Admin;
+    return this.authenticationService.currentUserValue &&
+      this.authenticationService.currentUserValue.role === Role.Admin;
   }
 
   logout() {
