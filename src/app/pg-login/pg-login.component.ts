@@ -89,8 +89,8 @@ export class PgLoginComponent implements OnInit {
     this.submitted = false;
     this.errorMessage = '';
     this.loginForm.reset();
-    Object.keys(this.loginForm.controls).forEach(key => {
+    /* Object.keys(this.loginForm.controls).forEach(key => {
       this.loginForm.controls[key].setErrors(null);
-    });
+    });*/
   }
 }
