@@ -22,8 +22,8 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     private entrepriseStorageService: EntrepriseStorageService,
     private authenticationService: AuthenticationService,
     private router: Router) {
-      this.entrepriseListBehavior = new BehaviorSubject(null);
-    }
+    this.entrepriseListBehavior = new BehaviorSubject(null);
+  }
 
   get user(): User {
     return this.authenticationService.currentUserValue;
@@ -34,19 +34,19 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     if (user) {
       this.selectedItem = index;
       this.entrepriseList
-      .pipe(
-        take(1),
-        switchMap(list => {
+        .pipe(
+          take(1),
+          switchMap(list => {
             if (list.length > index) {
               return this.entrepriseStorageService.open(user.id, list[index].id);
             } else {
               return NEVER;
             }
-        })
-      )
-      .subscribe( entreprise => {
-        this.router.navigate(['entreprise', entreprise.id]);
-      });
+          })
+        )
+        .subscribe(entreprise => {
+          this.router.navigate(['entreprise', entreprise.id]);
+        });
     }
   }
 
@@ -60,26 +60,44 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     if (user) {
       this.selectedItem = index;
       this.entrepriseList
-      .subscribe( list => {
-        if (list.length > index) {
-          this.router.navigate(['entreprise/entreprise-edit', list[index].id]);
-        }
-      });
+        .subscribe(list => {
+          if (list.length > index) {
+            this.router.navigate(['entreprise/entreprise-edit', list[index].id]);
+          }
+        });
     }
   }
 
   ngOnInit() {
-    const user = this.authenticationService.currentUserValue;
-    this.entrepriseList = this.entrepriseListBehavior
-    .pipe(
-        switchMap(() => this.entrepriseService.getList(user.id).pipe(
+    /*const user = this.authenticationService.currentUserValue;
+    if (user) {
+      this.entrepriseList = this.entrepriseListBehavior
+        .pipe(
+          switchMap(() => this.entrepriseService.getList(user.id).pipe(
             tap(list => console.log(list)),
             catchError(() => {
               this.emptyList = true;
               return [];
             })
           ))
-    );
+        );
+    } else {
+      this.emptyList = true;
+    }*/
+    /*const user = this.authenticationService.currentUserValue;
+    if (user) {*/
+      this.entrepriseList = this.authenticationService.currentUser.pipe(
+        take(1),
+        switchMap(user => this.entrepriseService.getList(user.id).pipe(
+        tap(list => console.log(list)),
+        catchError(() => {
+          this.emptyList = true;
+          return [];
+        })
+      )));
+    /*} else {
+      this.emptyList = true;
+    }*/
   }
 
   ngOnDestroy() {
