@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, NEVER, BehaviorSubject } from 'rxjs';
+import { Observable, of, EMPTY, Subject } from 'rxjs';
+import { switchMap, take, catchError, shareReplay, takeUntil } from 'rxjs/operators';
 
 import { EntrepriseService, EntrepriseStorageService } from '../../services';
 import { AuthenticationService } from '../../services';
 import { Entreprise, User } from '../../models';
-import { switchMap, take, catchError, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'pg-entreprise-list',
@@ -13,7 +13,7 @@ import { switchMap, take, catchError, tap } from 'rxjs/operators';
   styleUrls: ['./entreprise-list.component.scss']
 })
 export class EntrepriseListComponent implements OnInit, OnDestroy {
-  private entrepriseListBehavior: BehaviorSubject<any>;
+  private unsubscribList: Subject<any>;
   public entrepriseList: Observable<Entreprise[]>;
   public selectedItem = -1;
   public emptyList = false;
@@ -22,8 +22,8 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     private entrepriseStorageService: EntrepriseStorageService,
     private authenticationService: AuthenticationService,
     private router: Router) {
-    this.entrepriseListBehavior = new BehaviorSubject(null);
-  }
+      this.unsubscribList = new Subject<any>();
+    }
 
   get user(): User {
     return this.authenticationService.currentUserValue;
@@ -35,12 +35,18 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
       this.selectedItem = index;
       this.entrepriseList
         .pipe(
+          takeUntil(this.unsubscribList),
           take(1),
           switchMap(list => {
             if (list.length > index) {
-              return this.entrepriseStorageService.open(user.id, list[index].id);
+              return this.entrepriseStorageService.open(user.id, list[index].id).pipe(
+                catchError(error => {
+                  console.log(error);
+                  return EMPTY;
+              })
+              );
             } else {
-              return NEVER;
+              return EMPTY;
             }
           })
         )
@@ -59,7 +65,9 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     const user = this.authenticationService.currentUserValue;
     if (user) {
       this.selectedItem = index;
-      this.entrepriseList
+      this.entrepriseList.pipe(
+        takeUntil(this.unsubscribList)
+      )
         .subscribe(list => {
           if (list.length > index) {
             this.router.navigate(['entreprise/entreprise-edit', list[index].id]);
@@ -84,23 +92,27 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     } else {
       this.emptyList = true;
     }*/
-    /*const user = this.authenticationService.currentUserValue;
-    if (user) {*/
-      this.entrepriseList = this.authenticationService.currentUser.pipe(
-        take(1),
-        switchMap(user => this.entrepriseService.getList(user.id).pipe(
-        tap(list => console.log(list)),
-        catchError(() => {
+    this.entrepriseList = this.authenticationService.currentUser.pipe(
+      take(1),
+      switchMap(user => {
+        if (user) {
+          return this.entrepriseService.getList(user.id).pipe(
+            catchError(() => {
+              this.emptyList = true;
+              return of<Entreprise[]>([]);
+            })
+          );
+        } else {
           this.emptyList = true;
-          return [];
-        })
-      )));
-    /*} else {
-      this.emptyList = true;
-    }*/
+          return of<Entreprise[]>([]);
+        }
+      })
+    ).pipe(shareReplay(1));
   }
 
   ngOnDestroy() {
+    this.unsubscribList.next();
+    this.unsubscribList.complete();
   }
 
 }

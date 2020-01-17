@@ -27,12 +27,16 @@ export class EntrepriseStorageService {
   }
 
   public open(user_id: number, id: number, params = '') {
+    // same entreprise, just return it
+    if (this.currentEntrepriseValue && this.currentEntrepriseValue.id === id) {
+      return this.entreprise;
+    }
+
     return this.entrepriseService.get(user_id, id, params).pipe(
       tap(entreprise => {
         if (entreprise) {
           this.update(entreprise);
         }
-        return entreprise;
       })
     );
   }
