@@ -12,7 +12,8 @@
       class="text-center" style="color: #757575;">
     <!--  -->
       <div class="md-form">
-        <input type="email" mdbInput mdbValidate formControlName="email" id="email" class="form-control" />
+        <input type="email" mdbInput mdbValidate formControlName="email" 
+        id="email" class="form-control" autocomplete="email"/>
         <label for="email">E-mail:</label>
         <mdb-error *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
             <span *ngIf="f.email.errors.required">Email is required</span>
@@ -26,7 +27,7 @@
       <div class="md-form">
         <label for="password">Password:</label>
         <input type="password" formControlName="password" id="password" class="form-control"
-        mdbValidate mdbInput />
+        mdbValidate mdbInput autocomplete="new-password"/>
         <mdb-error *ngIf="f.password.invalid && (f.password.dirty || f.password.touched)">
           <span *ngIf="f.password.errors.required">Password is required</span>
           <span *ngIf="f.password.errors.minlength">Password must be at least 8 characters</span>
@@ -38,7 +39,7 @@
  
       <div class="md-form">
         <input type="password" formControlName="confirmPassword" class="form-control"
-        mdbValidate mdbInput />
+        mdbValidate mdbInput autocomplete="new-password"/>
         <label for="confirmPassword">Confirm Password:</label>
         <mdb-error *ngIf="f.confirmPassword.invalid && (f.confirmPassword.dirty || f.confirmPassword.touched)">
             <span *ngIf="f.confirmPassword.errors.required">Confirm Password is required</span>
