@@ -72,15 +72,19 @@ export class PgRegisterComponent implements OnInit {
       this.entreprise_id ? this.entreprise_id : null)
         .pipe(first())
         .subscribe(
-            data => {
-                this.alertService.success('Registration successful', true);
-                this.loading = false;
-                this.router.navigate(['/login']);
-              },
+          data => {
+              this.alertService.success('Registration successful', true);
+              this.loading = false;
+              this.router.navigate(['/login']);
+            },
             error => {
-                this.alertService.error(error);
-                this.loading = false;
-                this.errorMessage = error;
+              let errorMessage = 'Une erreur est survenu, impossible de s\'enregistrer';
+              if ( typeof error === 'string' ) {
+                errorMessage = error;
+              }
+              this.alertService.error(errorMessage);
+              this.loading = false;
+              this.errorMessage = errorMessage;
             });
   }
 

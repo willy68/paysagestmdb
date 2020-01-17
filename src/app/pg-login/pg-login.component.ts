@@ -79,8 +79,12 @@ export class PgLoginComponent implements OnInit {
           this.alertService.success('Bienvenue : ' + data.username);
         },
         error => {
-          this.alertService.error(error);
-          this.errorMessage = error;
+          let errorMessage = 'Une erreur est survenu, impossible de se connecter';
+          if ( typeof error === 'string' ) {
+            errorMessage = error;
+          }
+          this.alertService.error(errorMessage);
+          this.errorMessage = errorMessage;
         });
     this.loading = false;
   }

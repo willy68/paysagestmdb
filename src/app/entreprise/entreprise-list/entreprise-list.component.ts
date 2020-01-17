@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable, of, EMPTY, Subject } from 'rxjs';
 import { switchMap, take, catchError, shareReplay, takeUntil } from 'rxjs/operators';
 
-import { EntrepriseService, EntrepriseStorageService } from '../../services';
+import { EntrepriseService, EntrepriseStorageService, AlertService } from '../../services';
 import { AuthenticationService } from '../../services';
 import { Entreprise, User } from '../../models';
 
@@ -21,9 +21,10 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
   constructor(private entrepriseService: EntrepriseService,
     private entrepriseStorageService: EntrepriseStorageService,
     private authenticationService: AuthenticationService,
+    private alertService: AlertService,
     private router: Router) {
-      this.unsubscribList = new Subject<any>();
-    }
+    this.unsubscribList = new Subject<any>();
+  }
 
   get user(): User {
     return this.authenticationService.currentUserValue;
@@ -41,9 +42,13 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
             if (list.length > index) {
               return this.entrepriseStorageService.open(user.id, list[index].id).pipe(
                 catchError(error => {
-                  console.log(error);
+                  let errorMessage = 'Impossible d\'ouvrir cette entreprise';
+                  if ( typeof error === 'string' ) {
+                    errorMessage = error;
+                  }
+                  this.alertService.error(errorMessage);
                   return EMPTY;
-              })
+                })
               );
             } else {
               return EMPTY;
