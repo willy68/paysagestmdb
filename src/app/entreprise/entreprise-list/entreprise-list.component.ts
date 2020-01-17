@@ -17,6 +17,11 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
   public entrepriseList: Observable<Entreprise[]>;
   public selectedItem = -1;
   public emptyList = false;
+  public errorViewMessage = 'Aucune entreprise trouvée,' +
+  'Si vous n\'en avez peut-être pas encore créé une,' +
+  'cliquez sur le bouton: Nouvelle entreprise.' +
+  'Sinon un problème est peut-être survenu,' +
+  'veuillez retenter plus tard.';
 
   constructor(private entrepriseService: EntrepriseService,
     private entrepriseStorageService: EntrepriseStorageService,
@@ -61,7 +66,7 @@ export class EntrepriseListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSelect(index: number) {
+  onSelectChange(index: number) {
     this.selectedItem = index;
   }
 
