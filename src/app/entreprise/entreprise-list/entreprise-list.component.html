@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-8 mb-4">
-    <a [routerLink]="['../entreprise-create', {'user-id': user?.id}]" routerLinkActive="router-link-active"  mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Nouvelle entreprise</a>
+    <a [routerLink]="['/entreprise/entreprise-create', {'user-id': user?.id}]" routerLinkActive="router-link-active"  mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Nouvelle entreprise</a>
     <a (click)="onEdit(selectedItem)" mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Editer</a>
     <a (click)="onOpen(selectedItem)" mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Ouvrir</a>
   </div>
