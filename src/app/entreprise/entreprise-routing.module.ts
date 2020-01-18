@@ -28,9 +28,11 @@ const entrepriseRoutes: Routes = [
           },
           { path: 'entreprise-edit/:id',
             component: EntrepriseEditComponent,
-            data: {roles: Role.Admin}
+            data: {roles: Role.Admin, entreprise: true}
           },
-          { path: ':id', component: EntrepriseDashboardComponent }
+          { path: ':id',
+            component: EntrepriseDashboardComponent,
+            data: {entreprise: true} }
         ]
       }
     ]
