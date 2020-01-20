@@ -12,13 +12,15 @@ import { ClientsListComponent } from './clients-list/clients-list.component';
 import { ClientCreateComponent } from './client-create/client-create.component';
 import { ClientUpdateComponent } from './client-update/client-update.component';
 import { ClientComponent } from './client/client.component';
+import { AdresseCreateComponent } from './adresse-create/adresse-create.component';
+import { AdresseListComponent } from './adresse-list/adresse-list.component';
 
 
 @NgModule({
   declarations: [
     ClientsListComponent,
     ClientCreateComponent,
-    ClientUpdateComponent, ClientComponent
+    ClientUpdateComponent, ClientComponent, AdresseCreateComponent, AdresseListComponent
   ],
   imports: [
     CommonModule,
