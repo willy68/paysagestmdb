@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AdresseService, AdresseTypeService } from 'src/app/services';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Adresse, AdresseType } from 'src/app/models';
 
@@ -24,10 +24,18 @@ export class AdresseListComponent implements OnInit {
     this.adresses = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.client_id = +params.get('client_id');
-        return this.adresseService.getList(this.client_id);
+        return this.adresseService.getList(this.client_id).pipe(
+          catchError(err => {
+            return [];
+          })
+        );
       })
     );
-    this.adresse_type = this.adresseTypeService.getAll();
+    this.adresse_type = this.adresseTypeService.getAll().pipe(
+      catchError(err => {
+        return [];
+      })
+    );
   }
 
 }
