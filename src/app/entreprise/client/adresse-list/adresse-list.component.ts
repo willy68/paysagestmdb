@@ -12,7 +12,7 @@ import { Adresse, AdresseType } from 'src/app/models';
 })
 export class AdresseListComponent implements OnInit {
   private adresses: Observable <Adresse[]>;
-  private adresse_type: Observable <AdresseType>;
+  private adresse_type: Observable <AdresseType[]>;
   private client_id: number;
 
   constructor(private adresseService: AdresseService,
@@ -27,6 +27,7 @@ export class AdresseListComponent implements OnInit {
         return this.adresseService.getList(this.client_id);
       })
     );
+    this.adresse_type = this.adresseTypeService.getAll();
   }
 
 }
