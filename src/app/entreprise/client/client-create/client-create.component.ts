@@ -107,7 +107,7 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
         data => {
           this.alertService.success('SUCCESS!! : ' + data.nom);
           // navigue vers clients list
-          this.router.navigate(['../']);
+          this.router.navigate(['../', data.id, 'adresse-create'], {relativeTo: this.route});
         },
         error => {
           this.alertService.error(error);

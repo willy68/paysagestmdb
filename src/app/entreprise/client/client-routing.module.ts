@@ -12,7 +12,7 @@ import { AdresseListComponent } from './adresse-list/adresse-list.component';
 
 const clientRoutes: Routes = [
   {
-    path: 'entreprise/:entreprise_id/clients',
+    path: 'entreprise/:entreprise_id/client',
     component: ClientComponent,
     canActivate: [AuthGuard],
     children: [
@@ -21,10 +21,10 @@ const clientRoutes: Routes = [
         canActivateChild: [AuthGuard],
         children: [
           { path: 'client-create', component: ClientCreateComponent },
-          { path: 'client-update/:id', component: ClientUpdateComponent },
+          { path: ':id/client-update', component: ClientUpdateComponent },
           { path: '', component: ClientsListComponent },
-          { path: 'client/:id/adresse-create', component: AdresseCreateComponent },
-          { path: 'client/:id/adresse-list', component: AdresseListComponent}
+          { path: ':id/adresse-create', component: AdresseCreateComponent },
+          { path: ':id/adresse-list', component: AdresseListComponent}
         ]
       }
     ]

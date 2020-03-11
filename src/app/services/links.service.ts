@@ -36,7 +36,7 @@ export class LinksService {
       new_entreprise: ['/entreprise/entreprise-create'],
       edit_entreprise: ['/entreprise/entreprise-edit'],
       open: ['/entreprise'],
-      clients: ['/clients']
+      clients: ['/client']
     });
     this.currentLinks = merge(this.authenticationService.currentUser.pipe(
       switchMap((user) => {
@@ -58,7 +58,7 @@ export class LinksService {
               if (entreprise) {
                 routes.entreprise = ['/entreprise', entreprise.id];
                 routes.edit_entreprise = ['entreprise/entreprise-edit', entreprise.id];
-                routes.clients = ['/entreprise', entreprise.id, 'clients'];
+                routes.clients = ['/entreprise', entreprise.id, 'client'];
                 routes.register = ['/register', { entreprise_id: entreprise.id }];
                 routes.login = ['/login', { entreprise_id: entreprise.id }];
               } else {

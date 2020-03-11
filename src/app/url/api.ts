@@ -1,2 +1,2 @@
 
-export const apigest: string = 'http://apigest';
+export const apigest = 'http://apigest:8000/api';
