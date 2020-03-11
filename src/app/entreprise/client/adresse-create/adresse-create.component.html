@@ -1,1 +1,128 @@
-<p>adresse-create works!</p>
+<div class="row">
+  <div class="col-sm-12">
+    <mdb-card class="mb-5">
+      <mdb-card-header class="primary-color white-text">
+        <h6 class="fw-400 mb-0">
+          Nouvelle adresse pour le client
+          <span class="float-left mr-1">
+            <mdb-icon fas icon="sign-in-alt"></mdb-icon>
+          </span>
+        </h6>
+      </mdb-card-header>
+      <mdb-card-body class="px-lg-5 pt-0">
+        <form [formGroup]="createForm" (ngSubmit)="onSubmit()" (reset)="$event.preventDefault()"
+        class="text-center" style="color: #757575;">
+          <!--  -->
+
+          <div class="form-row">
+            <div class="col-md">
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="adresse_1" id="adresse_1" class="form-control" />
+                <label for="adresse_1">Adresse:</label>
+                <mdb-error *ngIf="f.adresse_1.invalid && (f.adresse_1.dirty || f.adresse_1.touched)">
+                  <span *ngIf="f.adresse_1.errors.required">adresse is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.adresse_1.valid && (f.adresse_1.dirty || f.adresse_1.touched)">
+                  Adresse valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="adresse_2" id="adresse_2" class="form-control" />
+                <label for="adresse_2">Adresse:</label>
+                <mdb-error *ngIf="f.adresse_2.invalid && (f.adresse_2.dirty || f.adresse_2.touched)">
+                  <span *ngIf="f.adresse_2.errors.required">adresse is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.adresse_2.valid && (f.adresse_2.dirty || f.adresse_2.touched)">
+                  Adresse valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="adresse_3" id="adresse_3" class="form-control" />
+                <label for="adresse_3">Adresse:</label>
+                <mdb-error *ngIf="f.adresse_3.invalid && (f.adresse_3.dirty || f.adresse_3.touched)">
+                  <span *ngIf="f.adresse_3.errors.required">adresse is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.adresse_3.valid && (f.adresse_3.dirty || f.adresse_3.touched)">
+                  Adresse valid
+                </mdb-success>
+              </div>
+              <ng-template #customItemCpTemplate let-model="item">
+                <span><b>{{model.cp | json}}</b> {{model.ville | json}}</span>
+              </ng-template>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="cp" id="cp" class="form-control"
+                [typeaheadAsync]="true"
+                [typeahead]="cpSearch"
+                (typeaheadLoading)="cpTypeaheadLoading($event)"
+                (typeaheadOnSelect)="onCpSelect($event)"
+                [typeaheadOptionsLimit]="15"
+                [typeaheadItemTemplate]="customItemCpTemplate"
+                typeaheadOptionField="cp"
+                (typeaheadNoResults)="typeaheadNoCpResults($event)"
+                 autocomplete="no"/>
+                <label for="cp">Code Postal:</label>
+                <mdb-error *ngIf="f.cp.invalid && (f.cp.dirty || f.cp.touched)">
+                  <span *ngIf="f.cp.errors.required">Code Postal is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.cp.valid && (f.cp.dirty || f.cp.touched)">
+                  Code Postal valid
+                  <div *ngIf="TypeheadCpLoading">Loading</div>
+                  <div *ngIf="noCpResult">No Results Found</div>
+                </mdb-success>
+              </div>
+              <ng-template #customItemVilleTemplate let-model="item">
+                <span>{{model.cp | json}} <b>{{model.ville | json}}</b></span>
+              </ng-template>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="ville" id="ville" class="form-control"
+                [typeaheadAsync]="true"
+                [typeahead]="villeSearch"
+                (typeaheadLoading)="villeTypeaheadLoading($event)"
+                (typeaheadOnSelect)="onVilleSelect($event)"
+                [typeaheadOptionsLimit]="15"
+                [typeaheadItemTemplate]="customItemVilleTemplate"
+                typeaheadOptionField="ville"
+                (typeaheadNoResults)="typeaheadNoVilleResults($event)"
+                 autocomplete="no"/>
+                <label for="ville">Ville:</label>
+                <mdb-error *ngIf="f.ville.invalid && (f.ville.dirty || f.ville.touched)">
+                  <span *ngIf="f.ville.errors.required">ville is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.ville.valid && (f.ville.dirty || f.ville.touched)">
+                  Ville valid
+                  <div *ngIf="TypeheadVilleLoading">Loading</div>
+                  <div *ngIf="noVilleResult">No Results Found</div>
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <input type="text" mdbInput mdbValidate formControlName="pays" id="pays" class="form-control" />
+                <label for="adresse_3">Pays:</label>
+                <mdb-error *ngIf="f.pays.invalid && (f.pays.dirty || f.pays.touched)">
+                  <span *ngIf="f.pays.errors.required">adresse is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.pays.valid && (f.pays.dirty || f.pays.touched)">
+                  Adresse valid
+                </mdb-success>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div>
+            <button pgRoundedBtn type="reset" mdbBtn color="secondary" outline="true" mdbWavesEffect
+              (click)="resetForm()">
+              Annuler
+            </button>
+            <button mdbBtn pgRoundedBtn class="mr-2" color="primary" outline="true" mdbWavesEffect type="submit">
+              Créer
+            </button>
+            <img *ngIf="loading" class="pl-2"
+              src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+          </div>
+
+        </form>
+      </mdb-card-body>
+    </mdb-card>
+  </div>
+</div>

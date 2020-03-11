@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';  // Reactive 
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
 import { DirectivesModule } from '../../directives';
 
 import { ClientRoutingModule } from './client-routing.module';
@@ -29,7 +29,8 @@ import { AdresseListComponent } from './adresse-list/adresse-list.component';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
-    ClientRoutingModule
+    ClientRoutingModule,
+    TypeaheadModule.forRoot()
   ]
 })
 export class ClientModule { }

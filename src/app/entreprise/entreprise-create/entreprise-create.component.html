@@ -98,7 +98,7 @@
                  autocomplete="no"/>
                 <label for="ville">Ville:</label>
                 <mdb-error *ngIf="f.ville.invalid && (f.ville.dirty || f.ville.touched)">
-                  <span *ngIf="f.adresse.errors.required">ville is required</span>
+                  <span *ngIf="f.ville.errors.required">ville is required</span>
                 </mdb-error>
                 <mdb-success *ngIf="f.ville.valid && (f.ville.dirty || f.ville.touched)">
                   Ville valid
