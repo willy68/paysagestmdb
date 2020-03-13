@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Reactive
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AdresseService, AdresseTypeService,
          CpvilleService, AlertService } from 'src/app/services';
-import { switchMap, catchError, first, map, tap } from 'rxjs/operators';
+import { switchMap, catchError, first, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { AdresseType, Cpville } from 'src/app/models';
 
@@ -43,7 +43,7 @@ export class AdresseCreateComponent implements OnInit {
     this.createFormBuild();
     this.adresses_type = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
-        this.client_id = +params.get('client_id');
+        this.client_id = +params.get('id');
         this.client_nom = params.get('client');
         return this.adresseTypeService.getAll().pipe(
           tap(adresseType => {
@@ -122,7 +122,7 @@ export class AdresseCreateComponent implements OnInit {
         data => {
           this.alertService.success('SUCCESS!! : Adresse create.');
           // navigue vers entreprise-list pour ouvrir cette entreprise
-          this.router.navigate(['../']);
+          this.router.navigate(['../'], {relativeTo: this.route});
         },
         error => {
           this.alertService.error(error);
