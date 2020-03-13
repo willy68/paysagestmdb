@@ -106,8 +106,8 @@
               </div>
               <div class="md-form">
                 <select formControlName="adresse_type" class="form-control" mdbInput mdbValidate>
-                  <option *ngFor="let adresse_type of (adresses_type | async); let isFirst = index" 
-                   [value]="adresse_type.id" [selected]="isFirst == 0">
+                  <option *ngFor="let adresse_type of (adresses_type | async); let isFirst = first" 
+                   [value]="adresse_type.id">
                    {{adresse_type.libelle}}
                   </option>
                 </select>
@@ -115,9 +115,10 @@
                 <mdb-error *ngIf="f.adresse_type.invalid && (f.adresse_type.dirty || f.adresse_type.touched)">
                   <span *ngIf="f.adresse_type.errors.required">adresse is required</span>
                 </mdb-error>
-                <mdb-success *ngIf="f.adresse_type.valid && (f.adresse_types.dirty || f.adresse_type.touched)">
+                <mdb-success *ngIf="f.adresse_type.valid && (f.adresse_type.dirty || f.adresse_type.touched)">
                   Adresse type valid
                 </mdb-success>
+                {{ adresse_type.value }}
               </div>
 
             </div>

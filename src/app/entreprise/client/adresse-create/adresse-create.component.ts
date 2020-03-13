@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Reactive
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AdresseService, AdresseTypeService,
          CpvilleService, AlertService } from 'src/app/services';
-import { switchMap, catchError, first } from 'rxjs/operators';
+import { switchMap, catchError, first, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { AdresseType, Cpville } from 'src/app/models';
 
@@ -46,6 +46,9 @@ export class AdresseCreateComponent implements OnInit {
         this.client_id = +params.get('client_id');
         this.client_nom = params.get('client');
         return this.adresseTypeService.getAll().pipe(
+          tap(adresseType => {
+            this.adresse_type.setValue(adresseType[0].id);
+          }),
           catchError(err => {
             return [];
           })
