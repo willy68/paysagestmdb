@@ -3,7 +3,7 @@
     <mdb-card class="mb-5">
       <mdb-card-header class="primary-color white-text">
         <h6 class="fw-400 mb-0">
-          Nouvelle adresse pour le client
+          Nouvelle adresse pour le client {{ (client_nom) }}
           <span class="float-left mr-1">
             <mdb-icon fas icon="sign-in-alt"></mdb-icon>
           </span>
@@ -18,7 +18,7 @@
             <div class="col-md">
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="adresse_1" id="adresse_1" class="form-control" />
-                <label for="adresse_1">Adresse:</label>
+                <label for="adresse_1">Adresse 1:</label>
                 <mdb-error *ngIf="f.adresse_1.invalid && (f.adresse_1.dirty || f.adresse_1.touched)">
                   <span *ngIf="f.adresse_1.errors.required">adresse is required</span>
                 </mdb-error>
@@ -28,7 +28,7 @@
               </div>
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="adresse_2" id="adresse_2" class="form-control" />
-                <label for="adresse_2">Adresse:</label>
+                <label for="adresse_2">Adresse 2:</label>
                 <mdb-error *ngIf="f.adresse_2.invalid && (f.adresse_2.dirty || f.adresse_2.touched)">
                   <span *ngIf="f.adresse_2.errors.required">adresse is required</span>
                 </mdb-error>
@@ -38,7 +38,7 @@
               </div>
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="adresse_3" id="adresse_3" class="form-control" />
-                <label for="adresse_3">Adresse:</label>
+                <label for="adresse_3">Adresse 3:</label>
                 <mdb-error *ngIf="f.adresse_3.invalid && (f.adresse_3.dirty || f.adresse_3.touched)">
                   <span *ngIf="f.adresse_3.errors.required">adresse is required</span>
                 </mdb-error>
@@ -96,12 +96,27 @@
               </div>
               <div class="md-form">
                 <input type="text" mdbInput mdbValidate formControlName="pays" id="pays" class="form-control" />
-                <label for="adresse_3">Pays:</label>
+                <label for="pays">Pays:</label>
                 <mdb-error *ngIf="f.pays.invalid && (f.pays.dirty || f.pays.touched)">
-                  <span *ngIf="f.pays.errors.required">adresse is required</span>
+                  <span *ngIf="f.pays.errors.required">Pays is required</span>
                 </mdb-error>
                 <mdb-success *ngIf="f.pays.valid && (f.pays.dirty || f.pays.touched)">
-                  Adresse valid
+                  Pays valid
+                </mdb-success>
+              </div>
+              <div class="md-form">
+                <select formControlName="adresse_type" class="form-control" mdbInput mdbValidate>
+                  <option *ngFor="let adresse_type of (adresses_type | async); let isFirst = index" 
+                   [value]="adresse_type.id" [selected]="isFirst == 0">
+                   {{adresse_type.libelle}}
+                  </option>
+                </select>
+                <label for="adresse_type">Type d'adresse:</label>
+                <mdb-error *ngIf="f.adresse_type.invalid && (f.adresse_type.dirty || f.adresse_type.touched)">
+                  <span *ngIf="f.adresse_type.errors.required">adresse is required</span>
+                </mdb-error>
+                <mdb-success *ngIf="f.adresse_type.valid && (f.adresse_types.dirty || f.adresse_type.touched)">
+                  Adresse type valid
                 </mdb-success>
               </div>
 
