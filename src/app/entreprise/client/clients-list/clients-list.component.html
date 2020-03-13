@@ -31,16 +31,20 @@
           <table class="table table-hover table-sheet table-sm" *ngIf="!emptyList">
             <thead>
               <tr>
-                <th>Game Name</th>
-                <th>Platform</th>
-                <th>Release Date</th>
+                <th>Code</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Code Postal</th>
+                <th>Ville</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let game of games; let i = index">
-                <td>{{game.game}}</td>
-                <td>{{game.platform}}</td>
-                <td>{{game.release}}</td>
+              <tr *ngFor="let client of (clientList | async)">
+                <td>{{client.code_client}}</td>
+                <td>{{client.nom}}</td>
+                <td>{{client.email}}</td>
+                <td>{{client?.cp}} </td>
+                <td>{{client?.ville}} </td>
               </tr>
             </tbody>
           </table>

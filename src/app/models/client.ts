@@ -11,4 +11,5 @@ export interface Client {
   tva_intracom?: string;
   created_at?: string;
   updated_at?: string;
+  [key: string]: any;
 }
