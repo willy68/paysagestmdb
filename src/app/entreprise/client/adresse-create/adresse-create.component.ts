@@ -122,7 +122,7 @@ export class AdresseCreateComponent implements OnInit {
         data => {
           this.alertService.success('SUCCESS!! : Adresse create.');
           // navigue vers entreprise-list pour ouvrir cette entreprise
-          this.router.navigate(['../'], {relativeTo: this.route});
+          this.router.navigate(['../../', 'client'], {relativeTo: this.route});
         },
         error => {
           this.alertService.error(error);

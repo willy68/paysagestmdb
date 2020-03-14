@@ -38,7 +38,8 @@ export class ClientsListComponent implements OnInit {
     this.clientList = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
-        return this.clientService.getList(this.entreprise_id).pipe(
+        return this.clientService.getList(this.entreprise_id, '?include=adresses').pipe(
+          tap(clientList => clientList),
           catchError(() =>  {
             this.emptyList = true;
             return of<Client[]>([]);
