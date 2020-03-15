@@ -16,10 +16,11 @@ import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
 })
 export class ClientFormComponent implements OnInit, OnDestroy {
   @Input() client: Client;
+  @Input() codeClient: number;
   public entreprise_id: number;
   form: FormGroup;
   public dernier_code: string;
-  public last_code: Observable<DernierCode>;
+  public client_code: Observable<DernierCode>;
   private readonly refreshCiviliteList = new BehaviorSubject(null);
   public civiliteList: Observable<Civilite[]>;
   public civilites: Civilite[];
@@ -42,7 +43,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
 
       this.form.addControl('addressForm',
         this.createForm = this.fb.group({
-          code_client: [{ value: this.dernier_code, disabled: true }, [Validators.required]],
+          code_client: [{ value: this.codeClient, disabled: true }, [Validators.required]],
           civilite: ['', []],
           nom: ['', [Validators.required]],
           prenom: ['', []],
@@ -51,17 +52,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
           email: ['', [Validators.required, Validators.email]],
           tva_intracom: ['', []]
         }));
-        this.last_code = this.route.paramMap.pipe(
-          switchMap((params: ParamMap) => {
-            this.entreprise_id = +params.get('entreprise_id');
-            return this.dernierCodeService.getLastCode(this.entreprise_id, 'client').pipe(
-              tap(data => {
-                this.dernier_code = data.prochain_code;
-                this.createForm.patchValue({ code_client: this.dernier_code });
-              })
-            );
-          })
-        );
+
         this.civiliteList = this.refreshCiviliteList.pipe(
           switchMap(() => this.civiliteService.getList(this.entreprise_id).pipe(
             tap(data => this.civilites = data)
@@ -69,23 +60,23 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         );
       }
 
-      get code_client() { return this.createForm.get('code_client'); }
-      get civilite() { return this.createForm.get('civilite'); }
-      get nom() { return this.createForm.get('nom'); }
-      get prenom() { return this.createForm.get('prenom'); }
-      get tel() { return this.createForm.get('tel'); }
-      get portable() { return this.createForm.get('portable'); }
-      get email() { return this.createForm.get('email'); }
-      get tva_intracom() { return this.createForm.get('tva_intracom'); }
+      get code_client() { return (<FormGroup>this.form.controls['clientForm']).get('code_client'); }
+      get civilite() { return (<FormGroup>this.form.controls['clientForm']).get('civilite'); }
+      get nom() { return (<FormGroup>this.form.controls['clientForm']).get('nom'); }
+      get prenom() { return (<FormGroup>this.form.controls['clientForm']).get('prenom'); }
+      get tel() { return (<FormGroup>this.form.controls['clientForm']).get('tel'); }
+      get portable() { return (<FormGroup>this.form.controls['clientForm']).get('portable'); }
+      get email() { return (<FormGroup>this.form.controls['clientForm']).get('email'); }
+      get tva_intracom() { return (<FormGroup>this.form.controls['clientForm']).get('tva_intracom'); }
 
       isInvalid(controlName: string): boolean {
-        return (<FormGroup>this.form.controls['addressForm']).controls[controlName].touched
-          && (<FormGroup>this.form.controls['addressForm']).controls[controlName].invalid;
+        return (<FormGroup>this.form.controls['clientForm']).controls[controlName].touched
+          && (<FormGroup>this.form.controls['clientForm']).controls[controlName].invalid;
       }
 
       isValid(controlName: string): boolean {
-        return (<FormGroup>this.form.controls['addressForm']).controls[controlName].touched
-          && (<FormGroup>this.form.controls['addressForm']).controls[controlName].valid;
+        return (<FormGroup>this.form.controls['clientForm']).controls[controlName].touched
+          && (<FormGroup>this.form.controls['clientForm']).controls[controlName].valid;
       }
 
       civiliteFocusout(event) {

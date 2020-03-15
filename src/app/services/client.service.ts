@@ -41,7 +41,7 @@ export class ClientService {
   }
 
   update(entreprise_id: number, client: Client) {
-    return this.http.put(apigest + `/entreprise/${entreprise_id}/client/${client.id}`, client);
+    return this.http.put<Client>(apigest + `/entreprise/${entreprise_id}/client/${client.id}`, client);
   }
 
   delete(entreprise_id: number, id: number) {
