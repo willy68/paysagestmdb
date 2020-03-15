@@ -38,103 +38,109 @@ export class ClientFormComponent implements OnInit, OnDestroy {
     private civiliteService: CiviliteService,
     private modalService: MDBModalService) { }
 
-    ngOnInit() {
-      this.form = this.ctrlContainer.form;
+  ngOnInit() {
+    this.form = this.ctrlContainer.form;
 
-      this.form.addControl('addressForm',
-        this.createForm = this.fb.group({
-          code_client: [{ value: this.codeClient, disabled: true }, [Validators.required]],
-          civilite: ['', []],
-          nom: ['', [Validators.required]],
-          prenom: ['', []],
-          tel: ['', []],
-          portable: ['', []],
-          email: ['', [Validators.required, Validators.email]],
-          tva_intracom: ['', []]
-        }));
+    this.form.addControl('clientForm',
+      this.createForm = this.fb.group({
+        code_client: [{ value: this.codeClient, disabled: true }, [Validators.required]],
+        civilite: ['', []],
+        nom: ['', [Validators.required]],
+        prenom: ['', []],
+        tel: ['', []],
+        portable: ['', []],
+        email: ['', [Validators.required, Validators.email]],
+        tva_intracom: ['', []]
+      }));
 
-        this.civiliteList = this.refreshCiviliteList.pipe(
+    this.civiliteList = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.entreprise_id = +params.get('entreprise_id');
+        return this.refreshCiviliteList.pipe(
           switchMap(() => this.civiliteService.getList(this.entreprise_id).pipe(
             tap(data => this.civilites = data)
           ))
         );
-      }
+      })
+    );
+  }
 
-      get code_client() { return (<FormGroup>this.form.controls['clientForm']).get('code_client'); }
-      get civilite() { return (<FormGroup>this.form.controls['clientForm']).get('civilite'); }
-      get nom() { return (<FormGroup>this.form.controls['clientForm']).get('nom'); }
-      get prenom() { return (<FormGroup>this.form.controls['clientForm']).get('prenom'); }
-      get tel() { return (<FormGroup>this.form.controls['clientForm']).get('tel'); }
-      get portable() { return (<FormGroup>this.form.controls['clientForm']).get('portable'); }
-      get email() { return (<FormGroup>this.form.controls['clientForm']).get('email'); }
-      get tva_intracom() { return (<FormGroup>this.form.controls['clientForm']).get('tva_intracom'); }
+  get f() { return (<FormGroup>this.form.controls['clientForm']).controls; }
+  get code_client() { return (<FormGroup>this.form.controls['clientForm']).get('code_client'); }
+  get civilite() { return (<FormGroup>this.form.controls['clientForm']).get('civilite'); }
+  get nom() { return (<FormGroup>this.form.controls['clientForm']).get('nom'); }
+  get prenom() { return (<FormGroup>this.form.controls['clientForm']).get('prenom'); }
+  get tel() { return (<FormGroup>this.form.controls['clientForm']).get('tel'); }
+  get portable() { return (<FormGroup>this.form.controls['clientForm']).get('portable'); }
+  get email() { return (<FormGroup>this.form.controls['clientForm']).get('email'); }
+  get tva_intracom() { return (<FormGroup>this.form.controls['clientForm']).get('tva_intracom'); }
 
-      isInvalid(controlName: string): boolean {
-        return (<FormGroup>this.form.controls['clientForm']).controls[controlName].touched
-          && (<FormGroup>this.form.controls['clientForm']).controls[controlName].invalid;
-      }
+  isInvalid(controlName: string): boolean {
+    return (<FormGroup>this.form.controls['clientForm']).controls[controlName].touched
+      && (<FormGroup>this.form.controls['clientForm']).controls[controlName].invalid;
+  }
 
-      isValid(controlName: string): boolean {
-        return (<FormGroup>this.form.controls['clientForm']).controls[controlName].touched
-          && (<FormGroup>this.form.controls['clientForm']).controls[controlName].valid;
-      }
+  isValid(controlName: string): boolean {
+    return (<FormGroup>this.form.controls['clientForm']).controls[controlName].touched
+      && (<FormGroup>this.form.controls['clientForm']).controls[controlName].valid;
+  }
 
-      civiliteFocusout(event) {
-        if (this.civilite.value.length &&
-          !this.civilites.find(element => element.libelle === this.civilite.value)) {
-          this.modalRef = this.openModal();
-          this.modalRef.content.action.pipe(
-            switchMap( (result: any) => {
-              this.modalRef.hide();
-              if (result) {
-                return this.civiliteService.create(this.entreprise_id,
-                  {
-                    entreprise_id: this.entreprise_id,
-                    libelle: this.civilite.value
-                  });
-              } else {
-                return NEVER;
-              }
-          }),
-          takeUntil(this.deadModal))
-          .subscribe(() => this.refreshCiviliteList.next(null));
+  civiliteFocusout(event) {
+    if (this.civilite.value.length &&
+      !this.civilites.find(element => element.libelle === this.civilite.value)) {
+      this.modalRef = this.openModal();
+      this.modalRef.content.action.pipe(
+        switchMap((result: any) => {
+          this.modalRef.hide();
+          if (result) {
+            return this.civiliteService.create(this.entreprise_id,
+              {
+                entreprise_id: this.entreprise_id,
+                libelle: this.civilite.value
+              });
+          } else {
+            return NEVER;
+          }
+        }),
+        takeUntil(this.deadModal))
+        .subscribe(() => this.refreshCiviliteList.next(null));
+    }
+  }
+
+  resetForm() {
+    this.submitted = false;
+    this.createForm.reset({
+      code_client: { value: this.dernier_code, disabled: true }
+    });
+  }
+
+  openModal(): MDBModalRef {
+    return this.modalRef = this.modalService.show(YesnomodalComponent, {
+      backdrop: true,
+      keyboard: true,
+      focus: true,
+      show: false,
+      ignoreBackdropClick: false,
+      class: '',
+      containerClass: '',
+      animated: true,
+      data: {
+        heading: 'Sauvegarde',
+        content: {
+          heading: 'Civilité nouvelle',
+          description: 'Voulez sauvegarder la civilité ' + this.civilite.value
+        },
+        button: {
+          yes: 'Sauver!',
+          no: 'Fermer'
         }
       }
+    });
+  }
 
-      resetForm() {
-        this.submitted = false;
-        this.createForm.reset({
-          code_client: { value: this.dernier_code, disabled: true }
-        });
-      }
-
-      openModal(): MDBModalRef {
-        return this.modalRef = this.modalService.show(YesnomodalComponent, {
-            backdrop: true,
-            keyboard: true,
-            focus: true,
-            show: false,
-            ignoreBackdropClick: false,
-            class: '',
-            containerClass: '',
-            animated: true,
-            data: {
-              heading: 'Sauvegarde',
-              content: {
-                heading: 'Civilité nouvelle',
-                description: 'Voulez sauvegarder la civilité ' + this.civilite.value
-              },
-              button: {
-                yes: 'Sauver!',
-                no: 'Fermer'
-              }
-            }
-        });
-      }
-
-      ngOnDestroy() {
-        this.deadModal.next();
-        this.deadModal.complete();
-      }
+  ngOnDestroy() {
+    this.deadModal.next();
+    this.deadModal.complete();
+  }
 
 }

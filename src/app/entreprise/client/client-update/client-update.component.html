@@ -30,7 +30,7 @@
 				<mdb-card-body class="px-lg-5 pt-0">
 					<form [formGroup]="clientForm" (ngSubmit)="onSubmit()" (reset)="$event.preventDefault()" class="text-center" style="color: #757575;">
 
-            <pg-client-form [client]="updatedClient | async" [codeClient]="(client_code | async)" ></pg-client-form>
+            <pg-client-form [client]="updatedClient | async" [codeClient]="client_code | async" ></pg-client-form>
 
 						<div>
 							<button pgroundedbtn mdbbtn color="secondary" outline="true" mdbwaveseffect (click)="resetForm()">
