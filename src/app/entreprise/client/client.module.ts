@@ -14,13 +14,18 @@ import { ClientUpdateComponent } from './client-update/client-update.component';
 import { ClientComponent } from './client/client.component';
 import { AdresseCreateComponent } from './adresse-create/adresse-create.component';
 import { AdresseListComponent } from './adresse-list/adresse-list.component';
+import { ClientFormComponent } from '../../forms/client/client-form/client-form.component';
 
 
 @NgModule({
   declarations: [
     ClientsListComponent,
     ClientCreateComponent,
-    ClientUpdateComponent, ClientComponent, AdresseCreateComponent, AdresseListComponent
+    ClientUpdateComponent,
+    ClientComponent,
+    AdresseCreateComponent,
+    AdresseListComponent,
+    ClientFormComponent
   ],
   imports: [
     CommonModule,
