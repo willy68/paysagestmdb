@@ -16,7 +16,7 @@ import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
 })
 export class ClientFormComponent implements OnInit, OnDestroy {
   @Input() client: Client;
-  @Input() codeClient: number;
+  @Input() code: Observable<DernierCode>;
   public entreprise_id: number;
   form: FormGroup;
   public dernier_code: string;
@@ -42,8 +42,8 @@ export class ClientFormComponent implements OnInit, OnDestroy {
     this.form = this.ctrlContainer.form;
 
     this.form.addControl('clientForm',
-      this.createForm = this.fb.group({
-        code_client: [{ value: this.codeClient, disabled: true }, [Validators.required]],
+      this.fb.group({
+        code_client: ['', [Validators.required]],
         civilite: ['', []],
         nom: ['', [Validators.required]],
         prenom: ['', []],
@@ -51,7 +51,30 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         portable: ['', []],
         email: ['', [Validators.required, Validators.email]],
         tva_intracom: ['', []]
-      }));
+      })
+    );
+    (<FormGroup>this.form.controls['clientForm']).patchValue({ code_client: 'CL1' });
+    console.log((<FormGroup>this.form.controls['clientForm']).controls);
+    console.log(this.form);
+
+    if (this.code) {
+      this.client_code = this.code.pipe(
+        tap(lastCode => (<FormGroup>this.form.controls['clientForm']).patchValue({ code_client: lastCode.prochain_code })
+      ));
+    } else {
+      this.client_code = this.route.paramMap.pipe(
+        switchMap((params: ParamMap) => {
+          this.entreprise_id = +params.get('entreprise_id');
+          return this.dernierCodeService.getLastCode(this.entreprise_id, 'client').pipe(
+            tap(data => {
+              this.dernier_code = data.prochain_code;
+              (<FormGroup>this.form.controls['clientForm']).patchValue({ code_client: this.dernier_code });
+            })
+          );
+        })
+      );
+    }
+
 
     this.civiliteList = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
@@ -66,6 +89,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
   }
 
   get f() { return (<FormGroup>this.form.controls['clientForm']).controls; }
+
   get code_client() { return (<FormGroup>this.form.controls['clientForm']).get('code_client'); }
   get civilite() { return (<FormGroup>this.form.controls['clientForm']).get('civilite'); }
   get nom() { return (<FormGroup>this.form.controls['clientForm']).get('nom'); }

@@ -1,18 +1,20 @@
-<div formgroupname="clientForm">
+<div formGroupName="clientForm">
 
 	<div class="form-row">
 		<div class="col-md">
 			<div class="md-form">
 				<input type="text" mdbinput mdbvalidate formcontrolname="code_client" id="code_client" class="form-control"/>
 				<label for="code_client">
-          Code client: *
-				</label>
+					<!--<ng-container *ngIf="!client_code || (client_code | async) ; else loadcode">Code client: *</ng-container>
+					<ng-template #loadcode>Loading ...</ng-template>-->
+					Code Client*
+				</label><!--
 				<mdb-error *ngIf="f.code_client.invalid && (f.code_client.dirty || f.code_client.touched)">
 					<span *ngIf="f.code_client.errors.required">Code client is required</span>
 				</mdb-error>
 				<mdb-success *ngIf="f.code_client.valid && (f.code_client.dirty || f.code_client.touched)">
 					Code client valid
-				</mdb-success>
+				</mdb-success>-->
 			</div>
 			<div class="md-form">
 				<input type="text" formcontrolname="civilite" class="form-control" mdbinput mdbvalidate list="civilites" (focusout)="civiliteFocusout($event)"/>
@@ -22,22 +24,16 @@
 					</option>
 				</datalist>
 				<label for="civilite">Civilite:</label>
-				<!--<mdb-error *ngIf="f.civilite.invalid && (f.civilite.dirty || f.civilite.touched)">
-				          <span *ngIf="f.civilite.errors.required">Civilite is required</span>
-				        </mdb-error>
-				        <mdb-success *ngIf="f.civilite.valid && (f.civilite.dirty || f.civilite.touched)">
-				          Civilite valid
-				        </mdb-success>-->
 			</div>
 			<div class="md-form">
 				<input type="text" mdbinput mdbvalidate formcontrolname="nom" id="nom" class="form-control"/>
 				<label for="nom">Nom: *</label>
-				<mdb-error *ngIf="f.nom.invalid && (f.nom.dirty || f.nom.touched)">
+				<!--<mdb-error *ngIf="f.nom.invalid && (f.nom.dirty || f.nom.touched)">
 					<span *ngIf="f.nom.errors.required">Nom is required</span>
 				</mdb-error>
 				<mdb-success *ngIf="f.nom.valid && (f.nom.dirty || f.nom.touched)">
 					Nom valid
-				</mdb-success>
+				</mdb-success>-->
 			</div>
 			<div class="md-form">
 				<input type="text" mdbinput mdbvalidate formcontrolname="prenom" id="prenom" class="form-control"/>
@@ -76,13 +72,13 @@
 			<div class="md-form">
 				<input type="email" mdbinput mdbvalidate formcontrolname="email" id="email" class="form-control"/>
 				<label for="email">Email: *</label>
-				<mdb-error *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
+				<!--<mdb-error *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
 					<span *ngIf="f.email.errors.required">Email is required</span>
 					<span *ngIf="f.email.errors.email">This email address is not valid</span>
 				</mdb-error>
 				<mdb-success *ngIf="f.email.valid && (f.email.dirty || f.email.touched)">
 					Email valid
-				</mdb-success>
+				</mdb-success>-->
 			</div>
 			<div class="md-form">
 				<input type="text" mdbinput mdbvalidate formcontrolname="tva_intracom" id="tva_intracom" class="form-control"/>

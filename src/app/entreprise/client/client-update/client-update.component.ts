@@ -33,6 +33,9 @@ export class ClientUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.clientForm = new FormGroup({});
+
+    console.log(this.clientForm);
+
     this.updatedClient = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
@@ -51,7 +54,7 @@ export class ClientUpdateComponent implements OnInit {
         return this.dernierCodeService.getLastCode(this.entreprise_id, 'client').pipe(
           tap(data => {
             this.dernier_code = data.prochain_code;
-            this.clientForm.patchValue({ code_client: this.dernier_code });
+            // this.clientForm.patchValue({ code_client: this.dernier_code });
           })
         );
       })
@@ -59,7 +62,8 @@ export class ClientUpdateComponent implements OnInit {
   }
 
   // convenience getter for easy access to form fields
-  get f() { return this.clientForm.controls; }
+  // get f() { return (<FormGroup>this.clientForm.controls['clientForm']); }
+  /*
   get code_client() { return this.clientForm.get('code_client'); }
   get civilite() { return this.clientForm.get('civilite'); }
   get nom() { return this.clientForm.get('nom'); }
@@ -68,15 +72,16 @@ export class ClientUpdateComponent implements OnInit {
   get portable() { return this.clientForm.get('portable'); }
   get email() { return this.clientForm.get('email'); }
   get tva_intracom() { return this.clientForm.get('tva_intracom'); }
-
+*/
   onSubmit() {
     this.submitted = true;
 
+    console.log(this.clientForm.value);
     // stop here if form is invalid or entreprise_id is null
     if (this.clientForm.invalid || !this.entreprise_id) {
       return;
     }
-
+/*
     this.loading = true;
     this.clientService.update(this.entreprise_id, {
       code_client: this.f.code_client.value,
@@ -99,7 +104,7 @@ export class ClientUpdateComponent implements OnInit {
         error => {
           this.alertService.error(error);
         });
-    this.loading = false;
+    this.loading = false;*/
   }
 
 }
