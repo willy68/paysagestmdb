@@ -107,4 +107,11 @@ export class ClientUpdateComponent implements OnInit {
     this.loading = false;*/
   }
 
+  resetForm() {
+    this.submitted = false;
+    this.clientForm.reset({
+      code_client: { value: this.dernier_code, disabled: true }
+    });
+  }
+
 }

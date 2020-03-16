@@ -23,7 +23,7 @@
         <h6 class="fw-400 mb-0">10 dernières factures</h6>
       </mdb-card-header>
         <div class="fixed-header ft-09" pgHighlightTableRow height="20rem" (selectItem)="onOpen($event)"
-          (selectChange)="onSelect($event)">
+          (selectChange)="onSelectChange($event)">
           <table class="table table-hover table-sheet table-sm" *ngIf="!emptyList">
             <thead>
               <tr>
@@ -52,7 +52,7 @@
       </mdb-card-header>
       <!--Text-->
       <div class="fixed-header ft-09" pgHighlightTableRow height="20rem" (selectItem)="onOpen($event)"
-        (selectChange)="onSelect($event)">
+        (selectChange)="onSelectChange($event)">
         <table class="table table-hover table-sheet table-sm" *ngIf="!emptyList">
           <thead>
             <tr>

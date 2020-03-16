@@ -15,9 +15,9 @@ import { TypeaheadMatch } from 'ngx-bootstrap/typeahead/ngx-bootstrap-typeahead'
   styleUrls: ['./adresse-create.component.scss']
 })
 export class AdresseCreateComponent implements OnInit {
-  private adresses_type: Observable<AdresseType[]>;
+  public adresses_type: Observable<AdresseType[]>;
   private client_id: number;
-  private client_nom: string;
+  public client_nom: string;
   public createForm: FormGroup;
   public submitted = false;
   public loading = false;

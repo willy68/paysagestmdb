@@ -43,8 +43,8 @@
                 <td>{{client.code_client}}</td>
                 <td>{{client.nom}}</td>
                 <td>{{client.email}}</td>
-                <td>{{client.adresses && client.adresses[0].cp}} </td>
-                <td>{{client.adresses && client.adresses[0].ville}} </td>
+                <td>{{client.adresses && client.adresses[0]?.cp}} </td>
+                <td>{{client.adresses && client.adresses[0]?.ville}} </td>
               </tr>
             </tbody>
           </table>
