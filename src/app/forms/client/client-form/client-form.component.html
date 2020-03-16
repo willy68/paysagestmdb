@@ -1,97 +1,32 @@
-<div formGroupName="clientForm">
+<div formGroupName="addressForm">
 
-	<div class="form-row">
-		<div class="col-md">
-			<div class="md-form">
-				<input type="text" mdbinput mdbvalidate formcontrolname="code_client" id="code_client" class="form-control"/>
-				<label for="code_client">
-					<!--<ng-container *ngIf="!client_code || (client_code | async) ; else loadcode">Code client: *</ng-container>
-					<ng-template #loadcode>Loading ...</ng-template>-->
-					Code Client*
-				</label><!--
-				<mdb-error *ngIf="f.code_client.invalid && (f.code_client.dirty || f.code_client.touched)">
-					<span *ngIf="f.code_client.errors.required">Code client is required</span>
-				</mdb-error>
-				<mdb-success *ngIf="f.code_client.valid && (f.code_client.dirty || f.code_client.touched)">
-					Code client valid
-				</mdb-success>
-			</div>
-			<div class="md-form">
-				<input type="text" formcontrolname="civilite" class="form-control" mdbinput mdbvalidate list="civilites" (focusout)="civiliteFocusout($event)"/>
-				<datalist id="civilites">
-					<option *ngFor="let civilite of civiliteList | async; let i = index" [value]="civilite.libelle">
-						{{civilite.libelle}}
-					</option>
-				</datalist>
-				<label for="civilite">Civilite:</label>
-			</div>-->
-			<!--<div class="md-form">
-				<input type="text" mdbinput mdbvalidate formcontrolname="nom" id="nom" class="form-control"/>
-				<label for="nom">Nom: *</label>
-				<mdb-error *ngIf="f.nom.invalid && (f.nom.dirty || f.nom.touched)">
-					<span *ngIf="f.nom.errors.required">Nom is required</span>
-				</mdb-error>
-				<mdb-success *ngIf="f.nom.valid && (f.nom.dirty || f.nom.touched)">
-					Nom valid
-				</mdb-success>
-			</div>
-			<div class="md-form">
-				<input type="text" mdbinput mdbvalidate formcontrolname="prenom" id="prenom" class="form-control"/>
-				<label for="prenom">Prenom:</label>
-				<mdb-error *ngIf="f.prenom.invalid && (f.prenom.dirty || f.prenom.touched)">
-				  <span *ngIf="f.prenom.errors.required">prenom is required</span>
-				</mdb-error>
-				<mdb-success *ngIf="f.prenom.valid && (f.prenom.dirty || f.prenom.touched)">
-				  Prenom valid
-				</mdb-success>
-			</div>
-
-		</div>
-
-		<div class="col-md">
-			<div class="md-form">
-				<input type="text" mdbinput mdbvalidate formcontrolname="tel" id="tel" class="form-control"/>
-				<label for="tel">Telephone:</label>
-				<mdb-error *ngIf="f.tel.invalid && (f.tel.dirty || f.tel.touched)">
-				  <span *ngIf="f.adresse.errors.required">Telephone is required</span>
-				</mdb-error>
-				<mdb-success *ngIf="f.tel.valid && (f.tel.dirty || f.tel.touched)">
-				  Telephone valid
-				</mdb-success>
-			</div>
-			<div class="md-form">
-				<input type="text" mdbinput mdbvalidate formcontrolname="portable" id="portable" class="form-control"/>
-				<label for="portable">Portable:</label>
-				<mdb-error *ngIf="f.portable.invalid && (f.portable.dirty || f.portable.touched)">
-				          <span *ngIf="f.portable.errors.required">Portable is required</span>
-				        </mdb-error>
-				        <mdb-success *ngIf="f.portable.valid && (f.portable.dirty || f.portable.touched)">
-				          Portable valid
-				        </mdb-success>
-			</div>
-			<div class="md-form">
-				<input type="email" mdbinput mdbvalidate formcontrolname="email" id="email" class="form-control"/>
-				<label for="email">Email: *</label>
-				<mdb-error *ngIf="f.email.invalid && (f.email.dirty || f.email.touched)">
-					<span *ngIf="f.email.errors.required">Email is required</span>
-					<span *ngIf="f.email.errors.email">This email address is not valid</span>
-				</mdb-error>
-				<mdb-success *ngIf="f.email.valid && (f.email.dirty || f.email.touched)">
-					Email valid
-				</mdb-success>
-			</div>
-			<div class="md-form">
-				<input type="text" mdbinput mdbvalidate formcontrolname="tva_intracom" id="tva_intracom" class="form-control"/>
-				<label for="tva_intracom">Tva intracom:</label>
-				<mdb-error *ngIf="f.tva_intracom.invalid && (f.tva_intracom.dirty || f.tva_intracom.touched)">
-				          <span *ngIf="f.tva_intracom.errors.required">tva_intracom is required</span>
-				        </mdb-error>
-				        <mdb-success *ngIf="f.tva_intracom.valid && (f.tva_intracom.dirty || f.tva_intracom.touched)">
-				          Tva_intracom valid
-				        </mdb-success>-->
-			</div>
-		</div>
-
-	</div>
+  <div class="form-label-group">
+    <label>First Name*</label>
+    <input type="text" class="form-control" name="firstName" formControlName="firstName" />
+  </div>
+  <div class="form-label-group">
+    <label>Last Name*</label>
+    <input type="text" class="form-control" name="lastName" formControlName="lastName" />
+  </div>
+  <div class="form-label-group">
+    <label>Phone</label>
+    <input type="text" class="form-control" name="phone" formControlName="phone" />
+  </div>
+  <div class="form-label-group">
+    <label>Street*</label>
+    <input type="text" class="form-control" name="street" formControlName="street" />
+  </div>
+  <div class="form-label-group">
+    <label>City*</label>
+    <input type="text" class="form-control" name="city" formControlName="city" />
+  </div>
+  <div class="form-label-group">
+    <label>State*</label>
+    <input type="text" class="form-control" name="state" formControlName="state" />
+  </div>
+  <div class="form-label-group">
+    <label>Zip*</label>
+    <input type="text" class="form-control" name="zip" formControlName="zip" />
+  </div>
 
 </div>

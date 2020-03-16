@@ -1,49 +1,18 @@
-<div class="row">
-	<div class="col-md-4 mb-4">
-		<a [routerLink]="['../']" routerlinkactive="router-link-active" mdbbtn pgroundedbtn class="mr-2" color="info" outline="true" mdbwaveseffect>Retour à la liste des clients</a>
-	</div>
-	<div class="col-md mb-4">
-		<mdb-card>
-			<mdb-card-header class="primary-color white-text">
-				<h6 class="fw-400 mb-0">Information</h6>
-			</mdb-card-header>
-			<mdb-card-body>
-				<mdb-card-text>Une fois le nouveau client créé,
-					          vous serez redirigé vers la création d'une adresse principale pour ce client
-				</mdb-card-text>
-			</mdb-card-body>
-		</mdb-card>
-  </div>
-</div>
+<form [formGroup]="addressForm" novalidate (ngSubmit)="onSubmit()">
 
-	<div class="row">
-		<div class="col-sm-12">
-			<mdb-card class="mb-5">
-				<mdb-card-header class="primary-color white-text">
-					<h6 class="fw-400 mb-0">
-						Editer un client
-						<span class="float-left mr-1">
-							<mdb-icon fas icon="address-card"></mdb-icon>
-						</span>
-					</h6>
-				</mdb-card-header>
-				<mdb-card-body class="px-lg-5 pt-0">
-					<form [formGroup]="clientForm" (ngSubmit)="onSubmit()" (reset)="$event.preventDefault()" class="text-center" style="color: #757575;">
-
-            <pg-client-form  ></pg-client-form>
-
-						<div>
-							<button pgroundedbtn mdbbtn color="secondary" outline="true" mdbwaveseffect (click)="resetForm()">
-								Annuler
-							</button>
-							<button mdbbtn pgroundedbtn class="mr-2" color="primary" outline="true" mdbwaveseffect type="submit">
-								Créer
-							</button>
-							<img *ngIf="loading" class="pl-2" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
-						</div>
-
-					</form>
-				</mdb-card-body>
-			</mdb-card>
+	<div class="text-center mb-4">
+			<h1 class="h3 mb-3 font-weight-normal">Reusable Form using 
+				 <i>Sub-Forms</i></h1>
 		</div>
-	</div>
+
+<pg-client-form [client]="client"></pg-client-form>
+
+<button class="btn btn-primary" type="submit" [disabled]="!addressForm.valid">
+	Submit
+</button>
+
+<p class="stauts">
+	Form Status: {{addressForm.status}}
+</p>
+
+</form>
