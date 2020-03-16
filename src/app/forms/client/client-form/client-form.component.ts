@@ -43,20 +43,20 @@ export class ClientFormComponent implements OnInit, OnDestroy {
 
     this.form.addControl('clientForm',
       this.fb.group({
-        code_client: ['', [Validators.required]],
+        code_client: ['', [Validators.required]]/*,
         civilite: ['', []],
         nom: ['', [Validators.required]],
         prenom: ['', []],
         tel: ['', []],
         portable: ['', []],
         email: ['', [Validators.required, Validators.email]],
-        tva_intracom: ['', []]
+        tva_intracom: ['', []]*/
       })
     );
-    (<FormGroup>this.form.controls['clientForm']).patchValue({ code_client: 'CL1' });
+    // (<FormGroup>this.form.controls['clientForm']).patchValue({ code_client: 'CL1' });
     console.log((<FormGroup>this.form.controls['clientForm']).controls);
     console.log(this.form);
-
+/*
     if (this.code) {
       this.client_code = this.code.pipe(
         tap(lastCode => (<FormGroup>this.form.controls['clientForm']).patchValue({ code_client: lastCode.prochain_code })
@@ -74,7 +74,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         })
       );
     }
-
+*/
 
     this.civiliteList = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
@@ -91,14 +91,14 @@ export class ClientFormComponent implements OnInit, OnDestroy {
   get f() { return (<FormGroup>this.form.controls['clientForm']).controls; }
 
   get code_client() { return (<FormGroup>this.form.controls['clientForm']).get('code_client'); }
-  get civilite() { return (<FormGroup>this.form.controls['clientForm']).get('civilite'); }
+  /*get civilite() { return (<FormGroup>this.form.controls['clientForm']).get('civilite'); }
   get nom() { return (<FormGroup>this.form.controls['clientForm']).get('nom'); }
   get prenom() { return (<FormGroup>this.form.controls['clientForm']).get('prenom'); }
   get tel() { return (<FormGroup>this.form.controls['clientForm']).get('tel'); }
   get portable() { return (<FormGroup>this.form.controls['clientForm']).get('portable'); }
   get email() { return (<FormGroup>this.form.controls['clientForm']).get('email'); }
   get tva_intracom() { return (<FormGroup>this.form.controls['clientForm']).get('tva_intracom'); }
-
+*/
   isInvalid(controlName: string): boolean {
     return (<FormGroup>this.form.controls['clientForm']).controls[controlName].touched
       && (<FormGroup>this.form.controls['clientForm']).controls[controlName].invalid;
@@ -110,7 +110,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
   }
 
   civiliteFocusout(event) {
-    if (this.civilite.value.length &&
+    /*if (this.civilite.value.length &&
       !this.civilites.find(element => element.libelle === this.civilite.value)) {
       this.modalRef = this.openModal();
       this.modalRef.content.action.pipe(
@@ -128,7 +128,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
         }),
         takeUntil(this.deadModal))
         .subscribe(() => this.refreshCiviliteList.next(null));
-    }
+    }*/
   }
 
   resetForm() {
@@ -138,8 +138,8 @@ export class ClientFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  openModal(): MDBModalRef {
-    return this.modalRef = this.modalService.show(YesnomodalComponent, {
+  openModal()/*: MDBModalRef */{
+    /*return this.modalRef = this.modalService.show(YesnomodalComponent, {
       backdrop: true,
       keyboard: true,
       focus: true,
@@ -159,7 +159,7 @@ export class ClientFormComponent implements OnInit, OnDestroy {
           no: 'Fermer'
         }
       }
-    });
+    });*/
   }
 
   ngOnDestroy() {
