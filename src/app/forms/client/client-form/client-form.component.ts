@@ -31,6 +31,8 @@ export class ClientFormComponent implements OnInit {
       }));
 
     console.log(this.form);
+    console.log(this.f);
+    console.log(this.client);
   }
 
   get f () { return (<FormGroup>this.form.controls['addressForm']).controls; }
