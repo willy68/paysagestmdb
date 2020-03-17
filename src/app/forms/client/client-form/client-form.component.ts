@@ -1,6 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Client } from '../../../models';
+import { Client, Civilite } from '../../../models';
+import { BehaviorSubject, Observable, Subject, NEVER } from 'rxjs';
+import { switchMap, tap, takeUntil } from 'rxjs/operators';
+import { CiviliteService } from 'src/app/services';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
+import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
 
 @Component({
   selector: 'pg-client-form',
@@ -11,10 +17,20 @@ import { Client } from '../../../models';
 export class ClientFormComponent implements OnInit {
 
   @Input() client: Client;
-  form: FormGroup;
+  public form: FormGroup;
+  // private readonly refreshCiviliteList = new BehaviorSubject(null);
+  // public civiliteList: Observable<Civilite[]>;
+  // public civilites: Civilite[];
+  // public entreprise_id: number;
+  // private deadModal = new Subject();
+  // public modalRef: MDBModalRef;
+
   constructor(
     private ctrlContainer: FormGroupDirective,
-    private formBuilder: FormBuilder) { }
+    private formBuilder: FormBuilder,
+    /*private route: ActivatedRoute,
+    private civiliteService: CiviliteService,
+    private modalService: MDBModalService*/) { }
 
   ngOnInit() {
     this.form = this.ctrlContainer.form;
@@ -30,12 +46,23 @@ export class ClientFormComponent implements OnInit {
         'zip': [null, [Validators.required]],
       }));
 
+    /*this.civiliteList = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.entreprise_id = +params.get('entreprise_id');
+        return this.refreshCiviliteList.pipe(
+          switchMap(() => this.civiliteService.getList(this.entreprise_id).pipe(
+            tap(data => this.civilites = data)
+          ))
+        );
+      })
+    );*/
+
     console.log(this.form);
     console.log(this.f);
     console.log(this.client);
   }
 
-  get f () { return (<FormGroup>this.form.controls['addressForm']).controls; }
+  get f() { return (<FormGroup>this.form.controls['addressForm']).controls; }
 
   isInvalid(controlName: string): boolean {
 
@@ -48,4 +75,48 @@ export class ClientFormComponent implements OnInit {
       && (<FormGroup>this.form.controls['addressForm']).controls[controlName].valid;
   }
 
+  /*civiliteFocusout(event) {
+    if (this.f.civilite.value.length &&
+      !this.civilites.find(element => element.libelle === this.f.civilite.value)) {
+      this.modalRef = this.openModal();
+      this.modalRef.content.action.pipe(
+        switchMap((result: any) => {
+          this.modalRef.hide();
+          if (result) {
+            return this.civiliteService.create(this.entreprise_id,
+              {
+                entreprise_id: this.entreprise_id,
+                libelle: this.f.civilite.value
+              });
+          } else {
+            return NEVER;
+          }
+        }),
+        takeUntil(this.deadModal))
+        .subscribe(() => this.refreshCiviliteList.next(null));
+    }
+  }
+  openModal(): MDBModalRef {
+    return this.modalRef = this.modalService.show(YesnomodalComponent, {
+      backdrop: true,
+      keyboard: true,
+      focus: true,
+      show: false,
+      ignoreBackdropClick: false,
+      class: '',
+      containerClass: '',
+      animated: true,
+      data: {
+        heading: 'Sauvegarde',
+        content: {
+          heading: 'Civilité nouvelle',
+          description: 'Voulez sauvegarder la civilité ' + this.f.civilite.value
+        },
+        button: {
+          yes: 'Sauver!',
+          no: 'Fermer'
+        }
+      }
+    });
+  }*/
 }

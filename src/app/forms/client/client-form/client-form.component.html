@@ -1,18 +1,12 @@
-<div formGroupName="addressForm">
+<div formgroupname="addressForm">
 
-  <div class="md-form">
+  <div class="form-label-group">
     <label>First Name*</label>
-    <input type="text"  mdbInput mdbValidate class="form-control" name="firstName" formControlName="firstName"  id="firstName"/>
-    <mdb-error *ngIf="f.firstName.invalid && (f.firstName.dirty || f.firstName.touched)">
-      <span *ngIf="f.firstName.errors.required">Code client is required</span>
-    </mdb-error>
-    <mdb-success *ngIf="f.firstName.valid && (f.firstName.dirty || f.firstName.touched)">
-      Code client valid
-    </mdb-success>
+    <input type="text" class="form-control" name="firstName" formControlName="firstName" />
   </div>
   <div class="form-label-group">
-    <input type="text" class="form-control" name="lastName" formControlName="lastName"/>
-    <label for="lastName">Last Name*</label>
+    <label>Last Name*</label>
+    <input type="text" class="form-control" name="lastName" formControlName="lastName" />
   </div>
   <div class="form-label-group">
     <label>Phone</label>
@@ -27,7 +21,7 @@
     <input type="text" class="form-control" name="city" formControlName="city" />
   </div>
   <div class="form-label-group">
-    <label>State*</label>
+    <label>State</label>
     <input type="text" class="form-control" name="state" formControlName="state" />
   </div>
   <div class="form-label-group">
