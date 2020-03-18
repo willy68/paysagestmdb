@@ -1,12 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Client, Civilite } from '../../../models';
-import { BehaviorSubject, Observable, Subject, NEVER } from 'rxjs';
-import { switchMap, tap, takeUntil } from 'rxjs/operators';
-import { CiviliteService } from 'src/app/services';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
-import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
+import { Client } from '../../../models';
 
 @Component({
   selector: 'pg-client-form',
@@ -35,9 +29,9 @@ export class ClientFormComponent implements OnInit {
   ngOnInit() {
     this.form = this.ctrlContainer.form;
 
-    this.form.addControl('addressForm',
+    this.form.addControl('clientForm',
       this.formBuilder.group({
-        'firstName': [null, [Validators.required]],
+        'code_client': [null, [Validators.required]],
         'lastName': [null, [Validators.required]],
         'phone': [null, null],
         'street': [null, [Validators.required]],
@@ -58,21 +52,19 @@ export class ClientFormComponent implements OnInit {
     );*/
 
     console.log(this.form);
-    console.log(this.f);
-    console.log(this.client);
   }
 
-  get f() { return (<FormGroup>this.form.controls['addressForm']).controls; }
+  get f() { return (<FormGroup>this.form.controls['clientForm']).controls; }
 
   isInvalid(controlName: string): boolean {
 
-    return (<FormGroup>this.form.controls['addressForm']).controls[controlName].touched
-      && (<FormGroup>this.form.controls['addressForm']).controls[controlName].invalid;
+    return (<FormGroup>this.form.controls['clientForm']).controls[controlName].touched
+      && (<FormGroup>this.form.controls['clientForm']).controls[controlName].invalid;
   }
 
   isValid(controlName: string): boolean {
-    return (<FormGroup>this.form.controls['addressForm']).controls[controlName].touched
-      && (<FormGroup>this.form.controls['addressForm']).controls[controlName].valid;
+    return (<FormGroup>this.form.controls['clientForm']).controls[controlName].touched
+      && (<FormGroup>this.form.controls['clientForm']).controls[controlName].valid;
   }
 
   /*civiliteFocusout(event) {

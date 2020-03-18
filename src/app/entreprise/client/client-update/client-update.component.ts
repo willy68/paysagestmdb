@@ -1,42 +1,36 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { first, takeUntil, switchMap, tap } from 'rxjs/operators';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { ClientService, AlertService, DernierCodeService } from 'src/app/services';
-import { Subject, Observable } from 'rxjs';
-import { Client, DernierCode } from 'src/app/models';
+import { Client } from 'src/app/models';
 
 @Component({
   selector: 'pg-client-update',
   templateUrl: './client-update.component.html',
   styleUrls: ['./client-update.component.scss']
 })
-export class ClientUpdateComponent implements OnInit, AfterViewInit {
+export class ClientUpdateComponent implements OnInit {
 
-  addressForm: FormGroup;
+  clientForm: FormGroup;
   client: Client;
   public loading = false;
+  public submitted = false;
   constructor() { }
 
   ngOnInit() {
-    this.addressForm = new FormGroup({});
-    console.log((<FormGroup>this.addressForm.controls['addressForm']));
+    this.clientForm = new FormGroup({});
+    // console.log((<FormGroup>this.clientForm.controls['addressForm']));
     // this.f.firstName.patchValue('CL1');
   }
 
-  ngAfterViewInit() {
-    console.log((<FormGroup>this.addressForm.controls['addressForm']));
-    // this.f.lastName.patchValue('CL1');
-  }
-
-  get f () { return (<FormGroup>this.addressForm.controls['addressForm']).controls; }
+  // get f () { return (<FormGroup>this.clientForm.controls['addressForm']).controls; }
 
   onSubmit() {
-    console.log((<FormGroup>this.addressForm.controls['addressForm']).value);
+    // console.log((<FormGroup>this.clientForm.controls['addressForm']).value);
+    console.log(this.clientForm.value);
   }
+
   resetForm() {
-    // this.submitted = false;
-    this.addressForm.reset(/*{
+    this.submitted = false;
+    this.clientForm.reset(/*{
       code_client: { value: this.dernier_code, disabled: true }
     }*/);
   }
