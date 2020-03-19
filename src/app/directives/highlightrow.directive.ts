@@ -46,30 +46,28 @@ export class HighlightTableRowDirective implements OnInit {
       }
     }
     const index: number = this.selectedRow;
-    if (event.code === 'ArrowDown') {
-      if (this.selectedRow === this.trCollection.length - 1) {
-        this.selectedRow = -1;
-      }
-      this.selectedRow++;
-      this.disableClass(index);
-      this.setClickedRow(this.selectedRow);
-      this.cancelScroll = true;
-      this.doScroll(this.selectedRow);
-      this.selectChange.emit(this.selectedRow);
-    } else if (event.code === 'ArrowUp') {
-      if (this.selectedRow === 0 || this.selectedRow === -1) {
-        this.selectedRow = this.trCollection.length;
-      }
-      this.selectedRow--;
-      this.disableClass(index);
-      this.setClickedRow(this.selectedRow);
-      this.cancelScroll = true;
-      this.doScroll(this.selectedRow);
-      this.selectChange.emit(this.selectedRow);
-    } else if (event.code === 'Enter') {
-      if (this.selectedRow !== -1) {
-        this.selectItem.emit(this.selectedRow);
-      }
+    switch (event.code) {
+      case 'ArrowUp':
+        if (this.selectedRow === 0 || this.selectedRow === -1) {
+          this.selectedRow = this.trCollection.length;
+        }
+        this.selectedRow--;
+        this.changeSelect(index);
+        break;
+      case 'ArrowDown':
+        if (this.selectedRow === this.trCollection.length - 1) {
+          this.selectedRow = -1;
+        }
+        this.selectedRow++;
+        this.changeSelect(index);
+        break;
+      case 'Enter':
+        if (this.selectedRow !== -1) {
+          this.selectItem.emit(this.selectedRow);
+        }
+      break;
+      default:
+        break;
     }
   }
 
@@ -86,12 +84,16 @@ export class HighlightTableRowDirective implements OnInit {
       this.startIndex = this.trCollection[0].rowIndex;
     }
 
-    this.disableClass(index);
     let tr: any = event.target;
     while (tr.tagName !== 'TR') {
       tr = tr.parentElement;
     }
     this.selectedRow = tr.rowIndex - this.startIndex;
+    this.changeSelect(index);
+  }
+
+  private changeSelect(prevIndex: number) {
+    this.disableClass(prevIndex);
     this.setClickedRow(this.selectedRow);
     this.cancelScroll = true;
     this.doScroll(this.selectedRow);
