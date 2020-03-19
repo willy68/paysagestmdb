@@ -34,12 +34,12 @@
   background-color: transparent;
 }
 
-.md-form select:focus:not([readonlu]) {
+.md-form select:focus:not([readonly]) {
   border-bottom: 1px solid #4285f4 !important;
   box-shadow: 0 1px 0 0 #4285f4 !important;
 }
 
-.md-form select:focus:not([readonlu]) + label{
+.md-form select:focus:not([readonly]) + label{
   color: #4285f4;
 }
 

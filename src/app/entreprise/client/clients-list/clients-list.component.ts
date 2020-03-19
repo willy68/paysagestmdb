@@ -14,7 +14,7 @@ import { Subject, Observable, of } from 'rxjs';
 export class ClientsListComponent implements OnInit {
   private unsubscribList: Subject<any>;
   public clientList: Observable<Client[]>;
-  public adresseList: Observable<Adresse[]>;
+  public clients: Client[];
   private entreprise_id: number;
   public selectedItem = -1;
   public emptyList = false;
@@ -39,7 +39,7 @@ export class ClientsListComponent implements OnInit {
       switchMap((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
         return this.clientService.getList(this.entreprise_id, '?include=adresses').pipe(
-          tap(clientList => clientList),
+          tap(clientList => this.clients = clientList),
           catchError(() =>  {
             this.emptyList = true;
             return of<Client[]>([]);
@@ -47,6 +47,12 @@ export class ClientsListComponent implements OnInit {
         );
       })
     );
+  }
+
+  onEdit(index: number) {
+    if (index > -1 && this.clients.length > index) {
+      this.router.navigate([this.clients[index].id, 'client-update'], {relativeTo: this.route});
+    }
   }
 
   onSelect(index: number) {

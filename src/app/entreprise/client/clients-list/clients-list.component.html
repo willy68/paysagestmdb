@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-md-8 mb-4">
     <a [routerLink]="['./client-create']" routerLinkActive="router-link-active"  mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Nouveau client</a>
-    <a [routerLink]="['./client-update']" mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Editer</a>
+    <a (click)="onEdit(selectedItem)" mdbBtn pgRoundedBtn class="mr-2" color="info" outline="true" mdbWavesEffect>Editer</a>
   </div>
   <div class="col-md mb-4">
     <mdb-card>
-      <mdb-card-header>
+      <mdb-card-header class="primary-color white-text">
         <h6 class="fw-400 mb-0">Chiffre d'affaire sur 12 mois</h6>
       </mdb-card-header>
       <mdb-card-body>
@@ -17,7 +17,7 @@
 <div class="row">
   <div class="col-sm-12">
     <mdb-card>
-      <mdb-card-header>
+      <mdb-card-header class="primary-color white-text">
         <h6 class="fw-400 mb-0">
           Liste des clients
           <span class="float-left mr-1">
@@ -27,7 +27,7 @@
       </mdb-card-header>
       <mdb-card-body class="p-0">
         <div class="fixed-header ft-09" pgHighlightTableRow height="19em"
-        (selectItem)="onSelect($event)" (selectChange)="onSelect($event)">
+        (selectItem)="onEdit($event)" (selectChange)="onSelect($event)">
           <table class="table table-hover table-sheet table-sm" *ngIf="!emptyList">
             <thead>
               <tr>
