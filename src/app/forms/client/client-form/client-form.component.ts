@@ -1,6 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
-import { Client } from '../../../models';
+import { Client, DernierCode, Civilite } from '../../../models';
+import { Observable, BehaviorSubject, Subject, NEVER } from 'rxjs';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
+import { CiviliteService } from 'src/app/services';
+import { switchMap, tap, takeUntil } from 'rxjs/operators';
+import { ParamMap, ActivatedRoute } from '@angular/router';
+import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
 
 @Component({
   selector: 'pg-client-form',
@@ -8,39 +14,64 @@ import { Client } from '../../../models';
   styleUrls: ['./client-form.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class ClientFormComponent implements OnInit {
+export class ClientFormComponent implements OnInit, OnChanges {
 
   @Input() client: Client;
   public form: FormGroup;
-  // private readonly refreshCiviliteList = new BehaviorSubject(null);
-  // public civiliteList: Observable<Civilite[]>;
-  // public civilites: Civilite[];
-  // public entreprise_id: number;
-  // private deadModal = new Subject();
-  // public modalRef: MDBModalRef;
+  public entreprise_id: number;
+  public dernier_code: string;
+  public last_code: Observable<DernierCode>;
+  private readonly refreshCiviliteList = new BehaviorSubject(null);
+  public civiliteList: Observable<Civilite[]>;
+  public civilites: Civilite[];
+  private deadModal = new Subject();
+  public modalRef: MDBModalRef;
 
   constructor(
     private ctrlContainer: FormGroupDirective,
     private formBuilder: FormBuilder,
-    /*private route: ActivatedRoute,
+    private route: ActivatedRoute,
     private civiliteService: CiviliteService,
-    private modalService: MDBModalService*/) { }
+    private modalService: MDBModalService) { }
+
+
+  ngOnChanges(changes: SimpleChanges): void {
+      if (this.client && this.form) {
+        (<FormGroup>this.form.controls['clientForm']).patchValue(this.client);
+      }
+  }
 
   ngOnInit() {
     this.form = this.ctrlContainer.form;
 
     this.form.addControl('clientForm',
       this.formBuilder.group({
-        'code_client': [null, [Validators.required]],
-        'lastName': [null, [Validators.required]],
-        'phone': [null, null],
-        'street': [null, [Validators.required]],
-        'city': [null, [Validators.required]],
-        'state': [null],
-        'zip': [null, [Validators.required]],
+        'code_client': [{disabled: true}, [Validators.required]],
+        'civilite': ['', []],
+        'nom': ['', [Validators.required]],
+        'prenom': ['', []],
+        'tel': ['', []],
+        'portable': ['', []],
+        'email': ['', [Validators.required, Validators.email]],
+        'tva_intracom': ['', []],
       }));
 
-    /*this.civiliteList = this.route.paramMap.pipe(
+      if (this.client) {
+        (<FormGroup>this.form.controls['clientForm']).patchValue(this.client);
+      }
+
+      /*this.last_code = this.route.paramMap.pipe(
+        switchMap((params: ParamMap) => {
+          this.entreprise_id = +params.get('entreprise_id');
+          return this.dernierCodeService.getLastCode(this.entreprise_id, 'client').pipe(
+            tap(data => {
+              this.dernier_code = data.prochain_code;
+              (<FormGroup>this.form.controls['clientForm']).patchValue({ code_client: this.dernier_code });
+            })
+          );
+        })
+      );*/
+    this.civiliteList = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
         return this.refreshCiviliteList.pipe(
@@ -49,7 +80,7 @@ export class ClientFormComponent implements OnInit {
           ))
         );
       })
-    );*/
+    );
 
     console.log(this.form);
   }
@@ -67,7 +98,7 @@ export class ClientFormComponent implements OnInit {
       && (<FormGroup>this.form.controls['clientForm']).controls[controlName].valid;
   }
 
-  /*civiliteFocusout(event) {
+  civiliteFocusout(event) {
     if (this.f.civilite.value.length &&
       !this.civilites.find(element => element.libelle === this.f.civilite.value)) {
       this.modalRef = this.openModal();
@@ -88,6 +119,7 @@ export class ClientFormComponent implements OnInit {
         .subscribe(() => this.refreshCiviliteList.next(null));
     }
   }
+
   openModal(): MDBModalRef {
     return this.modalRef = this.modalService.show(YesnomodalComponent, {
       backdrop: true,
@@ -110,5 +142,5 @@ export class ClientFormComponent implements OnInit {
         }
       }
     });
-  }*/
+  }
 }
