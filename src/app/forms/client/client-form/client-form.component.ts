@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { ControlContainer, FormGroupDirective, FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Client, DernierCode, Civilite } from '../../../models';
 import { Observable, BehaviorSubject, Subject, NEVER } from 'rxjs';
@@ -14,13 +14,11 @@ import { YesnomodalComponent } from 'src/app/yesnomodal/yesnomodal.component';
   styleUrls: ['./client-form.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class ClientFormComponent implements OnInit, OnChanges {
+export class ClientFormComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() client: Client;
   public form: FormGroup;
   public entreprise_id: number;
-  public dernier_code: string;
-  public last_code: Observable<DernierCode>;
   private readonly refreshCiviliteList = new BehaviorSubject(null);
   public civiliteList: Observable<Civilite[]>;
   public civilites: Civilite[];
@@ -34,7 +32,6 @@ export class ClientFormComponent implements OnInit, OnChanges {
     private civiliteService: CiviliteService,
     private modalService: MDBModalService) { }
 
-
   ngOnChanges(changes: SimpleChanges): void {
       if (this.client && this.form) {
         (<FormGroup>this.form.controls['clientForm']).patchValue(this.client);
@@ -46,7 +43,7 @@ export class ClientFormComponent implements OnInit, OnChanges {
 
     this.form.addControl('clientForm',
       this.formBuilder.group({
-        'code_client': [{disabled: true}, [Validators.required]],
+        'code_client': [{value: '', disabled: true}, [Validators.required]],
         'civilite': ['', []],
         'nom': ['', [Validators.required]],
         'prenom': ['', []],
@@ -60,17 +57,6 @@ export class ClientFormComponent implements OnInit, OnChanges {
         (<FormGroup>this.form.controls['clientForm']).patchValue(this.client);
       }
 
-      /*this.last_code = this.route.paramMap.pipe(
-        switchMap((params: ParamMap) => {
-          this.entreprise_id = +params.get('entreprise_id');
-          return this.dernierCodeService.getLastCode(this.entreprise_id, 'client').pipe(
-            tap(data => {
-              this.dernier_code = data.prochain_code;
-              (<FormGroup>this.form.controls['clientForm']).patchValue({ code_client: this.dernier_code });
-            })
-          );
-        })
-      );*/
     this.civiliteList = this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.entreprise_id = +params.get('entreprise_id');
@@ -142,5 +128,10 @@ export class ClientFormComponent implements OnInit, OnChanges {
         }
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.deadModal.next();
+    this.deadModal.complete();
   }
 }
