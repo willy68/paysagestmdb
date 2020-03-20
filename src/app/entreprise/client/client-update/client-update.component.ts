@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { ClientService, DernierCodeService, CiviliteService } from 'src/app/services';
+import { ClientService, DernierCodeService } from 'src/app/services';
 
 import { Client } from 'src/app/models';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'pg-client-update',
@@ -23,7 +23,8 @@ export class ClientUpdateComponent implements OnInit {
   public submitted = false;
   constructor(
     private route: ActivatedRoute,
-    private clientService: ClientService) { }
+    private clientService: ClientService,
+    private dernierCodeService: DernierCodeService) { }
 
   ngOnInit() {
     this.clientForm = new FormGroup({});
@@ -33,22 +34,33 @@ export class ClientUpdateComponent implements OnInit {
         this.entreprise_id = +params.get('entreprise_id');
         this.id = +params.get('id');
         return this.clientService.get(this.entreprise_id, this.id);
-      })
+      }),
+      shareReplay(1)
     );
-    // console.log((<FormGroup>this.clientForm.controls['addressForm']));
-    // this.f.firstName.patchValue('CL1');
+
+    /*this.client$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.entreprise_id = +params.get('entreprise_id');
+        return this.dernierCodeService.getLastCode(this.entreprise_id, 'client').pipe(
+          switchMap( (value) => {
+            this.client = {} as Client;
+            this.client.code_client = value.prochain_code;
+            return of<Client>(this.client);
+          })
+        );
+      })
+    );*/
   }
 
-  get f () { return (<FormGroup>this.clientForm.controls['addressForm']).controls; }
+  get f () { return (<FormGroup>this.clientForm.controls['clientForm']).controls; }
+
+  get fb (): FormGroup { return (<FormGroup>this.clientForm.controls['clientForm']); }
 
   onSubmit() {
-    console.log(this.clientForm.value);
+    // console.log(this.clientForm.value);
+    console.log(this.clientForm.value.clientForm);
+    this.client = this.clientForm.value.clientForm;
+    console.log(this.f.code_client.value);
   }
 
-  resetForm() {
-    this.submitted = false;
-    this.clientForm.reset(/*{
-      code_client: { value: this.dernier_code, disabled: true }
-    }*/);
-  }
 }
