@@ -55,6 +55,18 @@ export class ClientCreateComponent implements OnInit, OnDestroy {
         tap(data => this.civilites = data)
       ))
     );
+    /*this.client$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.entreprise_id = +params.get('entreprise_id');
+        return this.dernierCodeService.getLastCode(this.entreprise_id, 'client').pipe(
+          switchMap( (value) => {
+            this.client = {} as Client;
+            this.client.code_client = value.prochain_code;
+            return of<Client>(this.client);
+          })
+        );
+      })
+    );*/
   }
 
   // convenience getter for easy access to form fields
