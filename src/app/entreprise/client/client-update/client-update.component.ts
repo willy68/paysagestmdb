@@ -21,6 +21,9 @@ export class ClientUpdateComponent implements OnInit, OnDestroy {
   private deadCreate = new Subject();
   public loading = false;
   public submitted = false;
+  public temp = Array;
+  public math = Math;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,

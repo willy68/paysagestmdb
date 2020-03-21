@@ -67,8 +67,6 @@ export class ClientFormComponent implements OnInit, OnChanges, OnDestroy {
         );
       })
     );
-
-    console.log(this.form);
   }
 
   get f() { return (<FormGroup>this.form.controls['clientForm']).controls; }
