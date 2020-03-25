@@ -51,29 +51,8 @@
 					<div class="row" *ngFor="let t of temp(math.ceil((client$ | async)?.adresses.length/2)).fill(); let i = index">
 
 						<div class="col-6" *ngFor="let adresse of (client$ | async)?.adresses.slice(2*i,2*i+2)">
-							<mdb-card>
-								<mdb-card-body>
-									<mdb-card-title>
-										<h4>Adresses</h4>
-									</mdb-card-title>
-									<mdb-card-text>
-										{{ adresse.adresse_1 }} <br>
-										<span *ngIf="adresse.adresse_2">
-											{{ adresse.adresse_2 }} <br>
-										</span>
-										<span *ngIf="adresse.adresse_3">
-											{{ adresse.adresse_3 }} <br>
-										</span>
-										{{ adresse.cp }}
-										{{ adresse.ville }} <br>
-										{{ adresse.pays }} <br>
-									</mdb-card-text>
-									<div class="flex-row">
-										<a class="card-link">Modifier</a>
-										<a class="card-link" *ngIf="(client$ | async)?.adresses.length > 1">Supprimer</a>
-									</div>
-								</mdb-card-body>
-							</mdb-card>
+							<pg-adresse [adresse]="adresse" [canDelete]="(client$ | async)?.adresses.length > 1">
+							</pg-adresse>
 						</div>
 					</div>
 				</div>

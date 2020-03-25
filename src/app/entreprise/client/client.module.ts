@@ -15,6 +15,7 @@ import { ClientComponent } from './client/client.component';
 import { AdresseCreateComponent } from './adresse-create/adresse-create.component';
 import { AdresseListComponent } from './adresse-list/adresse-list.component';
 import { ClientFormComponent } from '../../forms/client/client-form/client-form.component';
+import { AdresseComponent } from './adresse/adresse.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ClientFormComponent } from '../../forms/client/client-form/client-form.
     ClientComponent,
     AdresseCreateComponent,
     AdresseListComponent,
-    ClientFormComponent
+    ClientFormComponent,
+    AdresseComponent
   ],
   imports: [
     CommonModule,
