@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';  // Reactive Form Module
 import { HttpClientModule, HttpClientXsrfModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
-import { JwtInterceptor, ErrorInterceptor } from './interceptor';
+import { JwtInterceptor, ErrorInterceptor, XhrInterceptor } from './interceptor';
 import { JwtHelperService } from './services';
 
 import { EntrepriseModule } from './entreprise/entreprise.module';
@@ -54,6 +54,7 @@ import { YesnomodalComponent } from './yesnomodal/yesnomodal.component';
     JwtHelperService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: XhrInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })
