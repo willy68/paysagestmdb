@@ -1,6 +1,8 @@
 {
   "/api": {
-    "target": "http://apigest:8000",
-    "secure": false
+    "target": "http://localhost:8000/api",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {"^/api" : ""}
   }
 }

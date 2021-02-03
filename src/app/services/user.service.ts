@@ -28,7 +28,7 @@ export class UserService {
 
   register(user: User, entreprise_id: number = null) {
     if (entreprise_id === null) {
-      return this.http.post(apigest + '/user', user);
+      return this.http.post(apigest + '/user/create', user);
     } else {
       return this.http.post(apigest + `/entreprise/${entreprise_id}/user`, user);
     }
