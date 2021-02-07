@@ -5,7 +5,8 @@ import { first } from 'rxjs/operators';
 
 // import custom validator to validate that password and confirm password fields match
 import { mustMatch } from '../helpers/must-match.validator';
-import { AuthenticationService, AlertService } from '../services';
+import { AuthenticationService, AlertService, EntrepriseService } from '../services';
+import { Entreprise } from '../models';
 
 @Component({
   selector: 'pg-login',
@@ -24,7 +25,8 @@ export class PgLoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    private entrepriseService: EntrepriseService) { }
 
   ngOnInit() {
     this.loginFormBuild();
@@ -32,8 +34,9 @@ export class PgLoginComponent implements OnInit {
       (params: ParamMap) => {
       this.entreprise_id = +params.get('entreprise_id');
     });
-    // get return url from route parameters or default to '/'
-    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+    // Ensure XSRF-TOKEN cookie is present with a get request
+    this.entrepriseService.getAll().subscribe();
   }
 
   // convenience getter for easy access to form fields
